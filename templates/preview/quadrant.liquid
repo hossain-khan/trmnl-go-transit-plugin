@@ -5,22 +5,22 @@
   Sample Data: Lakeshore East Line - Oshawa GO Station
 {% endcomment %}
 
-<div class="layout layout--row p--2 gap--large mb--0">
-  <div class="flex flex--col flex--1">
+<div class="layout layout--row p--2 gap--xxlarge mb--0" style="position:relative">
+  <div class="flex flex--col flex--stretch-x flex--top gap--none stretch" style="position:relative">
     
     <!-- Two-direction time table -->
     <div class="columns time-table">
       
       <!-- Direction 1: To Union Station -->
-      <div class="column gap--small">
+      <div class="column gap--medium" data-overflow="true">
         <div>
-          <span class="title title--small" style="display: block;">Union Station</span>
+          <span class="title title--small" style="display:block">Union Station</span>
         </div>
         
         <!-- Arriving -->
         <div class="item item--emphasis-3">
           <div class="meta"></div>
-          <div class="content">
+          <div class="content text--black">
             <span class="label label--small label--inverted mb--1">arriving</span>
             <span>
               <span class="value value--medium">9:34</span>
@@ -43,15 +43,15 @@
       </div>
       
       <!-- Direction 2: To Oshawa -->
-      <div class="column gap--small">
+      <div class="column gap--medium" data-overflow="true">
         <div>
-          <span class="title title--small" style="display: block;">Oshawa</span>
+          <span class="title title--small" style="display:block">Oshawa</span>
         </div>
         
         <!-- Arriving -->
         <div class="item item--emphasis-3">
           <div class="meta"></div>
-          <div class="content">
+          <div class="content text--black">
             <span class="label label--small label--inverted mb--1">arriving</span>
             <span>
               <span class="value value--medium">9:42</span>
