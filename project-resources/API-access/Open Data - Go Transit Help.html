@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://api.openmetrolinx.com/OpenDataAPI/Help/Index/en -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width">
+    <title>Open Data - Go Transit Help</title>
+    
+
+    <link type="text/css" href="./Open Data - Go Transit Help_files/HelpPage.css" rel="stylesheet">
+</head>
+<body>
+    <div style="position: relative; background: #3F7D3B; height: 150px; vertical-align: middle">
+        <div style="position: absolute; top: 50%; height: 60px; margin-top: -30px; padding: 0px 20px 0px 20px;">
+            <a href="https://api.openmetrolinx.com/OpenDataAPI/Home/Index/en" title="Home">
+                <img style="height: 60px; width: 126px;" src="./Open Data - Go Transit Help_files/go_logo.png" alt="GO">
+            </a>
+            <div style="font-size: 36px; color: #ffffff; min-width: 550px; position: absolute; top: 50%; left: 180px; margin-top: -20px;">OPEN DATA - GO API</div>
+        </div>
+    </div>
+    <div class="centerContainer">
+        
+
+<div id="body" class="help-page">
+    <section class="featured">
+        <div class="content-wrapper">
+            <h2>Introduction</h2> 
+            <p>
+                API is a collection of function calls providing access to GO information. Data provided through the API is public and in real time. Accessing the API is free, but you must register to obtain an Access Key. After registering, you are assigned an Access Key. You use the Access Key with every method call. The Key does not change or expire; however, it may get disabled if extensive API calls are detected. This is done by removing the capabilities manually associated with the key. The required capabilities need to be assigned back to the key manually to enable the key again. If the key has been compromised, a new key will be issued with the same capabilities.
+            </p>
+            <p>
+                <a download="" href="https://api.openmetrolinx.com/OpenDataAPI/Content/API_Data_Catalogue.pdf">Download API Specification</a>
+            </p>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+
+
+<h2 id="UPGTFSRealTimeV1">UPGTFSRealTimeV1</h2>
+    <p>
+            Returns GTFS real time feeds. Requests with "api/UP/Gtfs.xml" or "api/UP/Gtfs.json" or "api/UP/Gtfs.proto" or "api/UP/Gtfs" displays data in xml, json and protobuffer format respectively.
+            </p>
+<table class="help-page-table">
+    <thead>
+        <tr><th>API</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-UP-Gtfs-Feed-Alerts">GET api/V1/UP/Gtfs/Feed/Alerts</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns all UP alert feeds.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-UP-Gtfs-Feed-TripUpdates">GET api/V1/UP/Gtfs/Feed/TripUpdates</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns all UP trip update feeds.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-UP-Gtfs-Feed-VehiclePosition">GET api/V1/UP/Gtfs/Feed/VehiclePosition</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns all UP vehicle position feeds.
+            </p> 
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="StopV1">Stop</h2>
+    <p>   
+            Returns information on Stops. Requests with "api/V1/Stop.xml" or "api/V1/Stop.json" or "api/V1/Stop" displays data in xml and json format respectively.
+            </p>
+<table class="help-page-table">
+    <thead>
+        <tr><th>API</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Stop-NextService-StopCode">GET api/V1/Stop/NextService/{StopCode}</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays predictions for all lines that feed a certain bus or train stop.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Stop-Details-StopCode">GET api/V1/Stop/Details/{StopCode}</a></td>
+            <td class="api-documentation">
+                <p>No documentation available.</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Stop-Destinations-StopCode-FromTime-ToTime">GET api/V1/Stop/Destinations/{StopCode}/{FromTime}/{ToTime}</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays Destinations of a stop
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Stop-All">GET api/V1/Stop/All</a></td>
+            <td class="api-documentation">
+                <p>No documentation available.</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="ServiceUpdateV1">Service Update</h2>
+    <p>   
+            Returns information on Alert messages, train or bus departures from Union and Service Guarantee for the trip. Requests with "api/V1/ServiceUpdate.xml" or "api/V1/ServiceUpdate.json" 
+            or "api/V1/ServiceUpdate" displays data in xml and json format respectively.
+            </p>
+<table class="help-page-table">
+    <thead>
+        <tr><th>API</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-ServiceUpdate-ServiceAlert-All">GET api/V1/ServiceUpdate/ServiceAlert/All</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays Service alert messages by date.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-ServiceUpdate-InformationAlert-All">GET api/V1/ServiceUpdate/InformationAlert/All</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays Information alert messages by date.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-ServiceUpdate-MarketingAlert-All">GET api/V1/ServiceUpdate/MarketingAlert/All</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays Marketing Alert messages by date.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-ServiceUpdate-UnionDepartures-All">GET api/V1/ServiceUpdate/UnionDepartures/All</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays The nearest departures for buses and trains from Union Station
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-ServiceUpdate-ServiceGuarantee-TripNumber-OperationalDay">GET api/V1/ServiceUpdate/ServiceGuarantee/{TripNumber}/{OperationalDay}</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays The trip number for the day given.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-ServiceUpdate-Exceptions-Train">GET api/V1/ServiceUpdate/Exceptions/Train</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns the schedule exceptions - cancelled trips/stops etc.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-ServiceUpdate-Exceptions-Bus">GET api/V1/ServiceUpdate/Exceptions/Bus</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns the schedule exceptions - cancelled trips/stops etc.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-ServiceUpdate-Exceptions-All">GET api/V1/ServiceUpdate/Exceptions/All</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns the schedule exceptions - cancelled trips/stops etc.
+            </p> 
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="ServiceataGlanceV1">Service At Glance</h2>
+    <p>    
+            Returns information on service bus and train trips. Requests with "api/V1/ServiceataGlance.xml" or "api/V1/ServiceataGlance.json" or "api/V1/ServiceataGlance" 
+            displays data in xml and json format respectively.
+            </p>
+<table class="help-page-table">
+    <thead>
+        <tr><th>API</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-ServiceataGlance-Buses-All">GET api/V1/ServiceataGlance/Buses/All</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays all in service bus trips.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-ServiceataGlance-Trains-All">GET api/V1/ServiceataGlance/Trains/All</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays all in service train trips.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-ServiceataGlance-UPX-All">GET api/V1/ServiceataGlance/UPX/All</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays all in service UPX trips.
+            </p> 
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="ScheduleV1">Schedule</h2>
+    <p>    
+            Returns information on Schedules by Line, Schedules by Stop and Journey. Requests with "api/V1/Schedule.xml" or "api/V1/Schedule.json" or "api/V1/Schedule" 
+            displays data in xml and json format respectively.
+            </p>
+<table class="help-page-table">
+    <thead>
+        <tr><th>API</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Schedule-Journey-Date-FromStopCode-ToStopCode-StartTime-MaxJourney">GET api/V1/Schedule/Journey/{Date}/{FromStopCode}/{ToStopCode}/{StartTime}/{MaxJourney}</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays A Journey’s lines (rail corridor and bus routes), trips, stops and transfers.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Schedule-Journey-Date-FromStopCode-StartTime-MaxJourney_ToStopCode">GET api/V1/Schedule/Journey/{Date}/{FromStopCode}/{StartTime}/{MaxJourney}?ToStopCode={ToStopCode}</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays A Journey’s lines (rail corridor and bus routes), trips, stops and transfers.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Schedule-Line-Date-LineCode-LineDirection">GET api/V1/Schedule/Line/{Date}/{LineCode}/{LineDirection}</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays Line detail based on date, line code and direction
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Schedule-Line-All-Date">GET api/V1/Schedule/Line/All/{Date}</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays The lines in effect for the date provided.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Schedule-Line-Stop-Date-LineCode-LineDirection">GET api/V1/Schedule/Line/Stop/{Date}/{LineCode}/{LineDirection}</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays The line stops in effect for the date, line code and line direction given.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Schedule-Trip-Date-TripNumber">GET api/V1/Schedule/Trip/{Date}/{TripNumber}</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays The trip stops in effect for the given trip number and date
+            </p> 
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="GTFSRealTimeV1">GTFS Feeds</h2>
+    <p>
+            Returns GTFS real time feeds. Requests with "api/V1/Gtfs.xml" or "api/V1/Gtfs.json" or "api/V1/Gtfs.proto" or "api/V1/Gtfs" displays data in xml, json and protobuffer format respectively.
+            </p>
+<table class="help-page-table">
+    <thead>
+        <tr><th>API</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Gtfs-Feed-Alerts">GET api/V1/Gtfs/Feed/Alerts</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns all alert feeds.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Gtfs-Feed-TripUpdates">GET api/V1/Gtfs/Feed/TripUpdates</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns all trip update feeds.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Gtfs-Feed-VehiclePosition">GET api/V1/Gtfs/Feed/VehiclePosition</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns all vehicle position feeds.
+            </p> 
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="FleetV1">Fleet</h2>
+    <p>
+            Returns GTFS real time feeds with Occupancy percentage and Consist information. Requests with "api/V1/Fleet.xml " or "api/V1/Fleet.json " or "api/V1/Fleet.proto " display data in xml, json and protobuffer format respectively. The default return type is json for  "api/V1/Fleet ".
+            </p>
+<table class="help-page-table">
+    <thead>
+        <tr><th>API</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Fleet-Consist-All">GET api/V1/Fleet/Consist/All</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns all consists data.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Fleet-Consist-Engine-EngineNumber">GET api/V1/Fleet/Consist/Engine/{EngineNumber}</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns consist for engine.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Fleet-Occupancy-GtfsRT-Feed-Alerts">GET api/V1/Fleet/Occupancy/GtfsRT/Feed/Alerts</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns all alert feeds.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Fleet-Occupancy-GtfsRT-Feed-TripUpdates">GET api/V1/Fleet/Occupancy/GtfsRT/Feed/TripUpdates</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns all trip update feeds.
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Fleet-Occupancy-GtfsRT-Feed-VehiclePosition">GET api/V1/Fleet/Occupancy/GtfsRT/Feed/VehiclePosition</a></td>
+            <td class="api-documentation">
+                <p>
+            Returns all vehicle position feeds.
+            </p> 
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="FareV1">Fare</h2>
+    <p>
+            Returns information on Fares between stations. Requests with "api/V1/Fares.xml" or "api/V1/Fares.json" or "api/V1/Fares" 
+            displays data in xml and json format respectively.
+            </p>
+<table class="help-page-table">
+    <thead>
+        <tr><th>API</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Fares-FromStopCode-ToStopCode">GET api/V1/Fares/{FromStopCode}/{ToStopCode}</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays all fares between two stations
+            </p> 
+            </td>
+        </tr>
+        <tr>
+            <td class="api-name"><a href="https://api.openmetrolinx.com/OpenDataAPI/Help/Api/en/GET-api-V1-Fares-FromStopCode-ToStopCode-OperationalDay">GET api/V1/Fares/{FromStopCode}/{ToStopCode}/{OperationalDay}</a></td>
+            <td class="api-documentation">
+                <p>
+            Displays all fares between two stations for an operational day 
+            </p> 
+            </td>
+        </tr>
+    </tbody>
+</table>    </section>
+</div>
+
+    </div>
+
+
+<div id="give-freely-root-bcjindcccaagfpapjjmafapmmgkkhgoa" class="give-freely-root" data-extension-id="bcjindcccaagfpapjjmafapmmgkkhgoa" data-extension-name="JSON Formatter" style="display: block;"><template shadowrootmode="open"><style>
+  :host {
+    all: initial;
+  }
+
+  .gf-scroll-remove::-webkit-scrollbar {
+    border-radius-bottom-right: 15px;
+  }
+
+  button {
+    cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+
+  button:active {
+    transform: scale(0.98);
+  }
+
+  .give-freely-close-button:hover {
+    opacity: 0.7;
+  }
+
+  input[type="radio"] {
+    margin-right: 8px;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 1em 0;
+  }
+
+  dialog::backdrop  {
+    background-color: rgba(180, 180, 180, 0.6);
+  }
+
+  dialog.backdrop-hidden::backdrop  {
+    background-color: transparent;
+  }
+</style><div><div class="gf-app"></div></div></template></div></body></html>
