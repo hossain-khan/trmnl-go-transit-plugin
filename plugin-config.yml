@@ -1,0 +1,195 @@
+# GO Transit Dashboard - Plugin Configuration
+# Reference: https://help.usetrmnl.com/en/articles/10513740-custom-plugin-form-builder
+#
+# These custom fields allow users to configure their GO Transit dashboard.
+# Values are accessible in templates via {{ keyname }} or {{ trmnl.plugin_settings.custom_fields_values }}
+
+# =============================================================================
+# ABOUT THIS PLUGIN
+# =============================================================================
+- keyname: about
+  name: About This Plugin
+  category: travel,life
+  field_type: author_bio
+  description: |
+    GO Transit Dashboard displays real-time departure information for your preferred GO Rail or Bus station.
+    Features include two-direction schedules, service alerts, and responsive layouts for all TRMNL devices.
+    Data is sourced from the Metrolinx Open Data API and updated every 5-15 minutes.
+  github_url: https://github.com/hossain-khan/trmnl-go-transit-plugin
+  learn_more_url: https://www.gotransit.com/
+
+# =============================================================================
+# STATION SELECTION
+# =============================================================================
+- keyname: station_id
+  field_type: select
+  name: GO Station
+  description: Select your preferred GO Transit station. This will be used to fetch departure times.
+  options:
+    # Lakeshore East Line Stations
+    - "Union Station: UN"
+    - "Exhibition GO: EX"
+    - "Danforth GO: DA"
+    - "Scarborough GO: SC"
+    - "Eglinton GO: EG"
+    - "Guildwood GO: GU"
+    - "Rouge Hill GO: RO"
+    - "Pickering GO: PIN"
+    - "Ajax GO: AJ"
+    - "Whitby GO: WH"
+    - "Oshawa GO: OS"
+    # Lakeshore West Line Stations
+    - "Mimico GO: MI"
+    - "Long Branch GO: LO"
+    - "Port Credit GO: PO"
+    - "Clarkson GO: CL"
+    - "Oakville GO: OA"
+    - "Bronte GO: BO"
+    - "Appleby GO: AP"
+    - "Burlington GO: BU"
+    - "Aldershot GO: AL"
+    - "Hamilton GO Centre: HA"
+    - "West Harbour GO: WR"
+    - "St. Catharines GO: SCTH"
+    - "Niagara Falls GO: NI"
+    # Milton Line Stations
+    - "Kipling GO: KP"
+    - "Dixie GO: DI"
+    - "Cooksville GO: CO"
+    - "Erindale GO: ER"
+    - "Streetsville GO: SR"
+    - "Meadowvale GO: ME"
+    - "Lisgar GO: LS"
+    - "Milton GO: ML"
+    # Kitchener Line Stations
+    - "Bloor GO: BL"
+    - "Weston GO: WE"
+    - "Etobicoke North GO: ET"
+    - "Malton GO: MA"
+    - "Bramalea GO: BE"
+    - "Brampton GO: BR"
+    - "Mount Pleasant GO: MO"
+    - "Georgetown GO: GE"
+    - "Acton GO: AC"
+    - "Guelph Central GO: GL"
+    - "Kitchener GO: KI"
+    # Barrie Line Stations
+    - "Downsview Park GO: DW"
+    - "Rutherford GO: RU"
+    - "Maple GO: MP"
+    - "King City GO: KC"
+    - "Aurora GO: AU"
+    - "Newmarket GO: NE"
+    - "East Gwillimbury GO: EA"
+    - "Bradford GO: BD"
+    - "Barrie South GO: BA"
+    - "Allandale Waterfront GO: AD"
+    # Richmond Hill Line Stations
+    - "Oriole GO: OR"
+    - "Old Cummer GO: OL"
+    - "Langstaff GO: LA"
+    - "Richmond Hill GO: RI"
+    - "Gormley GO: GO"
+    # Stouffville Line Stations
+    - "Kennedy GO: KE"
+    - "Agincourt GO: AG"
+    - "Milliken GO: MK"
+    - "Unionville GO: UI"
+    - "Centennial GO: CE"
+    - "Markham GO: MR"
+    - "Mount Joy GO: MJ"
+    - "Stouffville GO: ST"
+    - "Old Elm GO: LI"
+  default: un
+  help_text: Can't find your station? The list includes major GO Rail stations.
+
+# =============================================================================
+# LINE FILTER (OPTIONAL)
+# =============================================================================
+- keyname: line_filter
+  field_type: select
+  name: Filter by Line
+  description: Optionally filter departures to a specific GO Transit line.
+  options:
+    - "All Lines: all"
+    - "Lakeshore East: LE"
+    - "Lakeshore West: LW"
+    - "Milton: MI"
+    - "Kitchener: KI"
+    - "Barrie: BR"
+    - "Richmond Hill: RH"
+    - "Stouffville: ST"
+  default: all
+  optional: true
+  help_text: Leave as "All Lines" to see departures for all lines serving your station.
+
+# =============================================================================
+# DISPLAY OPTIONS
+# =============================================================================
+- keyname: time_format
+  field_type: select
+  name: Time Format
+  description: Choose how departure times are displayed.
+  options:
+    - "12-hour (9:34 PM): 12h"
+    - "24-hour (21:34): 24h"
+  default: 12h
+
+- keyname: show_alerts
+  field_type: boolean
+  name: Show Service Alerts
+  description: Display active service alerts affecting your station.
+  default: true
+  help_text: Alerts include delays, cancellations, and planned maintenance.
+
+- keyname: departures_count
+  field_type: select
+  name: Departures to Show
+  description: Number of upcoming departures per direction.
+  options:
+    - "2 (Arriving + Next): 2"
+    - "3 (Arriving + Next + Later): 3"
+  default: 3
+  help_text: Quadrant layout always shows 2 departures due to space constraints.
+
+# =============================================================================
+# TIME ZONE
+# =============================================================================
+- keyname: time_zone
+  field_type: time_zone
+  name: Time Zone
+  description: Your local time zone for accurate departure times.
+  default: America/Toronto
+  help_text: GO Transit operates in Eastern Time (America/Toronto).
+
+# =============================================================================
+# ADVANCED OPTIONS
+# =============================================================================
+- keyname: api_key
+  field_type: password
+  name: Metrolinx API Key
+  description: |
+    Your Metrolinx Open Data API key for accessing real-time data.
+    Get one free at <a href="http://api.openmetrolinx.com/OpenDataAPI/Help/Registration/Register">Metrolinx Developer Portal</a>.
+  placeholder: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+  help_text: Required. The API key is free and takes 24-48 hours to activate.
+
+- keyname: refresh_interval
+  field_type: select
+  name: Data Refresh Interval
+  description: How often to fetch new departure data from the API.
+  options:
+    - "5 minutes: 5"
+    - "10 minutes: 10"
+    - "15 minutes: 15"
+    - "30 minutes: 30"
+  default: 10
+  optional: true
+  help_text: More frequent updates use more API calls. 10 minutes is recommended.
+
+# =============================================================================
+# CONDITIONAL VALIDATION
+# =============================================================================
+# Note: The line_filter field is particularly useful for stations served by 
+# multiple lines (e.g., Union Station serves all 7 lines). Users can filter
+# to see only departures for their specific commute.
