@@ -1,0 +1,43 @@
+{% comment %}
+  GO Transit Dashboard - Quadrant Layout
+  Use Case: Quarter-size display (most compact)
+  
+  Features:
+  - Ultra-compact display
+  - Shows only station, arriving time, and next time
+  - Alert indicator only (no text)
+{% endcomment %}
+
+<div class="flex flex--col p--2 h--full text--center">
+  
+  <!-- Station Name -->
+  <div class="title title--small" data-value-fit="true" data-value-fit-max-height="30">
+    {{ data.station | upcase }}
+  </div>
+  <div class="description mb--xsmall">{{ data.line_name }}</div>
+  
+  <!-- Primary: Arriving -->
+  <div class="flex--1 flex flex--col flex--center-x flex--center-y">
+    <div class="label label--small">ARRIVING</div>
+    <div class="value value--xxlarge" data-value-fit="true" data-value-fit-max-height="80">
+      {{ data.direction_1.arriving }}
+    </div>
+    {% if data.direction_1.arriving_status != "On Time" %}
+      <div class="label label--small label--inverted">{{ data.direction_1.arriving_status }}</div>
+    {% endif %}
+  </div>
+  
+  <!-- Next departure -->
+  <div class="flex flex--row flex--center-x gap--xsmall mt--xsmall">
+    <div class="description">Next:</div>
+    <div class="value value--small">{{ data.direction_1.next }}</div>
+    {% if data.has_alerts %}
+      <div class="label label--small label--inverted">!</div>
+    {% endif %}
+  </div>
+  
+</div>
+
+<div class="title_bar">
+  <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
+</div>

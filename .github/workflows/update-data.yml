@@ -1,0 +1,47 @@
+name: Update GO Transit Data
+
+on:
+  schedule:
+    # Run every 5 minutes during peak commute hours (6 AM - 9 AM and 4 PM - 8 PM EST)
+    - cron: '*/5 11-14,21-25 * * 1-5'  # Weekdays, adjusted for UTC
+    # Run every 15 minutes during off-peak hours
+    - cron: '*/15 0-10,15-20 * * 1-5'  # Weekdays off-peak
+    # Run every 30 minutes on weekends
+    - cron: '*/30 * * * 0,6'  # Weekends
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm install
+        working-directory: scripts
+        continue-on-error: true
+      
+      - name: Update GO Transit data
+        env:
+          GO_TRANSIT_API_KEY: ${{ secrets.GO_TRANSIT_API_KEY }}
+          STATION_ID: ${{ vars.STATION_ID || 'OS' }}
+        run: |
+          if [ -f scripts/update-go-transit.js ]; then
+            node scripts/update-go-transit.js
+          else
+            echo "Update script not found, using sample data"
+            cp data.json api/data.json
+          fi
+      
+      - name: Commit changes
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add api/data.json data.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update GO Transit data" && git push)

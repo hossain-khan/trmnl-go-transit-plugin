@@ -1,0 +1,64 @@
+{% comment %}
+  GO Transit Dashboard - Half Vertical Layout
+  Use Case: Half-size vertical display (abundant vertical space, limited horizontal)
+  
+  Features:
+  - Stacked vertical layout
+  - Large arrival time as primary focus
+  - Next departures below
+{% endcomment %}
+
+<div class="flex flex--col p--2 h--full">
+  
+  <!-- Header: Station and Line -->
+  <div class="text--center mb--small">
+    <div class="title title--large" data-value-fit="true" data-value-fit-max-height="50">
+      {{ data.station | upcase }}
+    </div>
+    <div class="description">{{ data.direction_1.label }}</div>
+  </div>
+  
+  <!-- Primary: Arriving -->
+  <div class="flex--1 flex flex--col flex--center-x flex--center-y">
+    <div class="label label--small">ARRIVING</div>
+    <div class="value value--xxxlarge" data-value-fit="true" data-value-fit-max-height="120">
+      {{ data.direction_1.arriving }}
+    </div>
+    {% if data.direction_1.arriving_status != "On Time" %}
+      <div class="label label--small label--inverted mt--xsmall">{{ data.direction_1.arriving_status }}</div>
+    {% else %}
+      <div class="label label--small mt--xsmall">{{ data.direction_1.arriving_status }}</div>
+    {% endif %}
+  </div>
+  
+  <!-- Secondary: Next and Later -->
+  <div class="flex flex--row flex--between gap--medium mt--small pt--small" style="border-top: 1px solid black;">
+    <div class="flex flex--col flex--center-x flex--1">
+      <div class="label label--small">NEXT</div>
+      <div class="value value--large md:value--xlarge">{{ data.direction_1.next }}</div>
+      {% if data.direction_1.next_status != "On Time" %}
+        <div class="label label--small label--inverted">{{ data.direction_1.next_status }}</div>
+      {% endif %}
+    </div>
+    <div class="flex flex--col flex--center-x flex--1">
+      <div class="label label--small">LATER</div>
+      <div class="value value--large md:value--xlarge">{{ data.direction_1.later }}</div>
+      {% if data.direction_1.later_status != "On Time" %}
+        <div class="label label--small label--inverted">{{ data.direction_1.later_status }}</div>
+      {% endif %}
+    </div>
+  </div>
+  
+  <!-- Alert indicator -->
+  {% if data.has_alerts %}
+    <div class="flex flex--row gap--xsmall flex--center-y mt--small">
+      <div class="label label--small label--inverted">!</div>
+      <div class="description" data-clamp="1">{{ data.alerts }}</div>
+    </div>
+  {% endif %}
+  
+</div>
+
+<div class="title_bar">
+  <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
+</div>
