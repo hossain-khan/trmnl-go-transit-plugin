@@ -1,66 +1,89 @@
 {% comment %}
   GO Transit Dashboard - Half Horizontal Layout
+  Adapted from Sound Transit Link Light Rail Dashboard
+  
   Use Case: Half-size horizontal display (abundant horizontal space, minimal vertical)
   
   Features:
-  - Compact horizontal layout
-  - Station info on left, times on right
+  - Two-direction schedule side by side
+  - Compact time display with arriving/next labels
   - No route map (space constraint)
 {% endcomment %}
 
-<div class="flex flex--row gap--medium p--2 flex--center-y h--full">
+<div class="layout layout--row layout--left layout--stretch mb--0 p--3">
   
-  <!-- Left: Station Info -->
-  <div class="flex flex--col min-w--36">
-    <div class="title title--medium md:title--large" data-value-fit="true" data-value-fit-max-height="40">
-      {{ data.station | upcase }}
+  <!-- Direction 1 -->
+  <div class="flex--1">
+    <div class="mb--1">
+      <span class="title title--small" style="display: block;">{{ data.direction_1.label | split: "To " | last }}</span>
+      <span class="description">{{ data.direction_1.label }}</span>
     </div>
-    <div class="description">{{ data.line_name }}</div>
-    <div class="label label--small mt--xsmall">{{ data.direction_1.label }}</div>
+    <div class="flex flex--col flex--left gap--small">
+      
+      <!-- Arriving -->
+      <div class="item item--emphasis-3">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="label label--small label--inverted mb--1">arriving</span>
+          <span>
+            <span class="value">{{ data.direction_1.arriving | split: " " | first }}</span>
+            <span class="value value--small">{{ data.direction_1.arriving | split: " " | last }}</span>
+          </span>
+        </div>
+      </div>
+      
+      <!-- Next -->
+      <div class="item item--emphasis-2">
+        <div class="meta"></div>
+        <div class="content text--gray-35">
+          <span class="label label--small label--outline mb--1">next</span>
+          <span>
+            <span class="value">{{ data.direction_1.next | split: " " | first }}</span>
+            <span class="value value--small">{{ data.direction_1.next | split: " " | last }}</span>
+          </span>
+        </div>
+      </div>
+      
+    </div>
   </div>
   
-  <!-- Right: Departure Times -->
-  <div class="flex flex--row gap--medium flex--1 flex--center-y">
-    
-    <!-- Arriving -->
-    <div class="flex flex--col">
-      <div class="label label--small">ARRIVING</div>
-      <div class="value value--xlarge md:value--xxlarge" data-value-fit="true">
-        {{ data.direction_1.arriving }}
-      </div>
-      {% if data.direction_1.arriving_status != "On Time" %}
-        <div class="label label--small label--inverted">{{ data.direction_1.arriving_status }}</div>
-      {% endif %}
+  <!-- Direction 2 -->
+  <div class="flex--1">
+    <div class="mb--1">
+      <span class="title title--small" style="display: block;">{{ data.direction_2.label | split: "To " | last }}</span>
+      <span class="description">{{ data.direction_2.label }}</span>
     </div>
-    
-    <!-- Next -->
-    <div class="flex flex--col">
-      <div class="label label--small">NEXT</div>
-      <div class="value value--large md:value--xlarge">
-        {{ data.direction_1.next }}
+    <div class="flex flex--col flex--left gap--small">
+      
+      <!-- Arriving -->
+      <div class="item item--emphasis-3">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="label label--small label--inverted mb--1">arriving</span>
+          <span>
+            <span class="value">{{ data.direction_2.arriving | split: " " | first }}</span>
+            <span class="value value--small">{{ data.direction_2.arriving | split: " " | last }}</span>
+          </span>
+        </div>
       </div>
-      {% if data.direction_1.next_status != "On Time" %}
-        <div class="label label--small label--inverted">{{ data.direction_1.next_status }}</div>
-      {% endif %}
-    </div>
-    
-    <!-- Later -->
-    <div class="flex flex--col">
-      <div class="label label--small">LATER</div>
-      <div class="value value--medium md:value--large">
-        {{ data.direction_1.later }}
+      
+      <!-- Next -->
+      <div class="item item--emphasis-2">
+        <div class="meta"></div>
+        <div class="content text--gray-35">
+          <span class="label label--small label--outline mb--1">next</span>
+          <span>
+            <span class="value">{{ data.direction_2.next | split: " " | first }}</span>
+            <span class="value value--small">{{ data.direction_2.next | split: " " | last }}</span>
+          </span>
+        </div>
       </div>
+      
     </div>
-    
   </div>
-  
-  <!-- Alert indicator (if any) -->
-  {% if data.has_alerts %}
-    <div class="label label--small label--inverted">!</div>
-  {% endif %}
   
 </div>
 
-<div class="title_bar">
-  <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
+<div class="title_bar m--0">
+  <span class="title">{{ data.station }}</span>
 </div>

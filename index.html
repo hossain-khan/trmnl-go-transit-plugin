@@ -19,8 +19,15 @@
     
     h1 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       color: #333;
+    }
+    
+    .subtitle {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #666;
+      font-size: 14px;
     }
     
     .device-selector {
@@ -35,6 +42,7 @@
       background: white;
       cursor: pointer;
       border-radius: 5px;
+      font-size: 14px;
     }
     
     .device-selector button.active {
@@ -45,15 +53,13 @@
     .preview-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 30px;
       justify-content: center;
     }
     
-    .preview-frame {
-      background: white;
-      border: 4px solid #333;
-      border-radius: 8px;
-      overflow: hidden;
+    .preview-wrapper {
+      display: flex;
+      flex-direction: column;
     }
     
     .preview-label {
@@ -62,300 +68,593 @@
       background: #333;
       color: white;
       font-weight: bold;
+      border-radius: 8px 8px 0 0;
+    }
+    
+    .preview-frame {
+      background: #f8f8f8;
+      border: 4px solid #333;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+      position: relative;
     }
     
     /* TRMNL OG: 800x480 */
-    .device-og { width: 800px; height: 480px; }
+    .device-og.full { width: 800px; height: 480px; }
     .device-og.half-h { width: 800px; height: 240px; }
     .device-og.half-v { width: 400px; height: 480px; }
     .device-og.quadrant { width: 400px; height: 240px; }
     
-    /* TRMNL V2: 1024x758 */
-    .device-v2 { width: 1024px; height: 758px; }
-    .device-v2.half-h { width: 1024px; height: 379px; }
-    .device-v2.half-v { width: 512px; height: 758px; }
-    .device-v2.quadrant { width: 512px; height: 379px; }
-    
-    /* Kindle: 600x800 */
-    .device-kindle { width: 600px; height: 800px; }
-    .device-kindle.half-h { width: 600px; height: 400px; }
-    .device-kindle.half-v { width: 300px; height: 800px; }
-    .device-kindle.quadrant { width: 300px; height: 400px; }
+    /* TRMNL V2: 1024x758 - scaled down */
+    .device-v2.full { width: 800px; height: 592px; }
+    .device-v2.half-h { width: 800px; height: 296px; }
+    .device-v2.half-v { width: 400px; height: 592px; }
+    .device-v2.quadrant { width: 400px; height: 296px; }
     
     /* E-ink styling simulation */
     .eink-display {
       background: #f8f8f8;
       color: #111;
-      font-family: 'Courier New', monospace;
-      padding: 16px;
-      height: 100%;
-      overflow: hidden;
-    }
-    
-    /* Layout components */
-    .layout {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
       height: 100%;
       display: flex;
       flex-direction: column;
     }
     
-    .header {
+    /* Layout */
+    .layout-row {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 12px;
-      border-bottom: 2px solid #333;
-      margin-bottom: 12px;
+      flex-direction: row;
+      flex: 1;
+      padding: 16px;
+      gap: 24px;
     }
     
-    .station-name {
-      font-size: 24px;
-      font-weight: bold;
+    /* Route visualization */
+    .route-container {
+      width: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     
     .line-badge {
-      background: #333;
+      background: #111;
       color: white;
-      padding: 4px 12px;
-      font-size: 14px;
+      padding: 4px 8px;
+      font-size: 12px;
       font-weight: bold;
+      margin-bottom: 8px;
     }
     
-    .main-content {
-      flex: 1;
-      display: flex;
-      gap: 16px;
-    }
-    
-    .route-map {
-      width: 60px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 8px 0;
-    }
-    
-    .route-line {
-      width: 4px;
-      flex: 1;
-      background: #333;
-      position: relative;
-    }
-    
-    .station-dot {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: white;
-      border: 3px solid #333;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    
-    .station-dot.current {
-      background: #333;
-    }
-    
-    .schedule {
-      flex: 1;
-    }
-    
-    .direction {
+    .line-label {
+      font-size: 12px;
+      color: #666;
       margin-bottom: 16px;
     }
     
-    .direction-label {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 8px;
+    .route-line {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     
-    .time-row {
+    .route-bg {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      margin-left: -3px;
+      background: gainsboro;
+    }
+    
+    .stations {
+      position: relative;
+      z-index: 1;
       display: flex;
-      align-items: center;
-      margin-bottom: 8px;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+    
+    .station-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid dimgray;
+    }
+    
+    .station-dot.current {
+      width: 14px;
+      height: 14px;
+      background: #111;
+      border-color: #111;
+      margin-left: -2px;
+    }
+    
+    /* Divider */
+    .divider {
+      width: 1px;
+      background: #ccc;
+    }
+    
+    /* Schedule */
+    .schedule-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .section-label {
+      font-size: 11px;
+      color: #666;
+      text-decoration: underline;
+      margin-bottom: 12px;
+    }
+    
+    .columns {
+      display: flex;
+      gap: 32px;
+      flex: 1;
+    }
+    
+    .column {
+      flex: 1;
+    }
+    
+    .direction-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    
+    .direction-subtitle {
+      font-size: 11px;
+      color: #666;
+      margin-bottom: 12px;
+    }
+    
+    /* Time slots */
+    .time-slot {
+      margin-bottom: 12px;
     }
     
     .time-label {
-      width: 80px;
-      font-size: 12px;
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 6px;
+      margin-bottom: 4px;
+    }
+    
+    .time-label.arriving {
+      background: #111;
+      color: white;
+    }
+    
+    .time-label.next {
+      border: 1px solid #666;
       color: #666;
     }
     
+    .time-label.later {
+      color: #999;
+    }
+    
     .time-value {
+      display: block;
+    }
+    
+    .time-value .hours {
       font-size: 24px;
       font-weight: bold;
     }
     
-    .time-value.arriving {
-      font-size: 32px;
+    .time-value .ampm {
+      font-size: 14px;
+      margin-left: 2px;
     }
     
-    .status {
-      margin-left: 12px;
-      font-size: 12px;
-      padding: 2px 8px;
-      border: 1px solid #333;
+    .time-slot.next .time-value .hours,
+    .time-slot.next .time-value .ampm {
+      color: #555;
     }
     
-    .status.delayed {
-      background: #333;
-      color: white;
+    .time-slot.later .time-value .hours,
+    .time-slot.later .time-value .ampm {
+      color: #888;
     }
     
-    .alerts {
-      padding-top: 12px;
-      border-top: 2px solid #333;
-      font-size: 12px;
+    /* Alerts */
+    .alerts-section {
+      margin-top: auto;
+    }
+    
+    .alert-item {
+      font-size: 11px;
       color: #666;
     }
     
-    .alert-icon {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      background: #333;
+    .alert-item .alert-text {
+      margin-bottom: 4px;
+    }
+    
+    .alert-item .alert-time {
+      text-decoration: underline;
+      font-size: 10px;
+    }
+    
+    /* Title bar */
+    .title-bar {
+      background: #111;
       color: white;
-      text-align: center;
-      line-height: 16px;
+      padding: 8px 16px;
+      font-size: 14px;
       font-weight: bold;
-      margin-right: 8px;
+    }
+    
+    /* Half horizontal specific */
+    .half-h .layout-row {
+      padding: 12px;
+      gap: 24px;
+    }
+    
+    .half-h .direction-subtitle {
+      margin-bottom: 8px;
+    }
+    
+    .half-h .time-slot {
+      margin-bottom: 8px;
+    }
+    
+    /* Quadrant specific */
+    .quadrant .layout-row {
+      padding: 8px;
+      gap: 16px;
+    }
+    
+    .quadrant .direction-title {
+      font-size: 12px;
+    }
+    
+    .quadrant .time-value .hours {
+      font-size: 18px;
+    }
+    
+    .quadrant .time-value .ampm {
+      font-size: 11px;
+    }
+    
+    .quadrant .time-slot {
+      margin-bottom: 6px;
     }
   </style>
 </head>
 <body>
   <h1>GO Transit Dashboard - TRMNL Preview</h1>
+  <p class="subtitle">Adapted from Sound Transit Link Light Rail Dashboard layout</p>
   
   <div class="device-selector">
     <button class="active" onclick="setDevice('og')">TRMNL OG (800×480)</button>
     <button onclick="setDevice('v2')">TRMNL V2 (1024×758)</button>
-    <button onclick="setDevice('kindle')">Kindle (600×800)</button>
   </div>
   
   <div class="preview-container">
+    
     <!-- Full Layout -->
-    <div>
+    <div class="preview-wrapper">
       <div class="preview-label">Full Layout</div>
-      <div class="preview-frame device-og" id="preview-full">
+      <div class="preview-frame device-og full" id="preview-full">
         <div class="eink-display">
-          <div class="layout">
-            <div class="header">
-              <div class="station-name">Oshawa GO</div>
-              <div class="line-badge">LAKESHORE EAST</div>
-            </div>
-            <div class="main-content">
-              <div class="route-map">
-                <div class="route-line">
-                  <div class="station-dot current" style="top: 0%"></div>
-                  <div class="station-dot" style="top: 14%"></div>
-                  <div class="station-dot" style="top: 28%"></div>
-                  <div class="station-dot" style="top: 42%"></div>
-                  <div class="station-dot" style="top: 56%"></div>
-                  <div class="station-dot" style="top: 70%"></div>
-                  <div class="station-dot" style="top: 84%"></div>
-                  <div class="station-dot" style="top: 98%"></div>
-                </div>
-              </div>
-              <div class="schedule">
-                <div class="direction">
-                  <div class="direction-label">To Union Station</div>
-                  <div class="time-row">
-                    <div class="time-label">ARRIVING</div>
-                    <div class="time-value arriving">9:34 PM</div>
-                    <div class="status">On Time</div>
-                  </div>
-                  <div class="time-row">
-                    <div class="time-label">NEXT</div>
-                    <div class="time-value">9:44 PM</div>
-                    <div class="status">On Time</div>
-                  </div>
-                  <div class="time-row">
-                    <div class="time-label">LATER</div>
-                    <div class="time-value">10:14 PM</div>
-                    <div class="status">On Time</div>
-                  </div>
+          <div class="layout-row">
+            
+            <!-- Route visualization -->
+            <div class="route-container">
+              <div class="line-badge">LE</div>
+              <div class="line-label">Line</div>
+              <div class="route-line">
+                <div class="route-bg"></div>
+                <div class="stations">
+                  <div class="station-dot current"></div>
+                  <div class="station-dot"></div>
+                  <div class="station-dot"></div>
+                  <div class="station-dot"></div>
+                  <div class="station-dot"></div>
+                  <div class="station-dot"></div>
+                  <div class="station-dot"></div>
+                  <div class="station-dot"></div>
                 </div>
               </div>
             </div>
-            <div class="alerts">
-              <span class="alert-icon">!</span>
-              Starting Dec 22, maintenance on Lakeshore East line. Expect delays of 10-15 minutes.
+            
+            <div class="divider"></div>
+            
+            <!-- Schedule -->
+            <div class="schedule-container">
+              <div class="section-label">Schedule</div>
+              
+              <div class="columns">
+                <!-- Direction 1 -->
+                <div class="column">
+                  <div class="direction-title">Union Station</div>
+                  <div class="direction-subtitle">To Union Station</div>
+                  
+                  <div class="time-slot arriving">
+                    <span class="time-label arriving">arriving</span>
+                    <span class="time-value">
+                      <span class="hours">9:34</span>
+                      <span class="ampm">PM</span>
+                    </span>
+                  </div>
+                  
+                  <div class="time-slot next">
+                    <span class="time-label next">next</span>
+                    <span class="time-value">
+                      <span class="hours">9:44</span>
+                      <span class="ampm">PM</span>
+                    </span>
+                  </div>
+                  
+                  <div class="time-slot later">
+                    <span class="time-label later">later</span>
+                    <span class="time-value">
+                      <span class="hours">10:14</span>
+                      <span class="ampm">PM</span>
+                    </span>
+                  </div>
+                </div>
+                
+                <!-- Direction 2 -->
+                <div class="column">
+                  <div class="direction-title">Oshawa</div>
+                  <div class="direction-subtitle">To Oshawa</div>
+                  
+                  <div class="time-slot arriving">
+                    <span class="time-label arriving">arriving</span>
+                    <span class="time-value">
+                      <span class="hours">9:42</span>
+                      <span class="ampm">PM</span>
+                    </span>
+                  </div>
+                  
+                  <div class="time-slot next">
+                    <span class="time-label next">next</span>
+                    <span class="time-value">
+                      <span class="hours">10:12</span>
+                      <span class="ampm">PM</span>
+                    </span>
+                  </div>
+                  
+                  <div class="time-slot later">
+                    <span class="time-label later">later</span>
+                    <span class="time-value">
+                      <span class="hours">10:42</span>
+                      <span class="ampm">PM</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Alerts -->
+              <div class="alerts-section">
+                <div class="section-label">Alerts</div>
+                <div class="alert-item">
+                  <div class="alert-text">Starting Dec 22, maintenance on Lakeshore East line. Expect delays of 10-15 minutes...</div>
+                  <div class="alert-time">active: 01/18/26 9:30 PM</div>
+                </div>
+              </div>
             </div>
           </div>
+          
+          <div class="title-bar">Oshawa GO</div>
         </div>
       </div>
     </div>
     
     <!-- Half Horizontal Layout -->
-    <div>
+    <div class="preview-wrapper">
       <div class="preview-label">Half Horizontal</div>
       <div class="preview-frame device-og half-h" id="preview-half-h">
-        <div class="eink-display" style="padding: 8px;">
-          <div style="display: flex; align-items: center; height: 100%;">
-            <div style="margin-right: 16px;">
-              <div style="font-size: 18px; font-weight: bold;">Oshawa GO</div>
-              <div style="font-size: 12px; color: #666;">Lakeshore East</div>
-            </div>
-            <div style="flex: 1; display: flex; gap: 24px;">
-              <div>
-                <div style="font-size: 10px; color: #666;">ARRIVING</div>
-                <div style="font-size: 28px; font-weight: bold;">9:34 PM</div>
+        <div class="eink-display">
+          <div class="layout-row">
+            <div class="columns" style="flex: 1;">
+              <!-- Direction 1 -->
+              <div class="column">
+                <div class="direction-title">Union Station</div>
+                <div class="direction-subtitle">To Union Station</div>
+                
+                <div class="time-slot arriving">
+                  <span class="time-label arriving">arriving</span>
+                  <span class="time-value">
+                    <span class="hours">9:34</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
+                
+                <div class="time-slot next">
+                  <span class="time-label next">next</span>
+                  <span class="time-value">
+                    <span class="hours">9:44</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
               </div>
-              <div>
-                <div style="font-size: 10px; color: #666;">NEXT</div>
-                <div style="font-size: 20px;">9:44 PM</div>
-              </div>
-              <div>
-                <div style="font-size: 10px; color: #666;">LATER</div>
-                <div style="font-size: 20px;">10:14 PM</div>
+              
+              <!-- Direction 2 -->
+              <div class="column">
+                <div class="direction-title">Oshawa</div>
+                <div class="direction-subtitle">To Oshawa</div>
+                
+                <div class="time-slot arriving">
+                  <span class="time-label arriving">arriving</span>
+                  <span class="time-value">
+                    <span class="hours">9:42</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
+                
+                <div class="time-slot next">
+                  <span class="time-label next">next</span>
+                  <span class="time-value">
+                    <span class="hours">10:12</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
+          
+          <div class="title-bar">Oshawa GO</div>
         </div>
       </div>
     </div>
     
     <!-- Half Vertical Layout -->
-    <div>
+    <div class="preview-wrapper">
       <div class="preview-label">Half Vertical</div>
       <div class="preview-frame device-og half-v" id="preview-half-v">
         <div class="eink-display">
-          <div style="text-align: center;">
-            <div style="font-size: 20px; font-weight: bold; margin-bottom: 4px;">Oshawa GO</div>
-            <div style="font-size: 12px; color: #666; margin-bottom: 16px;">To Union Station</div>
-            <div style="font-size: 10px; color: #666;">ARRIVING</div>
-            <div style="font-size: 48px; font-weight: bold; margin-bottom: 16px;">9:34 PM</div>
-            <div style="display: flex; justify-content: center; gap: 24px;">
-              <div>
-                <div style="font-size: 10px; color: #666;">NEXT</div>
-                <div style="font-size: 20px;">9:44 PM</div>
+          <div class="layout-row" style="flex-direction: column;">
+            <div class="section-label">Schedule</div>
+            
+            <div class="columns">
+              <!-- Direction 1 -->
+              <div class="column">
+                <div class="direction-title">Union Station</div>
+                <div class="direction-subtitle">To Union Station</div>
+                
+                <div class="time-slot arriving">
+                  <span class="time-label arriving">arriving</span>
+                  <span class="time-value">
+                    <span class="hours">9:34</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
+                
+                <div class="time-slot next">
+                  <span class="time-label next">next</span>
+                  <span class="time-value">
+                    <span class="hours">9:44</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
+                
+                <div class="time-slot later">
+                  <span class="time-label later">later</span>
+                  <span class="time-value">
+                    <span class="hours">10:14</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
               </div>
-              <div>
-                <div style="font-size: 10px; color: #666;">LATER</div>
-                <div style="font-size: 20px;">10:14 PM</div>
+              
+              <!-- Direction 2 -->
+              <div class="column">
+                <div class="direction-title">Oshawa</div>
+                <div class="direction-subtitle">To Oshawa</div>
+                
+                <div class="time-slot arriving">
+                  <span class="time-label arriving">arriving</span>
+                  <span class="time-value">
+                    <span class="hours">9:42</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
+                
+                <div class="time-slot next">
+                  <span class="time-label next">next</span>
+                  <span class="time-value">
+                    <span class="hours">10:12</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
+                
+                <div class="time-slot later">
+                  <span class="time-label later">later</span>
+                  <span class="time-value">
+                    <span class="hours">10:42</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Alerts -->
+            <div class="alerts-section" style="margin-top: 16px;">
+              <div class="section-label">Alerts</div>
+              <div class="alert-item">
+                <div class="alert-text">Starting Dec 22, maintenance on Lakeshore East line...</div>
+                <div class="alert-time">active: 01/18/26 9:30 PM</div>
               </div>
             </div>
           </div>
+          
+          <div class="title-bar">Oshawa GO</div>
         </div>
       </div>
     </div>
     
     <!-- Quadrant Layout -->
-    <div>
+    <div class="preview-wrapper">
       <div class="preview-label">Quadrant</div>
       <div class="preview-frame device-og quadrant" id="preview-quadrant">
-        <div class="eink-display" style="padding: 8px;">
-          <div style="text-align: center;">
-            <div style="font-size: 14px; font-weight: bold;">Oshawa GO</div>
-            <div style="font-size: 10px; color: #666; margin-bottom: 8px;">Lakeshore East</div>
-            <div style="font-size: 8px; color: #666;">ARRIVING</div>
-            <div style="font-size: 32px; font-weight: bold;">9:34 PM</div>
-            <div style="font-size: 10px; margin-top: 8px;">Next: 9:44 PM</div>
+        <div class="eink-display">
+          <div class="layout-row">
+            <div class="columns" style="flex: 1;">
+              <!-- Direction 1 -->
+              <div class="column">
+                <div class="direction-title">Union Station</div>
+                
+                <div class="time-slot arriving">
+                  <span class="time-label arriving">arriving</span>
+                  <span class="time-value">
+                    <span class="hours">9:34</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
+                
+                <div class="time-slot next">
+                  <span class="time-label next">next</span>
+                  <span class="time-value">
+                    <span class="hours">9:44</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
+              </div>
+              
+              <!-- Direction 2 -->
+              <div class="column">
+                <div class="direction-title">Oshawa</div>
+                
+                <div class="time-slot arriving">
+                  <span class="time-label arriving">arriving</span>
+                  <span class="time-value">
+                    <span class="hours">9:42</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
+                
+                <div class="time-slot next">
+                  <span class="time-label next">next</span>
+                  <span class="time-value">
+                    <span class="hours">10:12</span>
+                    <span class="ampm">PM</span>
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
+          
+          <div class="title-bar">Oshawa GO</div>
         </div>
       </div>
     </div>
+    
   </div>
   
   <script>
@@ -366,7 +665,16 @@
       
       const frames = document.querySelectorAll('.preview-frame');
       frames.forEach(frame => {
-        frame.classList.remove('device-og', 'device-v2', 'device-kindle');
+        // Get the layout type from the current class
+        const isHalfH = frame.classList.contains('half-h');
+        const isHalfV = frame.classList.contains('half-v');
+        const isQuadrant = frame.classList.contains('quadrant');
+        const isFull = frame.classList.contains('full');
+        
+        // Remove old device classes
+        frame.classList.remove('device-og', 'device-v2');
+        
+        // Add new device class
         frame.classList.add('device-' + device);
       });
     }

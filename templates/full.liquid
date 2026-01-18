@@ -1,97 +1,220 @@
 {% comment %}
   GO Transit Dashboard - Full Layout
+  Adapted from Sound Transit Link Light Rail Dashboard
+  
   Use Case: Full-screen display (entire TRMNL screen)
   
   Features:
-  - Station name and line prominently displayed
-  - Route map showing station position on the line
-  - Departure times for primary direction
+  - Route line visualization on the left
+  - Two-direction schedule with arriving/next/later times
   - Service alerts at bottom
+  - Station name in title bar
 {% endcomment %}
 
-<div class="layout layout--col p--2">
-  <!-- Header: Station name and line badge -->
-  <div class="flex flex--row flex--between flex--center-y mb--small">
-    <div class="title title--large md:title--xlarge" data-value-fit="true" data-value-fit-max-height="60">
-      {{ data.station | upcase }}
-    </div>
-    <div class="label label--small label--inverted">
-      {{ data.line_name | upcase }}
+<style type="text/css">
+  .route-container {
+    width: 80px;
+    position: relative;
+  }
+  
+  .route-line-bg {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    margin-left: -3px;
+    background: gainsboro;
+  }
+  
+  .station-marker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .station-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid dimgray;
+  }
+  
+  .station-dot.current {
+    width: 14px;
+    height: 14px;
+    background: black;
+    border: 2px solid black;
+  }
+  
+  .alerts-section {
+    max-height: 25%;
+  }
+</style>
+
+<div class="layout layout--row p--4 gap--large mb--0">
+  
+  <!-- Left: Route Line Visualization -->
+  <div class="route-container">
+    <div class="flex flex--col flex--center-x h--full" style="position: relative;">
+      <!-- Line logo/name -->
+      <div class="mb--2">
+        <span class="label label--small label--inverted">{{ data.line_code }}</span>
+      </div>
+      <span class="description mb--2">Line</span>
+      
+      <!-- Route visualization -->
+      <div class="flex--1 w--full" style="position: relative;">
+        <div class="route-line-bg"></div>
+        <div class="flex flex--col flex--between h--full" style="position: relative; z-index: 1;">
+          {% for station in data.stations %}
+            <div class="station-marker">
+              {% if forloop.index == data.station_position %}
+                <div class="station-dot current"></div>
+              {% else %}
+                <div class="station-dot"></div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </div>
   
-  <!-- Main content: Route map + Schedule -->
-  <div class="flex flex--row gap--medium flex--1">
-    
-    <!-- Left: Simplified Route Map -->
-    <div class="flex flex--col flex--center-x w--16 min-w--16">
-      {% for station in data.stations %}
-        <div class="flex flex--col flex--center-x flex--1">
-          {% if forloop.index == data.station_position %}
-            <!-- Current station: filled dot -->
-            <div class="w--4 h--4 rounded bg--black"></div>
-          {% else %}
-            <!-- Other stations: outline dot -->
-            <div class="w--3 h--3 rounded outline"></div>
-          {% endif %}
-          {% unless forloop.last %}
-            <div class="w--1 flex--1 bg--black"></div>
-          {% endunless %}
-        </div>
-      {% endfor %}
-    </div>
-    
-    <!-- Right: Schedule -->
-    <div class="flex--1">
-      <!-- Direction label -->
-      <div class="description mb--xsmall">{{ data.direction_1.label }}</div>
-      
-      <!-- Arriving -->
-      <div class="flex flex--row flex--center-y gap--small mb--small">
-        <div class="label label--small w--20">ARRIVING</div>
-        <div class="value value--xxlarge md:value--xxxlarge" data-value-fit="true">
-          {{ data.direction_1.arriving }}
-        </div>
-        {% if data.direction_1.arriving_status == "On Time" %}
-          <div class="label label--small">{{ data.direction_1.arriving_status }}</div>
-        {% else %}
-          <div class="label label--small label--inverted">{{ data.direction_1.arriving_status }}</div>
-        {% endif %}
-      </div>
-      
-      <!-- Next -->
-      <div class="flex flex--row flex--center-y gap--small mb--xsmall">
-        <div class="label label--small w--20">NEXT</div>
-        <div class="value value--large md:value--xlarge">
-          {{ data.direction_1.next }}
-        </div>
-        {% if data.direction_1.next_status != "On Time" %}
-          <div class="label label--small label--inverted">{{ data.direction_1.next_status }}</div>
-        {% endif %}
-      </div>
-      
-      <!-- Later -->
-      <div class="flex flex--row flex--center-y gap--small">
-        <div class="label label--small w--20">LATER</div>
-        <div class="value value--medium md:value--large">
-          {{ data.direction_1.later }}
-        </div>
-        {% if data.direction_1.later_status != "On Time" %}
-          <div class="label label--small label--inverted">{{ data.direction_1.later_status }}</div>
-        {% endif %}
-      </div>
-    </div>
-  </div>
+  <div class="divider--v"></div>
   
-  <!-- Footer: Service Alerts -->
-  {% if data.has_alerts %}
-    <div class="flex flex--row gap--xsmall flex--center-y mt--small pt--small" style="border-top: 2px solid black;">
-      <div class="label label--small label--inverted">!</div>
-      <div class="description" data-clamp="2">{{ data.alerts }}</div>
+  <!-- Right: Schedule and Alerts -->
+  <div class="flex flex--col flex--1">
+    
+    <!-- Schedule Header -->
+    <div class="mb--3">
+      <span class="label label--small label--underline">Schedule</span>
     </div>
-  {% endif %}
+    
+    <!-- Two-direction time table -->
+    <div class="columns time-table mb--4">
+      
+      <!-- Direction 1 -->
+      <div class="column gap--small">
+        <div class="mb--2">
+          <span class="title title--small" style="display: block;">{{ data.direction_1.label | split: "To " | last }}</span>
+          <span class="description">{{ data.direction_1.label }}</span>
+        </div>
+        
+        <!-- Arriving -->
+        <div class="item item--emphasis-3">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="label label--small label--inverted mb--1">arriving</span>
+            <span>
+              <span class="value value--small">{{ data.direction_1.arriving | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ data.direction_1.arriving | split: " " | last }}</span>
+            </span>
+            {% if data.direction_1.arriving_status != "On Time" %}
+              <span class="label label--small label--outline text--gray-35">{{ data.direction_1.arriving_status }}</span>
+            {% endif %}
+          </div>
+        </div>
+        
+        <!-- Next -->
+        <div class="item item--emphasis-2">
+          <div class="meta"></div>
+          <div class="content text--gray-35">
+            <span class="label label--small label--outline mb--1">next</span>
+            <span>
+              <span class="value value--small">{{ data.direction_1.next | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ data.direction_1.next | split: " " | last }}</span>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Later -->
+        <div class="item item--emphasis-1">
+          <div class="meta"></div>
+          <div class="content text--gray-50">
+            <span class="label label--small mb--1">later</span>
+            <span>
+              <span class="value value--small">{{ data.direction_1.later | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ data.direction_1.later | split: " " | last }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Direction 2 -->
+      <div class="column gap--small">
+        <div class="mb--2">
+          <span class="title title--small" style="display: block;">{{ data.direction_2.label | split: "To " | last }}</span>
+          <span class="description">{{ data.direction_2.label }}</span>
+        </div>
+        
+        <!-- Arriving -->
+        <div class="item item--emphasis-3">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="label label--small label--inverted mb--1">arriving</span>
+            <span>
+              <span class="value value--small">{{ data.direction_2.arriving | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ data.direction_2.arriving | split: " " | last }}</span>
+            </span>
+            {% if data.direction_2.arriving_status != "On Time" %}
+              <span class="label label--small label--outline text--gray-35">{{ data.direction_2.arriving_status }}</span>
+            {% endif %}
+          </div>
+        </div>
+        
+        <!-- Next -->
+        <div class="item item--emphasis-2">
+          <div class="meta"></div>
+          <div class="content text--gray-35">
+            <span class="label label--small label--outline mb--1">next</span>
+            <span>
+              <span class="value value--small">{{ data.direction_2.next | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ data.direction_2.next | split: " " | last }}</span>
+            </span>
+            {% if data.direction_2.next_status != "On Time" %}
+              <span class="label label--small label--inverted">{{ data.direction_2.next_status }}</span>
+            {% endif %}
+          </div>
+        </div>
+        
+        <!-- Later -->
+        <div class="item item--emphasis-1">
+          <div class="meta"></div>
+          <div class="content text--gray-50">
+            <span class="label label--small mb--1">later</span>
+            <span>
+              <span class="value value--small">{{ data.direction_2.later | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ data.direction_2.later | split: " " | last }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- Alerts Section -->
+    {% if data.has_alerts %}
+      <div class="mb--2">
+        <span class="label label--small label--underline">Alerts</span>
+      </div>
+      <div class="alerts-section">
+        <div class="item">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="description" data-clamp="2">{{ data.alerts }}</span>
+            <span class="label label--small label--underline">active: {{ data.updated_at | date: "%D %l:%M %p" }}</span>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    
+  </div>
 </div>
 
-<div class="title_bar">
-  <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
+<div class="title_bar m--0">
+  <span class="title">{{ data.station }}</span>
 </div>

@@ -1,43 +1,88 @@
 {% comment %}
   GO Transit Dashboard - Quadrant Layout
+  Adapted from Sound Transit Link Light Rail Dashboard
+  
   Use Case: Quarter-size display (most compact)
   
   Features:
-  - Ultra-compact display
-  - Shows only station, arriving time, and next time
-  - Alert indicator only (no text)
+  - Two-direction schedule in minimal space
+  - Shows arriving and next for each direction
+  - No alerts (space constraint)
 {% endcomment %}
 
-<div class="flex flex--col p--2 h--full text--center">
-  
-  <!-- Station Name -->
-  <div class="title title--small" data-value-fit="true" data-value-fit-max-height="30">
-    {{ data.station | upcase }}
-  </div>
-  <div class="description mb--xsmall">{{ data.line_name }}</div>
-  
-  <!-- Primary: Arriving -->
-  <div class="flex--1 flex flex--col flex--center-x flex--center-y">
-    <div class="label label--small">ARRIVING</div>
-    <div class="value value--xxlarge" data-value-fit="true" data-value-fit-max-height="80">
-      {{ data.direction_1.arriving }}
+<div class="layout layout--row p--2 gap--large mb--0">
+  <div class="flex flex--col flex--1">
+    
+    <!-- Two-direction time table -->
+    <div class="columns time-table">
+      
+      <!-- Direction 1 -->
+      <div class="column gap--small">
+        <div>
+          <span class="title title--small" style="display: block;">{{ data.direction_1.label | split: "To " | last }}</span>
+        </div>
+        
+        <!-- Arriving -->
+        <div class="item item--emphasis-3">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="label label--small label--inverted mb--1">arriving</span>
+            <span>
+              <span class="value value--medium">{{ data.direction_1.arriving | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ data.direction_1.arriving | split: " " | last }}</span>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Next -->
+        <div class="item item--emphasis-2">
+          <div class="meta"></div>
+          <div class="content text--gray-35">
+            <span class="label label--small label--outline mb--1">next</span>
+            <span>
+              <span class="value value--medium">{{ data.direction_1.next | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ data.direction_1.next | split: " " | last }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Direction 2 -->
+      <div class="column gap--small">
+        <div>
+          <span class="title title--small" style="display: block;">{{ data.direction_2.label | split: "To " | last }}</span>
+        </div>
+        
+        <!-- Arriving -->
+        <div class="item item--emphasis-3">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="label label--small label--inverted mb--1">arriving</span>
+            <span>
+              <span class="value value--medium">{{ data.direction_2.arriving | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ data.direction_2.arriving | split: " " | last }}</span>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Next -->
+        <div class="item item--emphasis-2">
+          <div class="meta"></div>
+          <div class="content text--gray-35">
+            <span class="label label--small label--outline mb--1">next</span>
+            <span>
+              <span class="value value--medium">{{ data.direction_2.next | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ data.direction_2.next | split: " " | last }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
     </div>
-    {% if data.direction_1.arriving_status != "On Time" %}
-      <div class="label label--small label--inverted">{{ data.direction_1.arriving_status }}</div>
-    {% endif %}
+    
   </div>
-  
-  <!-- Next departure -->
-  <div class="flex flex--row flex--center-x gap--xsmall mt--xsmall">
-    <div class="description">Next:</div>
-    <div class="value value--small">{{ data.direction_1.next }}</div>
-    {% if data.has_alerts %}
-      <div class="label label--small label--inverted">!</div>
-    {% endif %}
-  </div>
-  
 </div>
 
-<div class="title_bar">
-  <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
+<div class="title_bar m--0">
+  <span class="title">{{ data.station }}</span>
 </div>
