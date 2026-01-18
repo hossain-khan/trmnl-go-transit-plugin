@@ -32,7 +32,12 @@ trmnl-go-transit-plugin/
 │   ├── full.liquid               # Full-screen layout
 │   ├── half_horizontal.liquid    # Half-size horizontal layout
 │   ├── half_vertical.liquid      # Half-size vertical layout
-│   └── quadrant.liquid           # Quarter-size layout
+│   ├── quadrant.liquid           # Quarter-size layout
+│   └── preview/                  # Static preview templates (no API dependency)
+│       ├── full.liquid           # Preview with hardcoded sample data
+│       ├── half_horizontal.liquid
+│       ├── half_vertical.liquid
+│       └── quadrant.liquid
 ├── data.json                     # Transit data for templates
 ├── index.html                    # Preview/testing page
 ├── settings.yml                  # Plugin settings configuration
@@ -42,10 +47,21 @@ trmnl-go-transit-plugin/
 ## Key Files
 
 - **templates/*.liquid**: Four layout templates that adapt to different display sizes and orientations
+- **templates/preview/*.liquid**: Static preview templates with hardcoded sample data (Lakeshore East - Oshawa GO)
 - **data.json**: Contains current transit data (station, departures, alerts)
 - **scripts/update-go-transit.js**: Node.js script that fetches real-time data from Metrolinx API
 - **api/data.json**: Public API endpoint served via GitHub Pages
 - **settings.yml**: TRMNL plugin configuration
+
+### Preview Templates
+
+The `templates/preview/` directory contains static versions of all layouts with hardcoded sample data from the Lakeshore East line (Oshawa GO station). These previews:
+
+- **Enable layout testing** without API dependency
+- **Showcase design patterns** with realistic sample data
+- **Include edge cases** like delayed status and service alerts
+
+> **IMPORTANT**: Preview templates must always mirror the structure of their parent templates in `templates/`. When modifying any template, update both the main template AND its corresponding preview to keep them in sync. The `templates/*.liquid` files are the **source of truth** - preview templates should reflect any structural changes made to them.
 
 ## TRMNL Framework v2
 
