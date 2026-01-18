@@ -4,6 +4,8 @@
 
 This is a TRMNL plugin that displays real-time **GO Transit** departure and arrival information for commuters. It provides "at-a-glance" status updates for a user's preferred GO Rail or Bus station, utilizing the Metrolinx Open Data API. The plugin leverages the TRMNL Framework v2 to create responsive, adaptive layouts that work across all TRMNL devices.
 
+**Design Reference**: Templates are adapted from the [Sound Transit Link Light Rail Dashboard](https://usetrmnl.com/plugin/sound-transit-link-light-rail-dashboard) plugin, featuring a two-direction schedule with emphasis-based time display (arriving/next/later).
+
 ## Project Structure
 
 ```
@@ -100,9 +102,16 @@ Example: `md:portrait:4bit:flex--col` (medium+ screens, portrait, 4-bit display)
 #### Typography
 
 - **Title**: `title title--small`, `title--large`, `title--xlarge` (for headings, names)
-- **Value**: `value value--small`, `value--xlarge`, `value--xxlarge`, `value--xxxlarge` (for numbers, symbols)
-- **Label**: `label label--small`, `label--inverted` (for categories, badges)
-- **Description**: `description` (for body text)
+- **Value**: `value value--xsmall`, `value--small`, `value--large`, `value--xlarge` (for numbers, times)
+- **Label**: `label label--small` with variants:
+  - `label--inverted` - White text on black background (highest emphasis, used for "arriving")
+  - `label--outline` - Bordered label (medium emphasis, used for "next")
+  - `label--underline` - Underlined text (section headers like "Schedule", "Alerts")
+- **Description**: `description` (for body text, subtitles)
+- **Item**: `item` with emphasis levels:
+  - `item--emphasis-3` - Highest visual weight (arriving times)
+  - `item--emphasis-2` - Medium visual weight (next times)
+  - `item--emphasis-1` - Lowest visual weight (later times)
 
 #### Visual
 
@@ -128,133 +137,247 @@ The plugin provides four layouts for different display configurations:
 
 **Use Case**: Full-screen display (entire TRMNL screen)
 
+**Design**: Adapted from Sound Transit Link Light Rail Dashboard
+
 **Key Features**:
-- Station name and line prominently displayed in header
-- Route map showing station position on the line (left side)
-- Departure times with status badges (right side)
-- Service alerts in footer
+- Route line visualization on the left with station dots
+- Two-direction schedule with arriving/next/later times
+- Service alerts section at bottom
+- Station name in title bar (footer)
 
 **Layout Structure**:
 ```liquid
-<div class="layout layout--col p--2">
-  <!-- Header: Station name and line badge -->
-  <div class="flex flex--row flex--between flex--center-y mb--small">
-    <div class="title title--large">{{ data.station | upcase }}</div>
-    <div class="label label--inverted">{{ data.line_name | upcase }}</div>
+<div class="layout layout--row p--4 gap--large mb--0">
+  
+  <!-- Left: Route Line Visualization -->
+  <div class="route-container">
+    <span class="label label--small label--inverted">{{ data.line_code }}</span>
+    <span class="description">Line</span>
+    <!-- Station dots along vertical line -->
+    {% for station in data.stations %}
+      <div class="station-dot {% if forloop.index == data.station_position %}current{% endif %}"></div>
+    {% endfor %}
   </div>
   
-  <!-- Main: Route map + Schedule -->
-  <div class="flex flex--row gap--medium flex--1">
-    <div class="route-map">...</div>
-    <div class="schedule">...</div>
-  </div>
+  <div class="divider--v"></div>
   
-  <!-- Footer: Alerts -->
-  <div class="alerts">...</div>
+  <!-- Right: Schedule -->
+  <div class="flex flex--col flex--1">
+    <span class="label label--small label--underline">Schedule</span>
+    
+    <!-- Two-direction time table -->
+    <div class="columns time-table">
+      <!-- Direction 1 & 2 with arriving/next/later -->
+    </div>
+    
+    <!-- Alerts Section -->
+    {% if data.has_alerts %}
+      <div class="alerts-section">...</div>
+    {% endif %}
+  </div>
 </div>
+
+<!-- Title bar at bottom -->
+<div class="title_bar">{{ data.station }}</div>
 ```
 
 **Critical Learnings**:
-- Route map uses flexbox with station dots positioned along a vertical line
-- `data-value-fit` essential for station names (e.g., "UNION STATION" - 13 chars)
-- Use `label--inverted` for delayed status badges
-- `data-clamp="2"` truncates long alert text to prevent overflow
+- Route visualization uses CSS with `route-line-bg` and `station-dot` classes
+- `label--inverted` for "arriving" badges (high emphasis)
+- `label--outline` for "next" badges (medium emphasis)
+- `label--underline` for section headers (Schedule, Alerts)
+- `data-clamp="2"` truncates long alert text
+- Title bar at bottom shows station name
 
 #### 2. Half Horizontal Layout (`half_horizontal.liquid`)
 
 **Use Case**: Half-size horizontal display (abundant horizontal space, minimal vertical)
 
+**Design**: Adapted from Sound Transit Link Light Rail Dashboard
+
 **Key Features**:
-- Station info on left, departure times spread horizontally on right
+- Two-direction schedule displayed side by side
+- Compact time display with arriving/next labels only (no "later")
 - No route map (space constraint)
-- Alert indicator only (no full text)
+- Station name in title bar (footer)
 
 **Layout Structure**:
 ```liquid
-<div class="flex flex--row gap--medium p--2 flex--center-y h--full">
-  <!-- Left: Station Info -->
-  <div class="flex flex--col min-w--36">
-    <div class="title">{{ data.station | upcase }}</div>
-    <div class="description">{{ data.line_name }}</div>
+<div class="layout layout--row layout--left layout--stretch mb--0 p--3">
+  
+  <!-- Direction 1 -->
+  <div class="flex--1">
+    <span class="title title--small">{{ data.direction_1.label | split: "To " | last }}</span>
+    <span class="description">{{ data.direction_1.label }}</span>
+    
+    <!-- Arriving -->
+    <div class="item item--emphasis-3">
+      <div class="content">
+        <span class="label label--small label--inverted">arriving</span>
+        <span class="value">{{ data.direction_1.arriving | split: " " | first }}</span>
+        <span class="value value--small">{{ data.direction_1.arriving | split: " " | last }}</span>
+      </div>
+    </div>
+    
+    <!-- Next -->
+    <div class="item item--emphasis-2">
+      <div class="content text--gray-35">
+        <span class="label label--small label--outline">next</span>
+        <span class="value">{{ data.direction_1.next | split: " " | first }}</span>
+      </div>
+    </div>
   </div>
   
-  <!-- Right: Departure Times in row -->
-  <div class="flex flex--row gap--medium flex--1">
-    <div>ARRIVING: {{ data.direction_1.arriving }}</div>
-    <div>NEXT: {{ data.direction_1.next }}</div>
-    <div>LATER: {{ data.direction_1.later }}</div>
-  </div>
+  <!-- Direction 2 (same structure) -->
 </div>
+
+<div class="title_bar">{{ data.station }}</div>
 ```
 
 **Critical Learnings**:
-- `flex--center-y` centers content vertically in row layouts
-- **DO NOT** use `stretch` class on child containers - it conflicts with `flex--center-y`
-- Horizontal layout allows all three departure times to be visible at once
-- Alert shown as badge indicator (!) only, no text due to space constraints
+- `item item--emphasis-3` for arriving (highest emphasis)
+- `item item--emphasis-2` for next (medium emphasis)
+- Time split into hours and AM/PM: `{{ time | split: " " | first }}` and `{{ time | split: " " | last }}`
+- `text--gray-35` mutes the "next" time display
+- Title bar at bottom shows station name
 
 #### 3. Half Vertical Layout (`half_vertical.liquid`)
 
 **Use Case**: Half-size vertical display (abundant vertical space, limited horizontal)
 
+**Design**: Adapted from Sound Transit Link Light Rail Dashboard
+
 **Key Features**:
-- Station name at top, direction below
-- Large "arriving" time as primary focus (center)
-- Next and later times in row below
-- Truncated alerts at bottom
+- Two columns showing both directions
+- Full arriving/next/later times for each direction
+- Alerts section with truncation
+- Station name in title bar (footer)
+
+**Layout Structure**:
+```liquid
+<div class="layout layout--col p--3 mb--0">
+  <span class="label label--small label--underline">Schedule</span>
+  
+  <div class="columns time-table">
+    <!-- Direction 1 -->
+    <div class="column">
+      <span class="title title--small">{{ data.direction_1.label | split: "To " | last }}</span>
+      <!-- arriving/next/later items -->
+    </div>
+    
+    <!-- Direction 2 -->
+    <div class="column">
+      <!-- same structure -->
+    </div>
+  </div>
+  
+  {% if data.has_alerts %}
+    <div class="alerts-section">
+      <span class="label label--small label--underline">Alerts</span>
+      <span class="description" data-clamp="2">{{ data.alerts }}</span>
+    </div>
+  {% endif %}
+</div>
+
+<div class="title_bar">{{ data.station }}</div>
+```
 
 **Critical Learnings**:
-- Vertical layouts allow stacking of departure times
-- Primary arrival time can be much larger (`value--xxxlarge`)
-- Use `data-clamp="1"` for alerts to keep them to single line
+- `columns time-table` creates two-column layout
+- All three time slots (arriving/next/later) fit due to vertical space
+- `data-clamp="2"` limits alert text to 2 lines
 
 #### 4. Quadrant Layout (`quadrant.liquid`)
 
 **Use Case**: Quarter-size display (most compact)
 
+**Design**: Adapted from Sound Transit Link Light Rail Dashboard
+
 **Key Features**:
-- Station name and line only in header
-- Single large arrival time as focus
-- "Next" time shown inline with alert indicator
-- No alerts text, no route map
+- Two columns showing both directions
+- Only arriving/next times (no "later" - space constraint)
+- No alerts section
+- Station name in title bar (footer)
+
+**Layout Structure**:
+```liquid
+<div class="layout layout--col p--2 mb--0">
+  <div class="columns time-table">
+    <!-- Direction 1 -->
+    <div class="column">
+      <span class="title title--small">{{ data.direction_1.label | split: "To " | last }}</span>
+      <!-- arriving/next items only -->
+    </div>
+    
+    <!-- Direction 2 -->
+    <div class="column">
+      <!-- same structure -->
+    </div>
+  </div>
+</div>
+
+<div class="title_bar">{{ data.station }}</div>
+```
 
 **Critical Learnings**:
-- Smallest layout requires aggressive space optimization
-- Show only the most critical information: station, arriving, next
-- Use badge indicator for alerts instead of text
+- Most compact layout - only essential info
+- Two directions with arriving/next only
+- No alerts, no route visualization
+- Title bar shows station name
 
 ## Design Patterns & Best Practices
 
-### 1. Departure Time Display Structure
+### 1. Departure Time Display Structure (Sound Transit Pattern)
 
 Standard pattern for showing departure times across all layouts:
 
 ```liquid
-<!-- Arriving time (primary, largest) -->
-<div class="flex flex--row flex--center-y gap--small mb--small">
-  <div class="label label--small w--20">ARRIVING</div>
-  <div class="value value--xxlarge" data-value-fit="true">
-    {{ data.direction_1.arriving }}
+<!-- Arriving time (highest emphasis) -->
+<div class="item item--emphasis-3">
+  <div class="meta"></div>
+  <div class="content">
+    <span class="label label--small label--inverted mb--1">arriving</span>
+    <span>
+      <span class="value value--large">{{ data.direction_1.arriving | split: " " | first }}</span>
+      <span class="value">{{ data.direction_1.arriving | split: " " | last }}</span>
+    </span>
   </div>
-  {% if data.direction_1.arriving_status == "On Time" %}
-    <div class="label label--small">{{ data.direction_1.arriving_status }}</div>
-  {% else %}
-    <div class="label label--small label--inverted">{{ data.direction_1.arriving_status }}</div>
-  {% endif %}
 </div>
 
-<!-- Next departure (secondary, medium) -->
-<div class="flex flex--row flex--center-y gap--small">
-  <div class="label label--small w--20">NEXT</div>
-  <div class="value value--large">{{ data.direction_1.next }}</div>
+<!-- Next departure (medium emphasis) -->
+<div class="item item--emphasis-2">
+  <div class="meta"></div>
+  <div class="content text--gray-35">
+    <span class="label label--small label--outline mb--1">next</span>
+    <span>
+      <span class="value">{{ data.direction_1.next | split: " " | first }}</span>
+      <span class="value value--small">{{ data.direction_1.next | split: " " | last }}</span>
+    </span>
+  </div>
+</div>
+
+<!-- Later departure (low emphasis) -->
+<div class="item item--emphasis-1">
+  <div class="meta"></div>
+  <div class="content text--gray-50">
+    <span class="label label--small mb--1">later</span>
+    <span>
+      <span class="value value--small">{{ data.direction_1.later | split: " " | first }}</span>
+      <span class="value value--xsmall">{{ data.direction_1.later | split: " " | last }}</span>
+    </span>
+  </div>
 </div>
 ```
 
 **Key Points**:
-- `label--inverted` for delayed/cancelled status (high contrast)
-- Regular `label` for "On Time" status (subtle)
-- Time values use `value` class with size variants
-- Fixed width (`w--20`) on labels for alignment
+- `item item--emphasis-3` for arriving (highest visual weight)
+- `item item--emphasis-2` for next (medium visual weight)
+- `item item--emphasis-1` for later (lowest visual weight)
+- `label--inverted` (white on black) for "arriving"
+- `label--outline` (bordered) for "next"
+- Plain `label` for "later"
+- Times split: `{{ time | split: " " | first }}` for hours, `| last` for AM/PM
+- `text--gray-35` and `text--gray-50` for muted text
 
 ### 2. Long Text Handling
 
