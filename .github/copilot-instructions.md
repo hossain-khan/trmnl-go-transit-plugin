@@ -76,35 +76,112 @@ The `templates/preview/` directory contains static versions of all layouts with 
 
 ### Responsive System
 
-The framework uses a **mobile-first** approach with three responsive dimensions:
+> **Reference**: [TRMNL Framework Responsive Guide](https://usetrmnl.com/framework/responsive)
 
-#### 1. Size-Based Breakpoints (Progressive)
+The framework provides two complementary approaches for creating adaptive layouts:
+1. **Size-based breakpoints** that respond to screen dimensions (progressive)
+2. **Bit-depth variants** that adapt to color capabilities (specific)
+3. **Orientation variants** that adapt to portrait/landscape mode (specific)
 
-- `sm:` - 600px+ (Kindle 2024)
-- `md:` - 800px+ (TRMNL OG, OG V2)
-- `lg:` - 1024px+ (TRMNL V2)
+#### 1. Size-Based Breakpoints (Progressive - Mobile First)
 
-**Usage**: `md:value--large lg:value--xlarge` (applies at breakpoint and above)
+Size breakpoints follow a **mobile-first approach**. When you use `md:value--large`, it applies on medium screens **and larger**.
 
-#### 2. Bit-Depth Variants (Specific)
+| Prefix | CSS Class | Min Width | Devices |
+|--------|-----------|-----------|---------|
+| `sm:` | `screen--sm` | 600px | Kindle 2024 |
+| `md:` | `screen--md` | 800px | TRMNL OG, TRMNL OG V2 |
+| `lg:` | `screen--lg` | 1024px | TRMNL V2 |
 
-- `1bit:` - Monochrome (2 shades) - TRMNL OG
-- `2bit:` - Grayscale (4 shades) - TRMNL OG V2
-- `4bit:` - Grayscale (16 shades) - TRMNL V2, Kindle
+**Example - Progressive Sizing**:
+```liquid
+<!-- Regular by default, large on medium+, xlarge on large+ -->
+<span class="value md:value--large lg:value--xlarge">
+  Responsive Value
+</span>
+```
 
-**Usage**: `1bit:bg--black 2bit:bg--gray-45 4bit:bg--gray-75` (each targets only that bit-depth)
+#### 2. Bit-Depth Variants (Specific - NOT Progressive)
+
+Bit-depth variants are **NOT progressive** - each variant targets a **specific bit-depth only**. When you use `4bit:bg--gray-65`, it applies **only** on 4-bit screens.
+
+| Prefix | CSS Class | Color Capability | Devices |
+|--------|-----------|------------------|---------|
+| `1bit:` | `screen--1bit` | Monochrome (2 shades) | TRMNL OG |
+| `2bit:` | `screen--2bit` | Grayscale (4 shades) | TRMNL OG V2 |
+| `4bit:` | `screen--4bit` | Grayscale (16 shades) | TRMNL V2, Kindle 2024 |
+
+**Example - Bit-Depth Adaptation**:
+```liquid
+<!-- black on 1-bit, gray-45 on 2-bit, gray-75 on 4-bit screens -->
+<div class="h--36 w--36 rounded--large 1bit:bg--black 2bit:bg--gray-45 4bit:bg--gray-75"></div>
+```
 
 #### 3. Orientation-Based (Specific)
 
-- `portrait:` - Portrait orientation only (landscape is default)
+Since landscape is the default, only `portrait:` variants are provided. Particularly useful for layout utilities like Flexbox.
 
-**Usage**: `flex--row portrait:flex--col`
+**Example - Orientation-Responsive Layout**:
+```liquid
+<!-- Row layout in landscape, column layout in portrait -->
+<div class="flex flex--row portrait:flex--col gap">
+  {{ Item 1 }}
+  {{ Item 2 }}
+</div>
+```
 
-#### 4. Combined Modifiers
+#### 4. Combining All Systems
 
-Pattern: `size:orientation:bit-depth:utility`
+When combining variants, follow this pattern: **`size:orientation:bit-depth:utility`**
 
-Example: `md:portrait:4bit:flex--col` (medium+ screens, portrait, 4-bit display)
+This order flows from general layout concerns to specific display characteristics. Each modifier is optional.
+
+**Specificity Hierarchy**: The more modifiers in a class, the higher its specificity. `portrait:2bit:value--small` will override both `portrait:value--large` and `2bit:value--medium` when all conditions are met.
+
+| Pattern | Example | Active When |
+|---------|---------|-------------|
+| `size:` | `md:value--large` | Medium screens and larger |
+| `orientation:` | `portrait:flex--col` | Portrait orientation only |
+| `bit-depth:` | `4bit:bg--gray-75` | 4-bit displays only |
+| `size:orientation:` | `md:portrait:text--center` | Medium+ screens in portrait |
+| `size:bit-depth:` | `lg:2bit:value--xlarge` | Large+ screens with 2-bit display |
+| `orientation:bit-depth:` | `portrait:2bit:value--small` | Portrait with 2-bit display |
+| `size:orientation:bit-depth:` | `md:portrait:4bit:gap--large` | Medium+ screens, portrait, 4-bit display |
+
+**Advanced Example**:
+```liquid
+<!-- Simple orientation variant -->
+<div class="flex flex--row portrait:flex--col">...</div>
+
+<!-- Size + orientation -->
+<div class="text--center md:portrait:text--left">...</div>
+
+<!-- All three combined: size + orientation + bit-depth -->
+<div class="flex flex--row md:portrait:4bit:flex--col">
+  <!-- Row layout by default -->
+  <!-- Column layout on medium+ screens, in portrait, with 4-bit display -->
+</div>
+```
+
+#### Component Responsive Support
+
+Not all components support all responsive variants:
+
+| Component | Size | Orientation | Bit-Depth | Example |
+|-----------|------|-------------|-----------|---------|
+| Background | Yes | Yes | Auto | `md:bg--gray-50` |
+| Border | No | No | Auto | `border--h-3` (auto adapts) |
+| Text | Yes | Yes | Auto | `lg:2bit:text--center` |
+| Visibility | Yes | Yes | Yes | `sm:1bit:hidden` |
+| Value | Yes | Yes | No | `md:value--large` |
+| Label | Yes | Yes | Yes | `md:portrait:2bit:label--inverted` |
+| Spacing | Yes | Yes | No | `md:p--large`, `lg:m--xlarge` |
+| Layout | Yes | Yes | No | `md:layout--row`, `lg:layout--col` |
+| Gap | Yes | Yes | No | `md:gap--large`, `lg:gap--xlarge` |
+| Flexbox | Yes | Yes | No | `md:flex--center`, `portrait:flex--col` |
+| Rounded | Yes | Yes | No | `md:rounded--large` |
+| Size | Yes | Yes | No | `md:w--large`, `lg:h--full` |
+| Grid | Yes | Yes | No | `md:grid--cols-3`, `md:portrait:col--span-2` |
 
 ### Core Utilities
 
