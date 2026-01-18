@@ -1,0 +1,38 @@
+{
+  "station": "Oshawa GO",
+  "line_name": "Lakeshore East",
+  "line_code": "LE",
+  "direction_1": {
+    "label": "To Union Station",
+    "arriving": "9:34 PM",
+    "arriving_status": "On Time",
+    "next": "9:44 PM",
+    "next_status": "On Time",
+    "later": "10:14 PM",
+    "later_status": "On Time"
+  },
+  "direction_2": {
+    "label": "To Oshawa",
+    "arriving": "9:42 PM",
+    "arriving_status": "On Time",
+    "next": "10:12 PM",
+    "next_status": "Delayed",
+    "later": "10:42 PM",
+    "later_status": "On Time"
+  },
+  "alerts": "Starting Dec 22, maintenance on Lakeshore East line. Expect delays of 10-15 minutes during peak hours.",
+  "has_alerts": true,
+  "updated_at": "2026-01-18T21:30:00Z",
+  "station_position": 1,
+  "total_stations": 8,
+  "stations": [
+    "Oshawa",
+    "Whitby",
+    "Ajax",
+    "Pickering",
+    "Rouge Hill",
+    "Guildwood",
+    "Eglinton",
+    "Union"
+  ]
+}

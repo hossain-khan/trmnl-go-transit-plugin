@@ -1,43 +1,49 @@
-# TRMNL Elements Plugin - Copilot Instructions
+# TRMNL GO Transit Dashboard - Copilot Instructions
 
 ## Project Overview
 
-This is a TRMNL plugin that displays the "Periodic Element of the Day" - showcasing a different chemical element each day with its properties, category, and scientific details. The plugin leverages the TRMNL Framework v2 to create responsive, adaptive layouts that work across all TRMNL devices.
+This is a TRMNL plugin that displays real-time **GO Transit** departure and arrival information for commuters. It provides "at-a-glance" status updates for a user's preferred GO Rail or Bus station, utilizing the Metrolinx Open Data API. The plugin leverages the TRMNL Framework v2 to create responsive, adaptive layouts that work across all TRMNL devices.
 
 ## Project Structure
 
 ```
-trmnl-elements-plugin/
+trmnl-go-transit-plugin/
 ├── .github/                      # GitHub configuration
-│   └── copilot-instructions.md   # This file
+│   ├── copilot-instructions.md   # This file
+│   └── workflows/
+│       ├── pages.yml             # GitHub Pages deployment
+│       └── update-data.yml       # Scheduled data updates
 ├── api/                          # API endpoints
-│   └── element-of-the-day.json   # Current element data
+│   └── data.json                 # Current transit data (served via GitHub Pages)
 ├── assets/                       # Design assets
-│   └── icon/                     # Plugin icons
-├── data/                         # Source data
-│   ├── PubChemElements_all.csv   # Element data (CSV format)
-│   └── PubChemElements_all.json  # Element data (JSON format)
-├── docs/                         # Documentation
-│   ├── NEW_RECIPE_GUIDE.md       # Guide for creating new recipes
-│   └── PRD.md                    # Product requirements
+│   ├── icon/                     # Plugin icons
+│   └── demo/                     # Demo screenshots
+├── project-resources/            # Reference materials
+│   ├── docs/
+│   │   ├── PRD.md                # Product requirements
+│   │   └── NEW_RECIPE_GUIDE.md   # Guide for creating recipes
+│   ├── GO-GTFS/                  # GO Transit GTFS data
+│   └── API-access/               # API documentation
 ├── scripts/                      # Build scripts
-│   └── update-element-of-the-day.js  # Daily element update script
+│   └── update-go-transit.js      # Data update script
 ├── templates/                    # Liquid templates for layouts
 │   ├── full.liquid               # Full-screen layout
 │   ├── half_horizontal.liquid    # Half-size horizontal layout
 │   ├── half_vertical.liquid      # Half-size vertical layout
 │   └── quadrant.liquid           # Quarter-size layout
-├── data.json                     # Element data for templates
+├── data.json                     # Transit data for templates
 ├── index.html                    # Preview/testing page
-└── settings.yml                  # Plugin settings configuration
+├── settings.yml                  # Plugin settings configuration
+└── README.md
 ```
 
 ## Key Files
 
 - **templates/*.liquid**: Four layout templates that adapt to different display sizes and orientations
-- **data/PubChemElements_all.json**: Contains all 118 elements with properties (atomic number, mass, symbol, name, category, state, density, electron configuration, year discovered)
-- **scripts/update-element-of-the-day.js**: Node.js script that updates the daily element (runs via GitHub Actions)
-- **data.json**: Current element data used by templates
+- **data.json**: Contains current transit data (station, departures, alerts)
+- **scripts/update-go-transit.js**: Node.js script that fetches real-time data from Metrolinx API
+- **api/data.json**: Public API endpoint served via GitHub Pages
+- **settings.yml**: TRMNL plugin configuration
 
 ## TRMNL Framework v2
 
@@ -123,48 +129,60 @@ The plugin provides four layouts for different display configurations:
 **Use Case**: Full-screen display (entire TRMNL screen)
 
 **Key Features**:
-- Responsive grid: 1 column (mobile) → 2 columns (md) → 3 columns (lg)
-- Fixed card width: `w--52 min-w--52` for consistency
-- Title with fit-value for long element names
-- Category badge with `label--inverted`
+- Station name and line prominently displayed in header
+- Route map showing station position on the line (left side)
+- Departure times with status badges (right side)
+- Service alerts in footer
 
 **Layout Structure**:
 ```liquid
-<div class="grid grid--cols-1 md:grid--cols-2 lg:grid--cols-3 gap--xsmall">
-  <!-- Left: Element card with fixed width -->
-  <div class="w--52 min-w--52">...</div>
+<div class="layout layout--col p--2">
+  <!-- Header: Station name and line badge -->
+  <div class="flex flex--row flex--between flex--center-y mb--small">
+    <div class="title title--large">{{ data.station | upcase }}</div>
+    <div class="label label--inverted">{{ data.line_name | upcase }}</div>
+  </div>
   
-  <!-- Right: Element details in grid -->
-  <div class="grid grid--cols-2 gap--small">...</div>
+  <!-- Main: Route map + Schedule -->
+  <div class="flex flex--row gap--medium flex--1">
+    <div class="route-map">...</div>
+    <div class="schedule">...</div>
+  </div>
+  
+  <!-- Footer: Alerts -->
+  <div class="alerts">...</div>
 </div>
 ```
 
 **Critical Learnings**:
-- Use `grid--cols-*` for precise column control (better than flex-wrap)
-- Use `min-w--52` without `w--` to allow card to grow with long atomic masses (e.g., "259.10100")
-- Combine `min-w--` with `gap--small` in flex rows to prevent content touching edges
-- `data-value-fit` with `max-height` essential for long names (e.g., RUTHERFORDIUM - 13 chars)
-- `title` element handles long single-word text better than `value` element
+- Route map uses flexbox with station dots positioned along a vertical line
+- `data-value-fit` essential for station names (e.g., "UNION STATION" - 13 chars)
+- Use `label--inverted` for delayed status badges
+- `data-clamp="2"` truncates long alert text to prevent overflow
 
 #### 2. Half Horizontal Layout (`half_horizontal.liquid`)
 
 **Use Case**: Half-size horizontal display (abundant horizontal space, minimal vertical)
 
 **Key Features**:
-- Flex row layout with vertical centering: `flex--row flex--center-y`
-- Responsive card widths: `w--40 md:w--44 lg:w--48`
-- 2-column grid for details (maximizes horizontal space)
-- Layout padding: `p--2`
+- Station info on left, departure times spread horizontally on right
+- No route map (space constraint)
+- Alert indicator only (no full text)
 
 **Layout Structure**:
 ```liquid
-<div class="flex flex--row gap--medium portrait:flex--col p--2 flex--center-y">
-  <!-- Left: Element card -->
-  <div class="w--40 md:w--44 lg:w--48 min-w--40">...</div>
+<div class="flex flex--row gap--medium p--2 flex--center-y h--full">
+  <!-- Left: Station Info -->
+  <div class="flex flex--col min-w--36">
+    <div class="title">{{ data.station | upcase }}</div>
+    <div class="description">{{ data.line_name }}</div>
+  </div>
   
-  <!-- Right: Element details (vertically centered) -->
-  <div class="flex flex--col gap--xsmall">
-    <div class="grid grid--cols-2 gap--xsmall">...</div>
+  <!-- Right: Departure Times in row -->
+  <div class="flex flex--row gap--medium flex--1">
+    <div>ARRIVING: {{ data.direction_1.arriving }}</div>
+    <div>NEXT: {{ data.direction_1.next }}</div>
+    <div>LATER: {{ data.direction_1.later }}</div>
   </div>
 </div>
 ```
@@ -172,84 +190,98 @@ The plugin provides four layouts for different display configurations:
 **Critical Learnings**:
 - `flex--center-y` centers content vertically in row layouts
 - **DO NOT** use `stretch` class on child containers - it conflicts with `flex--center-y`
-- 2-column grid (`grid--cols-2`) better utilizes abundant horizontal space
-- Responsive widths scale better across devices than fixed widths
-- Remove redundant category from title (already shown in card badge)
+- Horizontal layout allows all three departure times to be visible at once
+- Alert shown as badge indicator (!) only, no text due to space constraints
 
 #### 3. Half Vertical Layout (`half_vertical.liquid`)
 
-**Use Case**: Half-size vertical display
+**Use Case**: Half-size vertical display (abundant vertical space, limited horizontal)
 
 **Key Features**:
-- Title with data-value-fit for category display
-- `label--inverted` for category badge
-- Responsive minimum widths: `min-w--48`
+- Station name at top, direction below
+- Large "arriving" time as primary focus (center)
+- Next and later times in row below
+- Truncated alerts at bottom
 
 **Critical Learnings**:
-- Vertical layouts need more compact text sizing
-- Category as main title works well for vertical orientation
+- Vertical layouts allow stacking of departure times
+- Primary arrival time can be much larger (`value--xxxlarge`)
+- Use `data-clamp="1"` for alerts to keep them to single line
 
 #### 4. Quadrant Layout (`quadrant.liquid`)
 
 **Use Case**: Quarter-size display (most compact)
 
 **Key Features**:
-- Minimal card width: `min-w--32`
-- Smallest text sizes
-- Most compact spacing
+- Station name and line only in header
+- Single large arrival time as focus
+- "Next" time shown inline with alert indicator
+- No alerts text, no route map
 
 **Critical Learnings**:
 - Smallest layout requires aggressive space optimization
-- May need special handling for very long element names
+- Show only the most critical information: station, arriving, next
+- Use badge indicator for alerts instead of text
 
 ## Design Patterns & Best Practices
 
-### 1. Element Card Structure
+### 1. Departure Time Display Structure
 
-Standard pattern across all layouts:
+Standard pattern for showing departure times across all layouts:
 
 ```liquid
-<div class="outline rounded p--2 bg--white">
-  <!-- Top: Atomic number (left) and Atomic mass (right) -->
-  <div class="flex flex--row flex--between mb--xsmall">
-    <div class="value value--small value--tnums">{{ element.atomic_number }}</div>
-    <div class="value value--xsmall value--tnums" data-value-fit="true">{{ element.atomic_mass }}</div>
+<!-- Arriving time (primary, largest) -->
+<div class="flex flex--row flex--center-y gap--small mb--small">
+  <div class="label label--small w--20">ARRIVING</div>
+  <div class="value value--xxlarge" data-value-fit="true">
+    {{ data.direction_1.arriving }}
   </div>
-  
-  <!-- Center: Symbol (large) -->
-  <div class="text--center mb--xsmall">
-    <div class="value value--xlarge">{{ element.symbol }}</div>
-  </div>
-  
-  <!-- Bottom: Name and category -->
-  <div class="text--center">
-    <div class="title title--small mb--xsmall">{{ element.name }}</div>
-    <div class="label label--small label--inverted">{{ element.category }}</div>
-  </div>
+  {% if data.direction_1.arriving_status == "On Time" %}
+    <div class="label label--small">{{ data.direction_1.arriving_status }}</div>
+  {% else %}
+    <div class="label label--small label--inverted">{{ data.direction_1.arriving_status }}</div>
+  {% endif %}
+</div>
+
+<!-- Next departure (secondary, medium) -->
+<div class="flex flex--row flex--center-y gap--small">
+  <div class="label label--small w--20">NEXT</div>
+  <div class="value value--large">{{ data.direction_1.next }}</div>
 </div>
 ```
 
 **Key Points**:
-- `value--tnums` for tabular numbers (consistent spacing)
-- `data-value-fit="true"` on atomic mass prevents cutoff (up to 9 chars)
-- `label--inverted` for category badge (consistent across all layouts)
+- `label--inverted` for delayed/cancelled status (high contrast)
+- Regular `label` for "On Time" status (subtle)
+- Time values use `value` class with size variants
+- Fixed width (`w--20`) on labels for alignment
 
 ### 2. Long Text Handling
 
-For element names that may be very long (e.g., "RUTHERFORDIUM" - 13 characters):
+For station names that may be long (e.g., "UNION STATION" - 13 characters):
 
 ```liquid
 <div class="title title--large md:title--xlarge" 
      data-value-fit="true" 
-     data-value-fit-max-height="120">
-  {{ element.name | upcase }}
+     data-value-fit-max-height="60">
+  {{ data.station | upcase }}
 </div>
 ```
 
 **Why**:
-- `title` element handles long single-word text better than `value`
+- `title` element handles long text better than `value`
 - `data-value-fit` automatically resizes text to fit container
 - `max-height` constraint prevents text from growing too large
+
+For service alerts that may be very long:
+
+```liquid
+<div class="description" data-clamp="2">{{ data.alerts }}</div>
+```
+
+**Why**:
+- `data-clamp="2"` limits text to 2 lines with ellipsis
+- Prevents alerts from overwhelming the schedule display
 
 ### 3. Responsive Width Strategy
 
@@ -311,31 +343,31 @@ For vertically centering content in horizontal layouts:
 
 ## Common Issues & Solutions
 
-### Issue 1: Atomic Mass Cutoff
+### Issue 1: Time Display Cutoff
 
-**Problem**: Long atomic masses (e.g., "259.10100" - 9 chars) get cut off
+**Problem**: Time values like "10:34 PM" get cut off in smaller layouts
 
 **Solution**:
-- Use `min-w--52` without `w--` to allow card to grow horizontally
-- Add `gap--small` to flex row with `flex--between` for proper spacing
-- Remove fixed width constraints that prevent horizontal growth
+- Use `data-value-fit="true"` on time values
+- Set appropriate `min-w--*` on containers
+- Test with both AM/PM and 24-hour formats
 
-### Issue 2: Long Element Names Breaking Layout
+### Issue 2: Long Station Names Breaking Layout
 
-**Problem**: Single-word names like "RUTHERFORDIUM" push layout
+**Problem**: Station names like "UNION STATION" push layout
 
 **Solution**:
 - Use `title` element instead of `value`
 - Add `data-value-fit="true"` with `data-value-fit-max-height`
 - Wrap in constrained width container
 
-### Issue 3: Inconsistent Card Widths
+### Issue 3: Alert Text Overflow
 
-**Problem**: Cards too narrow with short names (e.g., "Lithium")
+**Problem**: Long service alerts take too much space
 
 **Solution**:
-- Use fixed widths: `w--52 min-w--52`
-- Prevents card from shrinking below minimum
+- Use `data-clamp="1"` or `data-clamp="2"` to limit lines
+- In compact layouts, show only alert indicator (!) without text
 
 ### Issue 4: Vertical Alignment Not Working
 
@@ -355,26 +387,33 @@ For vertically centering content in horizontal layouts:
 
 ## Testing Strategy
 
-### Test Elements
+### Test Scenarios
 
-Critical elements to test (cover edge cases):
+Critical scenarios to test (cover edge cases):
 
-- **Element 3 (Lithium)**: Short name, tests minimum widths
-- **Element 99 (Einsteinium)**: Long atomic mass (252.0830 - 8 chars)
-- **Element 104 (Rutherfordium)**: Long name (13 chars), large atomic number (104)
-- **Elements 100-102**: Longest atomic masses (257.09511, 258.09843, 259.10100 - 9 chars)
+- **Short station name**: "Ajax GO" (7 chars) - tests minimum widths
+- **Long station name**: "Union Station" (13 chars) - tests text fitting
+- **Delayed status**: Tests `label--inverted` styling
+- **Long alerts**: Tests `data-clamp` truncation
+- **No alerts**: Tests conditional rendering when `has_alerts` is false
+- **Multiple time formats**: "9:34 PM", "10:04 AM", "12:00 PM" - tests alignment
 
 ### Testing Override
 
-Use `templates/shared.liquid` for testing specific elements:
+Modify `data.json` to test specific scenarios:
 
-```liquid
-{% comment %}
-Uncomment to test specific elements:
-{% assign element_index = 99 %}  {# Einsteinium - long atomic mass #}
-{% assign element_index = 104 %} {# Rutherfordium - long name #}
-{% assign element_index = 3 %}   {# Lithium - short name #}
-{% endcomment %}
+```json
+{
+  "station": "Union Station",
+  "direction_1": {
+    "arriving": "10:34 PM",
+    "arriving_status": "Delayed",
+    "next": "11:04 PM",
+    "next_status": "On Time"
+  },
+  "alerts": "Very long alert text to test truncation behavior...",
+  "has_alerts": true
+}
 ```
 
 ### Device Testing
@@ -396,39 +435,65 @@ Test across all responsive breakpoints:
 8. **Use gap utilities**: Better than margins for consistent spacing
 9. **Test with edge cases**: Long names, long numbers, short names
 
-## Element Data Structure
+## Transit Data Structure
 
 ```json
 {
-  "atomic_number": "3",
-  "symbol": "Li",
-  "name": "Lithium",
-  "atomic_mass": "6.9410",
-  "cpk_hex_color": "CC80FF",
-  "electron_configuration": "[He]2s1",
-  "electronegativity": "0.98",
-  "atomic_radius": "167",
-  "ionization_energy": "5.3917",
-  "electron_affinity": "59.6326",
-  "oxidation_states": "1",
-  "standard_state": "Solid",
-  "bonding_type": "Metallic",
-  "melting_point": "453.65",
-  "boiling_point": "1603",
-  "density": "0.534",
-  "group_block": "Alkali metal",
-  "year_discovered": "1817",
-  "category": "Alkali metal"
+  "station": "Oshawa GO",
+  "line_name": "Lakeshore East",
+  "line_code": "LE",
+  "direction_1": {
+    "label": "To Union Station",
+    "arriving": "9:34 PM",
+    "arriving_status": "On Time",
+    "next": "9:44 PM",
+    "next_status": "On Time",
+    "later": "10:14 PM",
+    "later_status": "On Time"
+  },
+  "direction_2": {
+    "label": "To Oshawa",
+    "arriving": "9:42 PM",
+    "arriving_status": "On Time",
+    "next": "10:12 PM",
+    "next_status": "Delayed",
+    "later": "10:42 PM",
+    "later_status": "On Time"
+  },
+  "alerts": "Starting Dec 22, maintenance on Lakeshore East line...",
+  "has_alerts": true,
+  "updated_at": "2026-01-18T21:30:00Z",
+  "station_position": 1,
+  "total_stations": 8,
+  "stations": [
+    "Oshawa",
+    "Whitby",
+    "Ajax",
+    "Pickering",
+    "Rouge Hill",
+    "Guildwood",
+    "Eglinton",
+    "Union"
+  ]
 }
 ```
 
 ## Workflow
 
-1. **Daily Update**: GitHub Action runs `scripts/update-element-of-the-day.js`
-2. **Element Selection**: Rotates through elements based on day of year
-3. **Template Rendering**: TRMNL renders appropriate layout template
-4. **Responsive Adaptation**: Framework applies device-specific styles
-5. **Display**: Element appears on TRMNL device with optimized layout
+1. **Scheduled Update**: GitHub Action runs `scripts/update-go-transit.js` every 5-15 minutes
+2. **API Fetch**: Script fetches real-time data from Metrolinx Open Data API
+3. **Data Transform**: API response transformed to plugin JSON format
+4. **Template Rendering**: TRMNL renders appropriate layout template
+5. **Responsive Adaptation**: Framework applies device-specific styles
+6. **Display**: Transit info appears on TRMNL device with optimized layout
+
+### API Endpoints Used
+
+| Endpoint | Purpose |
+|----------|--------|
+| `/ServiceAtAGlance/All` | Real-time departure times |
+| `/ServiceAlerts/All` | Service alerts and delays |
+| `/Station/All` | Station information |
 
 ## Future Considerations
 

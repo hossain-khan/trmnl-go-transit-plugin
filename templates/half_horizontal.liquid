@@ -1,0 +1,66 @@
+{% comment %}
+  GO Transit Dashboard - Half Horizontal Layout
+  Use Case: Half-size horizontal display (abundant horizontal space, minimal vertical)
+  
+  Features:
+  - Compact horizontal layout
+  - Station info on left, times on right
+  - No route map (space constraint)
+{% endcomment %}
+
+<div class="flex flex--row gap--medium p--2 flex--center-y h--full">
+  
+  <!-- Left: Station Info -->
+  <div class="flex flex--col min-w--36">
+    <div class="title title--medium md:title--large" data-value-fit="true" data-value-fit-max-height="40">
+      {{ data.station | upcase }}
+    </div>
+    <div class="description">{{ data.line_name }}</div>
+    <div class="label label--small mt--xsmall">{{ data.direction_1.label }}</div>
+  </div>
+  
+  <!-- Right: Departure Times -->
+  <div class="flex flex--row gap--medium flex--1 flex--center-y">
+    
+    <!-- Arriving -->
+    <div class="flex flex--col">
+      <div class="label label--small">ARRIVING</div>
+      <div class="value value--xlarge md:value--xxlarge" data-value-fit="true">
+        {{ data.direction_1.arriving }}
+      </div>
+      {% if data.direction_1.arriving_status != "On Time" %}
+        <div class="label label--small label--inverted">{{ data.direction_1.arriving_status }}</div>
+      {% endif %}
+    </div>
+    
+    <!-- Next -->
+    <div class="flex flex--col">
+      <div class="label label--small">NEXT</div>
+      <div class="value value--large md:value--xlarge">
+        {{ data.direction_1.next }}
+      </div>
+      {% if data.direction_1.next_status != "On Time" %}
+        <div class="label label--small label--inverted">{{ data.direction_1.next_status }}</div>
+      {% endif %}
+    </div>
+    
+    <!-- Later -->
+    <div class="flex flex--col">
+      <div class="label label--small">LATER</div>
+      <div class="value value--medium md:value--large">
+        {{ data.direction_1.later }}
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- Alert indicator (if any) -->
+  {% if data.has_alerts %}
+    <div class="label label--small label--inverted">!</div>
+  {% endif %}
+  
+</div>
+
+<div class="title_bar">
+  <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
+</div>

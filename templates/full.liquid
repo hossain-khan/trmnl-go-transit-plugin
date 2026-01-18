@@ -1,0 +1,97 @@
+{% comment %}
+  GO Transit Dashboard - Full Layout
+  Use Case: Full-screen display (entire TRMNL screen)
+  
+  Features:
+  - Station name and line prominently displayed
+  - Route map showing station position on the line
+  - Departure times for primary direction
+  - Service alerts at bottom
+{% endcomment %}
+
+<div class="layout layout--col p--2">
+  <!-- Header: Station name and line badge -->
+  <div class="flex flex--row flex--between flex--center-y mb--small">
+    <div class="title title--large md:title--xlarge" data-value-fit="true" data-value-fit-max-height="60">
+      {{ data.station | upcase }}
+    </div>
+    <div class="label label--small label--inverted">
+      {{ data.line_name | upcase }}
+    </div>
+  </div>
+  
+  <!-- Main content: Route map + Schedule -->
+  <div class="flex flex--row gap--medium flex--1">
+    
+    <!-- Left: Simplified Route Map -->
+    <div class="flex flex--col flex--center-x w--16 min-w--16">
+      {% for station in data.stations %}
+        <div class="flex flex--col flex--center-x flex--1">
+          {% if forloop.index == data.station_position %}
+            <!-- Current station: filled dot -->
+            <div class="w--4 h--4 rounded bg--black"></div>
+          {% else %}
+            <!-- Other stations: outline dot -->
+            <div class="w--3 h--3 rounded outline"></div>
+          {% endif %}
+          {% unless forloop.last %}
+            <div class="w--1 flex--1 bg--black"></div>
+          {% endunless %}
+        </div>
+      {% endfor %}
+    </div>
+    
+    <!-- Right: Schedule -->
+    <div class="flex--1">
+      <!-- Direction label -->
+      <div class="description mb--xsmall">{{ data.direction_1.label }}</div>
+      
+      <!-- Arriving -->
+      <div class="flex flex--row flex--center-y gap--small mb--small">
+        <div class="label label--small w--20">ARRIVING</div>
+        <div class="value value--xxlarge md:value--xxxlarge" data-value-fit="true">
+          {{ data.direction_1.arriving }}
+        </div>
+        {% if data.direction_1.arriving_status == "On Time" %}
+          <div class="label label--small">{{ data.direction_1.arriving_status }}</div>
+        {% else %}
+          <div class="label label--small label--inverted">{{ data.direction_1.arriving_status }}</div>
+        {% endif %}
+      </div>
+      
+      <!-- Next -->
+      <div class="flex flex--row flex--center-y gap--small mb--xsmall">
+        <div class="label label--small w--20">NEXT</div>
+        <div class="value value--large md:value--xlarge">
+          {{ data.direction_1.next }}
+        </div>
+        {% if data.direction_1.next_status != "On Time" %}
+          <div class="label label--small label--inverted">{{ data.direction_1.next_status }}</div>
+        {% endif %}
+      </div>
+      
+      <!-- Later -->
+      <div class="flex flex--row flex--center-y gap--small">
+        <div class="label label--small w--20">LATER</div>
+        <div class="value value--medium md:value--large">
+          {{ data.direction_1.later }}
+        </div>
+        {% if data.direction_1.later_status != "On Time" %}
+          <div class="label label--small label--inverted">{{ data.direction_1.later_status }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer: Service Alerts -->
+  {% if data.has_alerts %}
+    <div class="flex flex--row gap--xsmall flex--center-y mt--small pt--small" style="border-top: 2px solid black;">
+      <div class="label label--small label--inverted">!</div>
+      <div class="description" data-clamp="2">{{ data.alerts }}</div>
+    </div>
+  {% endif %}
+</div>
+
+<div class="title_bar">
+  <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
+</div>
