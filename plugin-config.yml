@@ -153,18 +153,10 @@
   help_text: Quadrant layout always shows 2 departures due to space constraints.
 
 # =============================================================================
-# TIME ZONE
-# =============================================================================
-- keyname: time_zone
-  field_type: time_zone
-  name: Time Zone
-  description: Your local time zone for accurate departure times.
-  default: America/Toronto
-  help_text: GO Transit operates in Eastern Time (America/Toronto).
-
-# =============================================================================
 # ADVANCED OPTIONS
 # =============================================================================
+# Note: GO Transit operates entirely within the Eastern Time zone (America/Toronto),
+# so no time zone configuration is needed.
 - keyname: api_key
   field_type: password
   name: Metrolinx API Key
