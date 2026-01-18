@@ -1,0 +1,134 @@
+{% comment %}
+  GO Transit Dashboard - Half Vertical Layout PREVIEW
+  Static preview template with sample data (no API dependency)
+  
+  Sample Data: Lakeshore East Line - Oshawa GO Station
+{% endcomment %}
+
+<style type="text/css">
+  .alerts-section {
+    max-height: 30%;
+  }
+</style>
+
+<div class="layout layout--row p--3 gap--large mb--0">
+  <div class="flex flex--col flex--1">
+    
+    <!-- Schedule Header -->
+    <div class="mb--2">
+      <span class="label label--small label--underline">Schedule</span>
+    </div>
+    
+    <!-- Two-direction time table -->
+    <div class="columns time-table mb--3">
+      
+      <!-- Direction 1: To Union Station -->
+      <div class="column gap--small">
+        <div class="mb--1">
+          <span class="title title--small" style="display: block;">Union Station</span>
+          <span class="description">To Union Station</span>
+        </div>
+        
+        <!-- Arriving -->
+        <div class="item item--emphasis-3">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="label label--small label--inverted mb--1">arriving</span>
+            <span>
+              <span class="value value--small">9:34</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Next -->
+        <div class="item item--emphasis-2">
+          <div class="meta"></div>
+          <div class="content text--gray-35">
+            <span class="label label--small label--outline mb--1">next</span>
+            <span>
+              <span class="value value--small">9:44</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Later -->
+        <div class="item item--emphasis-1">
+          <div class="meta"></div>
+          <div class="content text--gray-50">
+            <span class="label label--small mb--1">later</span>
+            <span>
+              <span class="value value--small">10:14</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Direction 2: To Oshawa -->
+      <div class="column gap--small">
+        <div class="mb--1">
+          <span class="title title--small" style="display: block;">Oshawa</span>
+          <span class="description">To Oshawa</span>
+        </div>
+        
+        <!-- Arriving -->
+        <div class="item item--emphasis-3">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="label label--small label--inverted mb--1">arriving</span>
+            <span>
+              <span class="value value--small">9:42</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Next -->
+        <div class="item item--emphasis-2">
+          <div class="meta"></div>
+          <div class="content text--gray-35">
+            <span class="label label--small label--outline mb--1">next</span>
+            <span>
+              <span class="value value--small">10:12</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Later -->
+        <div class="item item--emphasis-1">
+          <div class="meta"></div>
+          <div class="content text--gray-50">
+            <span class="label label--small mb--1">later</span>
+            <span>
+              <span class="value value--small">10:42</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- Alerts Section -->
+    <div class="mb--2">
+      <span class="label label--small label--underline">Alerts</span>
+    </div>
+    <div class="alerts-section">
+      <div class="item">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="description" data-clamp="2">Starting Dec 22, maintenance on Lakeshore East line between Oshawa and Whitby. Expect delays of 10-15 minutes.</span>
+          <span class="label label--small label--underline">active: 01/18/26 9:30 PM</span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div class="title_bar m--0">
+  <span class="title">Oshawa GO</span>
+</div>

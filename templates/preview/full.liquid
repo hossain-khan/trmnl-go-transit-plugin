@@ -1,0 +1,227 @@
+{% comment %}
+  GO Transit Dashboard - Full Layout PREVIEW
+  Static preview template with sample data (no API dependency)
+  
+  Sample Data: Lakeshore East Line - Oshawa GO Station
+{% endcomment %}
+
+<style type="text/css">
+  .route-container {
+    width: 80px;
+    position: relative;
+  }
+  
+  .route-line-bg {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    margin-left: -3px;
+    background: gainsboro;
+  }
+  
+  .station-marker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .station-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid dimgray;
+  }
+  
+  .station-dot.current {
+    width: 14px;
+    height: 14px;
+    background: black;
+    border: 2px solid black;
+  }
+  
+  .alerts-section {
+    max-height: 25%;
+  }
+</style>
+
+<div class="layout layout--row p--4 gap--large mb--0">
+  
+  <!-- Left: Route Line Visualization -->
+  <div class="route-container">
+    <div class="flex flex--col flex--center-x h--full" style="position: relative;">
+      <!-- Line logo/name -->
+      <div class="mb--2">
+        <span class="label label--small label--inverted">LE</span>
+      </div>
+      <span class="description mb--2">Line</span>
+      
+      <!-- Route visualization - 8 stations on Lakeshore East -->
+      <div class="flex--1 w--full" style="position: relative;">
+        <div class="route-line-bg"></div>
+        <div class="flex flex--col flex--between h--full" style="position: relative; z-index: 1;">
+          <!-- Oshawa (current station - position 1) -->
+          <div class="station-marker">
+            <div class="station-dot current"></div>
+          </div>
+          <!-- Whitby -->
+          <div class="station-marker">
+            <div class="station-dot"></div>
+          </div>
+          <!-- Ajax -->
+          <div class="station-marker">
+            <div class="station-dot"></div>
+          </div>
+          <!-- Pickering -->
+          <div class="station-marker">
+            <div class="station-dot"></div>
+          </div>
+          <!-- Rouge Hill -->
+          <div class="station-marker">
+            <div class="station-dot"></div>
+          </div>
+          <!-- Guildwood -->
+          <div class="station-marker">
+            <div class="station-dot"></div>
+          </div>
+          <!-- Eglinton -->
+          <div class="station-marker">
+            <div class="station-dot"></div>
+          </div>
+          <!-- Union -->
+          <div class="station-marker">
+            <div class="station-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="divider--v"></div>
+  
+  <!-- Right: Schedule and Alerts -->
+  <div class="flex flex--col flex--1">
+    
+    <!-- Schedule Header -->
+    <div class="mb--3">
+      <span class="label label--small label--underline">Schedule</span>
+    </div>
+    
+    <!-- Two-direction time table -->
+    <div class="columns time-table mb--4">
+      
+      <!-- Direction 1: To Union Station -->
+      <div class="column gap--small">
+        <div class="mb--2">
+          <span class="title title--small" style="display: block;">Union Station</span>
+          <span class="description">To Union Station</span>
+        </div>
+        
+        <!-- Arriving -->
+        <div class="item item--emphasis-3">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="label label--small label--inverted mb--1">arriving</span>
+            <span>
+              <span class="value value--small">9:34</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Next -->
+        <div class="item item--emphasis-2">
+          <div class="meta"></div>
+          <div class="content text--gray-35">
+            <span class="label label--small label--outline mb--1">next</span>
+            <span>
+              <span class="value value--small">9:44</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Later -->
+        <div class="item item--emphasis-1">
+          <div class="meta"></div>
+          <div class="content text--gray-50">
+            <span class="label label--small mb--1">later</span>
+            <span>
+              <span class="value value--small">10:14</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Direction 2: To Oshawa -->
+      <div class="column gap--small">
+        <div class="mb--2">
+          <span class="title title--small" style="display: block;">Oshawa</span>
+          <span class="description">To Oshawa</span>
+        </div>
+        
+        <!-- Arriving -->
+        <div class="item item--emphasis-3">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="label label--small label--inverted mb--1">arriving</span>
+            <span>
+              <span class="value value--small">9:42</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Next (with delay status) -->
+        <div class="item item--emphasis-2">
+          <div class="meta"></div>
+          <div class="content text--gray-35">
+            <span class="label label--small label--outline mb--1">next</span>
+            <span>
+              <span class="value value--small">10:12</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+            <span class="label label--small label--inverted">Delayed</span>
+          </div>
+        </div>
+        
+        <!-- Later -->
+        <div class="item item--emphasis-1">
+          <div class="meta"></div>
+          <div class="content text--gray-50">
+            <span class="label label--small mb--1">later</span>
+            <span>
+              <span class="value value--small">10:42</span>
+              <span class="value value--xxsmall">PM</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- Alerts Section -->
+    <div class="mb--2">
+      <span class="label label--small label--underline">Alerts</span>
+    </div>
+    <div class="alerts-section">
+      <div class="item">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="description" data-clamp="2">Starting Dec 22, maintenance on Lakeshore East line between Oshawa and Whitby. Expect delays of 10-15 minutes during peak hours.</span>
+          <span class="label label--small label--underline">active: 01/18/26 9:30 PM</span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div class="title_bar m--0">
+  <span class="title">Oshawa GO</span>
+</div>
