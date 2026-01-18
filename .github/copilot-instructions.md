@@ -651,6 +651,73 @@ Test across all responsive breakpoints:
 8. **Use gap utilities**: Better than margins for consistent spacing
 9. **Test with edge cases**: Long names, long numbers, short names
 
+## Recipe Best Practices (Plugin Submission)
+
+> **Reference**: [TRMNL Recipe Best Practices](https://help.usetrmnl.com/en/articles/11395668-recipe-best-practices)
+
+When preparing a plugin for submission to the TRMNL public directory, follow these guidelines to pass the automated "Chef" linting utility.
+
+### Avoid Inline Styles
+
+**Problem**: Using inline `style` attributes instead of framework classes.
+
+**Solution**: Use the TRMNL Framework design system classes instead of inline styles.
+
+| Avoid Inline | Use Framework Class |
+|--------------|---------------------|
+| `style="text-align: center"` | `text--center` |
+| `style="background-color: black"` | `bg--black` |
+| `style="display: flex"` | `flex` |
+| `style="justify-content: center"` | `flex--center-x` |
+| `style="padding: 8px"` | `p--2` |
+| `style="margin: 16px"` | `m--4` |
+| `style="border-radius: 8px"` | `rounded` |
+| `style="font-size: 24px"` | `value--large` or `title--large` |
+| `style="color: gray"` | `text--gray-50` |
+| `style="object-fit: cover"` | `object--cover` |
+
+**Framework References**:
+- Text alignment: [https://usetrmnl.com/framework/text#text-alignment](https://usetrmnl.com/framework/text#text-alignment)
+- Background: [https://usetrmnl.com/framework/background](https://usetrmnl.com/framework/background)
+- Image object-fit: [https://usetrmnl.com/framework/image#object-fit](https://usetrmnl.com/framework/image#object-fit)
+
+### Optimize Custom Field Links
+
+**Problem**: Pointing users to external URLs with raw text.
+
+**Bad Example**:
+```yaml
+- keyname: api_key
+  name: API Key
+  description: Get your API key from https://somewhere.com/settings
+  field_type: string
+```
+
+**Good Example**:
+```yaml
+- keyname: api_key
+  name: API Key
+  description: Get your API key from <a href="https://somewhere.com/settings">Server Settings</a>.
+  field_type: string
+```
+
+**Benefits**:
+- Shorter description text
+- Links open in new tab
+- More obviously clickable with `underline` CSS applied
+- Better UX for plugin configuration
+
+**Tip**: If a link is just an example and should not be clickable, remove `https://` from the beginning to bypass the Chef check.
+
+### General Submission Tips
+
+1. **Spelling & Grammar**: Check all text for errors before submission
+2. **Consistent Naming**: Use clear, descriptive names for settings fields
+3. **Helpful Descriptions**: Provide context for each custom field
+4. **Placeholder Text**: Include realistic placeholder values to guide users
+5. **Optional Fields**: Mark non-required fields as `optional: true`
+6. **Framework Compliance**: Exclusively use framework classes for styling
+
 ## Transit Data Structure
 
 ```json
