@@ -1,13 +1,13 @@
 name: Update GO Transit Data
 
 on:
-  schedule:
-    # Run every 5 minutes during peak commute hours (6 AM - 9 AM and 4 PM - 8 PM EST)
-    - cron: '*/5 11-14,21-25 * * 1-5'  # Weekdays, adjusted for UTC
-    # Run every 15 minutes during off-peak hours
-    - cron: '*/15 0-10,15-20 * * 1-5'  # Weekdays off-peak
-    # Run every 30 minutes on weekends
-    - cron: '*/30 * * * 0,6'  # Weekends
+  # schedule:
+  #   # Run every 5 minutes during peak commute hours (6 AM - 9 AM and 4 PM - 8 PM EST)
+  #   - cron: '*/5 11-14,21-25 * * 1-5'  # Weekdays, adjusted for UTC
+  #   # Run every 15 minutes during off-peak hours
+  #   - cron: '*/15 0-10,15-20 * * 1-5'  # Weekdays off-peak
+  #   # Run every 30 minutes on weekends
+  #   - cron: '*/30 * * * 0,6'  # Weekends
   workflow_dispatch:
 
 jobs:
