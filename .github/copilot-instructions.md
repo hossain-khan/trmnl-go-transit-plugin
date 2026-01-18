@@ -17,10 +17,11 @@ trmnl-go-transit-plugin/
 │       └── update-data.yml       # Scheduled data updates
 ├── api/                          # API endpoints
 │   └── data.json                 # Current transit data (served via GitHub Pages)
-├── assets/                       # Design assets
-│   ├── icon/                     # Plugin icons
-│   └── demo/                     # Demo screenshots
 ├── project-resources/            # Reference materials
+│   ├── assets/                   # Design assets
+│   │   ├── demo/                 # Demo screenshots
+│   │   ├── icon/                 # Plugin icons
+│   │   └── logo/                 # GO Transit logos (SVG, PNG)
 │   ├── docs/
 │   │   ├── PRD.md                # Product requirements
 │   │   └── NEW_RECIPE_GUIDE.md   # Guide for creating recipes
@@ -40,6 +41,7 @@ trmnl-go-transit-plugin/
 │       └── quadrant.liquid
 ├── data.json                     # Transit data for templates
 ├── index.html                    # Preview/testing page
+├── plugin-config.yml             # Custom form fields for user configuration
 ├── settings.yml                  # Plugin settings configuration
 └── README.md
 ```
