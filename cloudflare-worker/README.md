@@ -41,7 +41,7 @@ Secrets should not be stored in `.env` for security. Instead, use Wrangler's sec
 # Staging
 wrangler secret put ORIGIN_AUTH_TOKEN --env staging
 
-# Production  
+# Production
 wrangler secret put ORIGIN_AUTH_TOKEN --env production
 ```
 
@@ -82,18 +82,19 @@ cloudflare-worker/
 
 See `.env.example` for all available variables:
 
-| Variable | Purpose | Default |
-|----------|---------|---------|
-| `ORIGIN_BASE_URL` | Metrolinx API base URL | `https://api.openmetrolinx.com/OpenDataAPI/` |
-| `ORIGIN_AUTH_TOKEN` | Metrolinx API key | Required |
-| `ORIGIN_TIMEOUT_MS` | Origin fetch timeout | `3000` |
-| `EDGE_TTL` | Cloudflare cache TTL | `300` |
-| `BROWSER_TTL` | Client-side cache TTL | `60` |
-| `LOG_LEVEL` | Logging verbosity | `info` |
+| Variable            | Purpose                | Default                                      |
+| ------------------- | ---------------------- | -------------------------------------------- |
+| `ORIGIN_BASE_URL`   | Metrolinx API base URL | `https://api.openmetrolinx.com/OpenDataAPI/` |
+| `ORIGIN_AUTH_TOKEN` | Metrolinx API key      | Required                                     |
+| `ORIGIN_TIMEOUT_MS` | Origin fetch timeout   | `3000`                                       |
+| `EDGE_TTL`          | Cloudflare cache TTL   | `300`                                        |
+| `BROWSER_TTL`       | Client-side cache TTL  | `60`                                         |
+| `LOG_LEVEL`         | Logging verbosity      | `info`                                       |
 
 ### wrangler.toml
 
 The `wrangler.toml` file contains:
+
 - Worker name and main entry point
 - Environment configurations (dev, staging, prod)
 - Build settings
@@ -152,6 +153,7 @@ curl "https://your-worker.workers.dev/api/V1/ServiceataGlance/Trains/All?station
 See [METROLINX_API.md](../../project-resources/docs/METROLINX_API.md) for full API documentation.
 
 **Key endpoints:**
+
 - `/api/V1/ServiceataGlance/Trains/All` - Real-time train departures
 - `/api/V1/ServiceUpdate/ServiceAlert/All` - Service alerts
 - `/api/V1/Stop/NextService/{StopCode}` - Predictions for a specific stop
@@ -159,6 +161,7 @@ See [METROLINX_API.md](../../project-resources/docs/METROLINX_API.md) for full A
 ### Query Parameters
 
 Only allowlisted parameters are included in cache keys:
+
 - `station_id` - GO Transit stop ID
 - `limit` - Maximum results
 - `direction` - Inbound/outbound filter
@@ -215,11 +218,13 @@ nano .env  # Add your API key
 ### `504 Gateway Timeout`
 
 **Causes**:
+
 - Origin API is unreachable
 - Timeout is too short (default 3s)
 - Network issues
 
 **Solutions**:
+
 - Check `ORIGIN_BASE_URL` is correct
 - Verify API key is valid
 - Increase `ORIGIN_TIMEOUT_MS` temporarily
@@ -228,11 +233,13 @@ nano .env  # Add your API key
 ### Cache not working (always MISS)
 
 **Causes**:
+
 - Cache-Control headers not set
 - Query parameters not normalized
 - Different parameters create different cache keys
 
 **Solutions**:
+
 - Check `EDGE_TTL` and `BROWSER_TTL` env vars
 - Verify parameter allowlist includes your params
 - Test with same URL twice: `?station_id=OS` should HIT on second request
@@ -247,6 +254,7 @@ curl -i "http://localhost:8787/api/..." | grep -i access-control
 ```
 
 Should see:
+
 ```
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: GET, OPTIONS
@@ -256,11 +264,11 @@ Access-Control-Allow-Methods: GET, OPTIONS
 
 Based on PROXY_API_SERVER_PRD.md:
 
-| Metric | Target | Acceptable |
-|--------|--------|-----------|
-| Median TTFB (cache HIT) | < 50ms | < 100ms |
-| P95 origin fetch | < 3s | < 5s |
-| Cache hit ratio | > 85% | > 75% |
+| Metric                  | Target | Acceptable |
+| ----------------------- | ------ | ---------- |
+| Median TTFB (cache HIT) | < 50ms | < 100ms    |
+| P95 origin fetch        | < 3s   | < 5s       |
+| Cache hit ratio         | > 85%  | > 75%      |
 
 ## Security
 
@@ -275,6 +283,7 @@ dist/
 ```
 
 **API key protection:**
+
 - Use `wrangler secret put` for production keys
 - Rotate keys regularly
 - Monitor API usage in Metrolinx dashboard

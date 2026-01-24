@@ -84,10 +84,20 @@ const worker = {
       } catch (err) {
         // Log error and return appropriate response
         if (err.name === 'AbortError') {
-          logEvent(env, 'ORIGIN_TIMEOUT', {
-            path: url.pathname,
-            timeout_ms: env.ORIGIN_TIMEOUT_MS || 3000,
-          })
+          const timeoutMs = env.ORIGIN_TIMEOUT_MS || 3000
+          console.error(`ORIGIN_TIMEOUT: Exceeded ${timeoutMs}ms`)
+
+          // Check for stale cached response
+          const staleResponse = await cache.match(cacheKey)
+          if (staleResponse) {
+            console.log(`STALE_FALLBACK: Returning stale cache for ${url.pathname} (timeout)`)
+            const response = new Response(staleResponse.body, staleResponse)
+            response.headers.set('X-Cache', 'STALE')
+            addCorsHeaders(response)
+            return response
+          }
+
+          // No stale cache available, return 504
           return createErrorResponse(504, 'Gateway Timeout', env)
         }
 
@@ -128,6 +138,24 @@ const worker = {
         time_ms: originTime,
         path: url.pathname,
       })
+
+      // Handle 5xx errors with stale fallback
+      if (originResponse.status >= 500) {
+        console.error(`ORIGIN_ERROR: ${originResponse.status} from ${env.ORIGIN_BASE_URL}`)
+
+        // Check for stale cached response
+        const staleResponse = await cache.match(cacheKey)
+        if (staleResponse) {
+          console.log(`STALE_FALLBACK: Returning stale cache for ${url.pathname} (origin 5xx)`)
+          const response = new Response(staleResponse.body, staleResponse)
+          response.headers.set('X-Cache', 'STALE')
+          addCorsHeaders(response)
+          return response
+        }
+
+        // No stale cache available, cache the error response with short TTL
+        console.log(`Caching 5xx error response for ${url.pathname} with 10s TTL`)
+      }
 
       // Clone response before reading body (body can only be consumed once)
       const clonedResponse = originResponse.clone()
@@ -178,7 +206,7 @@ const worker = {
  * - Request size within limits
  * Returns error response if validation fails, null if valid
  */
-function validateRequest(request, url) {
+function validateRequest(request, _url) {
   // Check method
   if (request.method === 'OPTIONS') {
     const response = new Response(null, { status: 204 })
@@ -212,7 +240,7 @@ function createCacheKey(originBaseUrl, url) {
   // Validate the cache key URL
   try {
     new URL(cacheKeyUrl)
-  } catch (err) {
+  } catch (_err) {
     throw new Error(`Invalid cache key URL: ${cacheKeyUrl}`)
   }
 
@@ -241,7 +269,7 @@ function normalizeParams(params) {
  * Metrolinx API uses query parameter 'key' for authentication
  * Throws AbortError on timeout, Error on other failures
  */
-async function fetchOrigin(url, env, ctx) {
+async function fetchOrigin(url, env, _ctx) {
   if (!env.ORIGIN_BASE_URL || !env.ORIGIN_AUTH_TOKEN) {
     throw new Error('Missing required environment variables: ORIGIN_BASE_URL or ORIGIN_AUTH_TOKEN')
   }
@@ -289,7 +317,6 @@ async function fetchOrigin(url, env, ctx) {
     console.log('[fetchOrigin] Got response, status:', response.status, 'ok:', response.ok)
 
     clearTimeout(timeout)
-    console.log('[fetchOrigin] Response status:', response.status)
     return response
   } catch (err) {
     clearTimeout(timeout)
