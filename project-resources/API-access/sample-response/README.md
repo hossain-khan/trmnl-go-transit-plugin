@@ -37,33 +37,33 @@ Real-time information for all in-service trains.
 **Usage:** Real-time train tracking and departure prediction.
 
 ### ServiceAlerts-All.json
-**Endpoint:** `/ServiceAlerts/All`
+**Endpoint:** `/api/V1/ServiceUpdate/ServiceAlert/All`
 
 Active service alerts, delays, and maintenance notices.
 
 **Key Fields:**
-- `AlertType`: "SERVICE_CHANGE", "DELAY", "MAINTENANCE"
-- `Severity`: "MAJOR", "MINOR"
-- `AffectedLines`: Which lines are impacted
-- `IsActive`: Whether alert is currently active
-- `StartDate`/`EndDate`: Alert duration
+- `Code`: Unique alert message code
+- `SubjectEnglish`/`SubjectFrench`: Alert title in both languages
+- `BodyEnglish`/`BodyFrench`: Alert description in both languages
+- `Category`: "Amenity", "Service Disruption"
+- `SubCategory`: Alert type (e.g., "Elevator-Escalator Disruption", "Delays")
+- `Lines`: Array of affected line codes
+- `Status`: "INIT" (new), "UPD" (updated), etc.
 
 **Usage:** Filter active alerts for the selected line and display in the alerts section.
 
-### Station-All.json
-**Endpoint:** `/Station/All`
+### Stop-All.json
+**Endpoint:** `/api/V1/Stop/All`
 
-Complete station information including accessibility and facilities.
+Complete stop and station information for all GO Transit locations.
 
 **Key Fields:**
-- `StationId`: Unique identifier
-- `StationName`: Display name
-- `Latitude`/`Longitude`: Geographic coordinates
-- `AccessibilityFeatures`: Available accessibility options
-- `Facilities`: Available amenities
-- `ServiceLines`: Which GO lines serve this station
+- `LocationCode`: Internal stop code (e.g., "OS" for Oshawa, "UN" for Union)
+- `PublicStopId`: Public-facing stop identifier
+- `LocationName`: Human-readable name (e.g., "Oshawa GO", "Union Station")
+- `LocationType`: Type of location (Bus Stop, Bus Terminal, Train Station, Park & Ride)
 
-**Usage:** Station lookup and metadata for the plugin's configuration.
+**Usage:** Station lookup and metadata for the plugin's configuration and scheduling.
 
 ## Integration Notes
 
