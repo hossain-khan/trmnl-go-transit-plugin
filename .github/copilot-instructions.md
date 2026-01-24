@@ -780,6 +780,20 @@ When preparing a plugin for submission to the TRMNL public directory, follow the
 | `/ServiceAlerts/All` | Service alerts and delays |
 | `/Station/All` | Station information |
 
+### Pre-commit CI Checks ✅
+
+Before committing or pushing changes, run these locally to ensure the CI workflow will pass:
+
+- Run quality checks (Prettier + ESLint):
+  - `cd cloudflare-worker && npm run quality`
+- Validate wrangler config (dry-run):
+  - `cd cloudflare-worker && npx wrangler publish --dry-run`
+  - If your dry-run requires authentication, provide `CLOUDFLARE_API_TOKEN` in the environment when running the command.
+- Ensure `cloudflare-worker/package-lock.json` exists (used by CI caching):
+  - `cd cloudflare-worker && npm install --package-lock-only`
+
+If any check fails, fix locally and re-run before pushing to avoid CI failures.
+
 ## Future Considerations
 
 - Support for additional TRMNL devices as they're released
