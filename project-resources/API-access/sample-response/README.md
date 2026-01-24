@@ -4,20 +4,37 @@ This directory contains sample responses from the Metrolinx Open Data API endpoi
 
 ## Files
 
-### ServiceAtAGlance-All.json
-**Endpoint:** `/ServiceAtAGlance/All`
+### ServiceAtAGlance-Buses.json
+**Endpoint:** `/api/V1/ServiceataGlance/Buses/All`
 
-Real-time departure and arrival information for all GO Transit lines.
+Real-time information for all in-service buses.
 
 **Key Fields:**
-- `StationId`: Unique station identifier
-- `LineName`: Name of the service line (e.g., "Lakeshore East")
-- `LineCode`: Short line code (e.g., "LE")
-- `Direction1`/`Direction2`: Bi-directional schedule information
-- `ScheduledDeparture`/`ActualDeparture`: Scheduled vs actual times
-- `Status`: "On Time", "Delayed", "Cancelled"
+- `TripNumber`: Unique trip identifier
+- `LineCode`: Bus line code (e.g., "18", "40")
+- `RouteNumber`: Route display number
+- `Display`: Human-readable destination (e.g., "18B - Union Station")
+- `DelaySeconds`: Current delay in seconds
+- `IsInMotion`: Whether vehicle is currently moving
+- `AtStationCode`: Station code if vehicle is at a station
 
-**Usage:** Transform this data into the plugin's `direction_1` and `direction_2` structures with arriving/next/later times.
+**Usage:** Real-time bus tracking and arrival prediction data.
+
+### ServiceAtAGlance-Trains.json
+**Endpoint:** `/api/V1/ServiceataGlance/Trains/All`
+
+Real-time information for all in-service trains.
+
+**Key Fields:** Same structure as Buses endpoint
+- `TripNumber`: Train trip identifier
+- `LineCode`: Rail line code (e.g., "LE" for Lakeshore East, "LSW" for Lakeshore West)
+- `Display`: Destination display (e.g., "LE1 - Union Station")
+- `DelaySeconds`: Current delay in seconds
+- `FirstStopCode`/`LastStopCode`: Origin and destination station codes
+
+**Note:** `ServiceAtAGlance-Trains.json` will be added when train service is available (currently captured as buses sample).
+
+**Usage:** Real-time train tracking and departure prediction.
 
 ### ServiceAlerts-All.json
 **Endpoint:** `/ServiceAlerts/All`
