@@ -54,10 +54,16 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url)
 
+    // Validate request method
+    if (request.method !== "GET") {
+      return new Response(null, { status: 405, statusText: "Method Not Allowed" })
+    }
+
     // Normalize cache key (very important)
+    // NOTE: Cache key should NOT include url.origin (proxy always uses same origin)
     const cacheKey = new Request(
-      `${url.origin}${url.pathname}?${normalizeParams(url.searchParams)}`,
-      request
+      `${env.ORIGIN_BASE_URL}${url.pathname}?${normalizeParams(url.searchParams)}`,
+      { method: "GET" }
     )
 
     const cache = caches.default
@@ -82,16 +88,24 @@ export default {
     )
 
     // 3️⃣ Clone & cache
-    response = new Response(originResponse.body, originResponse)
+    // NOTE: originResponse.body can only be consumed once,
+    // so we clone the response to preserve it for caching
+    const clonedResponse = originResponse.clone()
 
-    response.headers.set(
+    // Add cache headers to cloned response
+    clonedResponse.headers.set(
       "Cache-Control",
       "public, max-age=60, s-maxage=300, stale-while-revalidate=30"
     )
 
-    ctx.waitUntil(cache.put(cacheKey, response.clone()))
+    // Add observability headers
+    clonedResponse.headers.set("X-Cache", "MISS")
+    clonedResponse.headers.set("X-Proxy-Version", "1.0")
 
-    return response
+    // Cache asynchronously in background
+    ctx.waitUntil(cache.put(cacheKey, clonedResponse.clone()))
+
+    return clonedResponse
   },
 }
 ```
@@ -132,7 +146,11 @@ Example:
 
 ```js
 function normalizeParams(params) {
-  const allowlist = ["q", "page", "limit"]
+  // GO Transit API allowlist
+  // station_id: GO Transit stop ID
+  // limit: max results to return
+  // direction: inbound/outbound filter
+  const allowlist = ["station_id", "limit", "direction"]
   return [...params.entries()]
     .filter(([k]) => allowlist.includes(k))
     .sort(([a], [b]) => a.localeCompare(b))
@@ -166,20 +184,42 @@ Example rule:
 
 ## 6️⃣ Timeouts & safety (production-grade)
 
+### Timeout Pattern
+
 ```js
 const controller = new AbortController()
-setTimeout(() => controller.abort(), 3000)
+const timeout = setTimeout(() => controller.abort(), env.ORIGIN_TIMEOUT_MS || 3000)
 
-const res = await fetch(originUrl, {
-  signal: controller.signal,
-})
+try {
+  const res = await fetch(originUrl, {
+    signal: controller.signal,
+  })
+  clearTimeout(timeout)
+  return res
+} catch (err) {
+  clearTimeout(timeout)
+  if (err.name === "AbortError") {
+    // Check for stale cached response
+    const stale = await cache.match(cacheKey)
+    if (stale) return stale // Return stale-while-revalidate
+    return new Response(null, { status: 504, statusText: "Gateway Timeout" })
+  }
+  throw err
+}
 ```
 
-Add:
+### Error Response Caching
 
-* origin timeout
-* fallback cached response
-* optional error caching (short TTL)
+Cache error responses (5xx) briefly to prevent origin hammering:
+
+```js
+if (originResponse.status >= 500) {
+  clonedResponse.headers.set(
+    "Cache-Control",
+    "public, max-age=10, s-maxage=10" // Short TTL only
+  )
+}
+```
 
 ---
 
@@ -229,13 +269,43 @@ KV:
 
 ## 9️⃣ Observability (don’t skip this)
 
-* `CF-Cache-Status` header
-* Custom headers:
+### Response Headers
 
-  ```http
-  X-Cache: HIT | MISS | STALE
-  ```
-* Cloudflare Analytics → Workers
+* `CF-Cache-Status` - Cloudflare cache status (automatic)
+* `X-Cache: HIT | MISS | STALE` - Proxy cache status
+* `X-Proxy-Version: 1.0` - Identify proxy version
+* `X-Proxy-Time-Ms` - Origin fetch duration (optional)
+
+### Logging Strategy
+
+```js
+// Log cache misses (indicates origin load)
+if (cacheHit === false) {
+  console.log(`CACHE_MISS: ${url.pathname}?${normalizeParams(url.searchParams)}`)
+}
+
+// Log origin errors
+if (originResponse.status >= 500) {
+  console.error(`ORIGIN_ERROR: ${originResponse.status} from ${env.ORIGIN_BASE_URL}`)
+}
+
+// Log timeouts
+catch (err) {
+  if (err.name === "AbortError") {
+    console.error(`ORIGIN_TIMEOUT: Exceeded ${env.ORIGIN_TIMEOUT_MS}ms`)
+  }
+}
+```
+
+### Logging Destinations
+
+* **Development**: `console.log()` outputs to Worker logs
+* **Production**: Use Cloudflare Logpush to send logs to:
+  - AWS S3 (recommended for cost)
+  - Axiom (recommended for APM + dashboards)
+  - Datadog / New Relic
+
+Configure via Cloudflare dashboard → Logs → Logpush
 
 ---
 
@@ -249,10 +319,41 @@ KV:
 
 ---
 
-## Recommended “starter blueprint”
+## CORS Handling (Critical for Web Clients)
 
-If I had to give an engineer or AI agent a **single instruction**, it’d be:
+Cloudflare Workers require explicit CORS headers:
 
-> “Build a Cloudflare Worker proxy that normalizes cache keys, uses Cache API with `stale-while-revalidate`, short TTLs, and no KV unless metadata is needed.”
+```js
+// Add CORS headers to all responses
+const setCorsHeaders = (response) => {
+  response.headers.set("Access-Control-Allow-Origin", "*")
+  response.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS")
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type")
+  return response
+}
+
+// Handle preflight OPTIONS requests
+if (request.method === "OPTIONS") {
+  return setCorsHeaders(new Response(null, { status: 204 }))
+}
+
+// Apply CORS to all responses
+return setCorsHeaders(clonedResponse)
+```
+
+---
+
+## Recommended "starter blueprint"
+
+If I had to give an engineer or AI agent a **single instruction**, it'd be:
+
+> "Build a Cloudflare Worker proxy that:
+> 1. Validates requests (GET only)
+> 2. Normalizes cache keys from allowlisted query params
+> 3. Uses Cache API with `stale-while-revalidate`
+> 4. Implements timeouts with fallback to stale responses
+> 5. Adds observability headers (X-Cache, X-Proxy-Version)
+> 6. Handles CORS for web clients
+> 7. Short TTLs with error response caching for resilience"
 
 ---

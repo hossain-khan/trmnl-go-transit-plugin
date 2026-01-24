@@ -100,10 +100,19 @@ Origin API (internal or third-party)
 
   * Tracking parameters (e.g., `utm_*`)
   * Random or session parameters
+  * Origin domain (proxy always uses same origin)
 * Query parameters must be:
 
   * Allow-listed
   * Sorted deterministically
+
+#### GO Transit API Parameter Allowlist
+
+| Parameter | Purpose | Example |
+|-----------|---------|---------|
+| `station_id` | GO Transit stop ID | `1234` |
+| `limit` | Max results to return | `5` |
+| `direction` | Filter by direction (inbound/outbound) | `inbound` |
 
 #### 4.2.3 Cache Headers
 
@@ -157,10 +166,15 @@ Default values:
 | Origin 5xx         | Return cached response if available (stale) |
 | Invalid request    | `400 Bad Request`                           |
 | Unsupported method | `405 Method Not Allowed`                    |
+| CORS preflight     | Return `204 No Content` with CORS headers   |
 
-Optional:
+#### Error Response Caching Strategy
 
-* Cache error responses for a short TTL (e.g. 10s)
+Cache error responses (5xx) with **very short TTL** to prevent origin hammering:
+
+* `max-age=10, s-maxage=10` (10 seconds)
+* Only when no stale response is available
+* Never cache 4xx errors (bad requests should fail fast)
 
 ---
 
@@ -210,17 +224,45 @@ Optional:
 
 ### 7.1 Response Headers
 
-Include debug headers:
+Include observability headers on all responses:
 
-* `CF-Cache-Status`
-* `X-Cache: HIT | MISS | STALE`
-* `X-Proxy-Version`
+* `CF-Cache-Status` - Cloudflare automatic cache status (HIT/MISS)
+* `X-Cache: HIT | MISS | STALE` - Proxy cache status
+* `X-Proxy-Version: 1.0` - Identifies proxy implementation version
+* `X-Proxy-Time-Ms` - Origin fetch latency (optional, for performance debugging)
+* `Access-Control-*` - CORS headers for web client access
 
 ### 7.2 Logging
 
-* Log cache misses
-* Log origin timeouts
-* Log error responses (status ≥ 500)
+#### Log Signals
+
+* **Cache misses** - Indicates origin load (should be < 10% in steady state)
+* **Origin timeouts** - Connection quality issues
+* **Origin 5xx errors** - Upstream service degradation
+* **Stale cache usage** - Fallback to aged responses (success metric during outages)
+
+#### Log Format
+
+```
+[TIMESTAMP] [LEVEL] [EVENT] - {context}
+
+Examples:
+2026-01-23T14:30:45Z INFO CACHE_HIT - station_id=1234 ttl=245s
+2026-01-23T14:31:12Z WARN CACHE_MISS - station_id=5678 (origin_fetch_5ms)
+2026-01-23T14:31:45Z ERROR ORIGIN_TIMEOUT - station_id=1234 (3000ms exceeded)
+2026-01-23T14:32:01Z WARN STALE_FALLBACK - station_id=1234 (origin_5xx, age=120s)
+```
+
+#### Logging Destinations
+
+* **Development**: `console.log()` → Cloudflare Worker dashboard logs
+* **Staging**: Cloudflare Logpush → AWS S3 (cost-effective archival)
+* **Production**: 
+  - Primary: Cloudflare Logpush → Axiom (APM + real-time dashboards)
+  - Secondary: Logpush → AWS S3 (long-term retention, backup)
+  - Optional: Real-time alerts via PagerDuty for 5xx errors
+
+Configure via: Cloudflare Dashboard → Logs → Logpush
 
 ---
 
@@ -229,7 +271,12 @@ Include debug headers:
 * No client-provided Authorization headers forwarded by default
 * Only allow outbound requests to configured origin
 * Avoid caching personalized or authenticated data
-* Validate incoming request size
+* Validate incoming request size (max 5MB)
+* **CORS Headers**: Explicit `Access-Control-Allow-Origin`, `Access-Control-Allow-Methods`
+  - Support preflight `OPTIONS` requests
+  - Restrict to necessary methods (GET, OPTIONS only)
+* Request method validation (only GET + OPTIONS allowed)
+* Query parameter allowlisting (reject unknown params)
 
 ---
 
@@ -246,19 +293,38 @@ Include debug headers:
 
 ## 10. Acceptance Criteria
 
-* Cache HIT ratio measurable via headers
-* Deterministic cache keys verified
-* Origin not called on cache HIT
-* Timeout behavior validated
-* Cache invalidation strategy documented
+* ✅ Cache HIT ratio measurable via headers (`X-Cache` header present on all responses)
+* ✅ Deterministic cache keys verified (same query params → same cache key)
+* ✅ Origin not called on cache HIT (verified in logs)
+* ✅ Timeout behavior validated (504 returned at 3s, stale fallback works)
+* ✅ Cache invalidation strategy documented
+* ✅ CORS headers present and valid for web client usage
+* ✅ Error responses cached with short TTL (10s for 5xx)
+* ✅ Observability headers logged and queryable
+* ✅ Query parameter allowlist enforced (unknown params rejected)
+
+### Test Scenarios
+
+| Scenario | Expected Behavior | Verification |
+|----------|-------------------|--------------|
+| Cache HIT | Return response with `X-Cache: HIT` in < 50ms | Check headers + latency |
+| Cache MISS | Fetch origin, return with `X-Cache: MISS` | Check logs for origin call |
+| Stale fallback | Return cached response on origin timeout | Logs show STALE_FALLBACK |
+| Origin 5xx | Cache error for 10s, then retry | Check TTL in response header |
+| Unknown param | Stripped from cache key | Cache hits with/without param |
+| CORS preflight | Return 204 with CORS headers | OPTIONS request succeeds |
+| Method not allowed | Return 405 | POST/PUT requests rejected |
 
 ---
 
 ## 11. Open Questions
 
-* Which query parameters should be allow-listed?
-* Do we need regional cache bypass?
-* Should error responses be cached?
+* ✅ Which query parameters should be allow-listed? → **Resolved**: `station_id`, `limit`, `direction`
+* ✅ Do we need regional cache bypass? → **Deferred**: Not in MVP (can add via Cache Rules later)
+* ✅ Should error responses be cached? → **Resolved**: Yes, 5xx cached for 10s only
+* ✅ What's the logging destination? → **Resolved**: Axiom for prod, console for dev, S3 backup
+* Where should the Worker be deployed? → TBD (Cloudflare account setup)
+* What's the origin API rate limit? → TBD (check Metrolinx API documentation)
 
 ---
 
