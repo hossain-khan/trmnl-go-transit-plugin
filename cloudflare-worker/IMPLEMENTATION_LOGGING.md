@@ -1,6 +1,7 @@
 # Implementation Summary: Logging & Observability Headers
 
 ## Overview
+
 Successfully implemented comprehensive logging and observability headers for the TRMNL GO Transit Proxy API, enabling monitoring of cache performance, origin health, and errors.
 
 ## Changes Made
@@ -8,6 +9,7 @@ Successfully implemented comprehensive logging and observability headers for the
 ### 1. Structured Logging Implementation (`src/index.js`)
 
 #### Log Event Types Added
+
 - **INFO Level:**
   - `CACHE_MISS` - Cache miss occurred, origin fetch required
   - `ORIGIN_FETCH_SUCCESS` - Successful origin response with timing
@@ -24,16 +26,19 @@ Successfully implemented comprehensive logging and observability headers for the
   - `WORKER_ERROR` - Unexpected worker error
 
 #### Log Format
+
 ```
 [TIMESTAMP] [LEVEL] [EVENT] - {context}
 ```
 
 Example:
+
 ```
 [2026-01-24T09:27:56.949Z] [INFO] [CACHE_MISS] - {"path":"/api/V1/ServiceataGlance/Trains/All"}
 ```
 
 #### Key Features
+
 - ISO 8601 timestamps for precise timing
 - Structured JSON context for easy parsing
 - Log level filtering based on `LOG_LEVEL` environment variable
@@ -52,6 +57,7 @@ function logEvent(env, eventType, context = {}) {
 ```
 
 Features:
+
 - Automatic log level determination (INFO, WARN, ERROR)
 - Environment-based filtering
 - Consistent formatting across all events
@@ -63,14 +69,14 @@ When serving stale responses, the system now calculates and logs the age:
 
 ```javascript
 const cacheDate = staleResponse.headers.get('Date')
-const ageSeconds = cacheDate 
+const ageSeconds = cacheDate
   ? Math.floor((Date.now() - new Date(cacheDate).getTime()) / 1000)
   : null
 
 logEvent(env, 'STALE_FALLBACK', {
   path: url.pathname,
   age_seconds: ageSeconds,
-  reason: 'timeout' // or 'origin_5xx'
+  reason: 'timeout', // or 'origin_5xx'
 })
 ```
 
@@ -78,11 +84,11 @@ logEvent(env, 'STALE_FALLBACK', {
 
 All responses now include:
 
-| Header | Values | When Set |
-|--------|--------|----------|
-| `X-Cache` | HIT, MISS, STALE, ERROR | All responses |
-| `X-Proxy-Version` | 1.0 | All responses |
-| `X-Proxy-Time-Ms` | milliseconds | MISS only (origin fetch duration) |
+| Header            | Values                  | When Set                          |
+| ----------------- | ----------------------- | --------------------------------- |
+| `X-Cache`         | HIT, MISS, STALE, ERROR | All responses                     |
+| `X-Proxy-Version` | 1.0                     | All responses                     |
+| `X-Proxy-Time-Ms` | milliseconds            | MISS only (origin fetch duration) |
 
 ### 5. Fixed Immutable Headers Issue
 
@@ -105,6 +111,7 @@ const finalResponse = new Response(clonedResponse.body, {
 ### 6. Comprehensive Documentation (`LOGGING.md`)
 
 Created 272-line documentation covering:
+
 - Log format and event types
 - Observability headers reference
 - Logging destinations (development, staging, production)
@@ -117,6 +124,7 @@ Created 272-line documentation covering:
 ## Testing Results
 
 ### Local Development Testing
+
 - ✅ Worker starts successfully
 - ✅ Cache MISS logging verified
 - ✅ Cache HIT behavior verified (no unnecessary logs)
@@ -124,6 +132,7 @@ Created 272-line documentation covering:
 - ✅ Performance improvement: 224ms (miss) → 2-3ms (hit)
 
 ### Quality Checks
+
 - ✅ Prettier formatting: PASSED
 - ✅ ESLint validation: PASSED
 - ✅ No syntax errors
@@ -132,6 +141,7 @@ Created 272-line documentation covering:
 ## File Changes
 
 ### Modified Files
+
 1. **cloudflare-worker/src/index.js** (+143 lines, -38 lines)
    - Replaced ad-hoc console.log calls with structured logEvent()
    - Added stale response age calculation
@@ -139,6 +149,7 @@ Created 272-line documentation covering:
    - Enhanced error logging
 
 ### New Files
+
 1. **cloudflare-worker/LOGGING.md** (+272 lines)
    - Comprehensive logging documentation
    - Setup guides for Axiom and S3
@@ -156,11 +167,13 @@ Created 272-line documentation covering:
 ## Performance Impact
 
 ### Response Times
+
 - Cache HIT: 2-3ms (no origin call)
 - Cache MISS: 200-250ms (includes origin fetch + processing)
 - Improvement: ~99% reduction on cache hits
 
 ### Logging Overhead
+
 - Minimal: ~1-2ms per log event
 - Only logs important events (misses, errors)
 - No logging on cache hits (most common path)
@@ -168,11 +181,13 @@ Created 272-line documentation covering:
 ## Logging Destinations
 
 ### Development
+
 - **Output:** `console.log()`, `console.warn()`, `console.error()`
 - **Access:** Cloudflare Worker dashboard logs or `wrangler tail`
 - **Retention:** ~1 hour (ephemeral)
 
 ### Staging/Production
+
 - **Primary:** Cloudflare Logpush → Axiom
   - Real-time log streaming
   - Advanced query and analytics
@@ -185,7 +200,9 @@ Created 272-line documentation covering:
   - Cost-effective storage
 
 ### Configuration
+
 Set via environment variables in `wrangler.toml`:
+
 - `LOG_LEVEL`: debug, info, warn, error
 - `ENVIRONMENT`: development, staging, production
 - `ENABLE_OBSERVABILITY_HEADERS`: true/false
