@@ -1,0 +1,219 @@
+{
+  "Metadata": {
+    "TimeStamp": "2026-01-24 17:31:47",
+    "ErrorCode": "200",
+    "ErrorMessage": "OK"
+  },
+  "Messages": {
+    "Message": [
+      {
+        "Code": "M0000470883",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2025-12-23 06:48:10",
+        "SubjectEnglish": "Street level access after station hours",
+        "SubjectFrench": "Accès au niveau de la rue après les heures de gare",
+        "BodyEnglish": "Access to the waiting area and restrooms is open Monday – Friday, 5:20 a.m. to 12:40 p.m.After the main waiting area is closed:To exit from the station building to MacNab Street, please use the walkway doors adjacent to the platform 1 staircase.",
+        "BodyFrench": "L’accès à la zone d’attente et aux toilettes est ouvert du lundi au vendredi, de 5 h 20 à 12 h 40. Après la fermeture de la zone d’attente principale?: Pour sortir du bâtiment de la station vers la rue MacNab, veuillez utiliser les portes du passage piéton adjacent à l’escalier du quai 1.",
+        "Category": "General Information",
+        "SubCategory": "Station General Information",
+        "Lines": [
+          {
+            "Code": "LW"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "WR"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000491015",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2025-11-19 12:38:14",
+        "SubjectEnglish": "Exhibition GO: Pedestrian Bridge Closure",
+        "SubjectFrench": "Gare GO d’Exhibition : Fermeture du pont piétonnier",
+        "BodyEnglish": "The pedestrian bridge at Exhibition GO, is closed for the winter season and inaccessible to customers. Please use elevators and stairwells to access the pedestrian tunnel for Exhibition GO platform and station access. Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. Sign up for On The GO alerts here.",
+        "BodyFrench": "Le pont piétonnier à la gare GO d’Exhibition est fermé pour la saison hivernale et inaccessible aux clients. Veuillez utiliser les ascenseurs et les escaliers pour accéder au tunnel piétonnier pour le quai et l’accès à la station de la gare GO d’Exhibition. Abonnez-vous aux alertes On the GO et recevez des alertes personnalisées en temps réel pour les changements d’horaire, les mises à jour de construction et plus encore. Inscrivez-vous aux alertes On the GO ici.",
+        "Category": "General Information",
+        "SubCategory": "Station General Information",
+        "Lines": [
+          {
+            "Code": "LW"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "EX"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000496136",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-19 00:07:32",
+        "SubjectEnglish": "Lakeshore West Service Adjustments",
+        "SubjectFrench": "Ajustements de service Lakeshore West",
+        "BodyEnglish": "Jan. 24 – 25: GO buses replace trains due to planned construction. Sign up for On the GO alerts for more information.",
+        "BodyFrench": "Du 24 au 25 janvier : les bus GO remplaceront les trains en raison de travaux. Abonnez-vous aux alertes On the GO pour plus d’informations.",
+        "Category": "General Information",
+        "SubCategory": "E-Ticket",
+        "Lines": [
+          {
+            "Code": "LW"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "EX"
+          },
+          {
+            "Name": null,
+            "Code": "MI"
+          },
+          {
+            "Name": null,
+            "Code": "OA"
+          },
+          {
+            "Name": null,
+            "Code": "BO"
+          },
+          {
+            "Name": null,
+            "Code": "AP"
+          },
+          {
+            "Name": null,
+            "Code": "BU"
+          },
+          {
+            "Name": null,
+            "Code": "AL"
+          },
+          {
+            "Name": null,
+            "Code": "WR"
+          },
+          {
+            "Name": null,
+            "Code": "CF"
+          },
+          {
+            "Name": null,
+            "Code": "SCTH"
+          },
+          {
+            "Name": null,
+            "Code": "NI"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000496137",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-19 00:08:03",
+        "SubjectEnglish": "Lakeshore West Service Adjustments",
+        "SubjectFrench": "Ajustements de service Lakeshore West",
+        "BodyEnglish": "Jan. 24 – 25: No GO train service at Clarkson GO due to planned construction. Sign up for On the GO alerts.",
+        "BodyFrench": "24-25 janvier : Il n’y aura pas de service de train GO à la gare GO de Clarkson en raison de travaux prévus. Abonnez-vous aux alertes On the GO.",
+        "Category": "General Information",
+        "SubCategory": "E-Ticket",
+        "Lines": [
+          {
+            "Code": "LW"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "CL"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000496139",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-19 00:08:03",
+        "SubjectEnglish": "Lakeshore West Service Adjustments",
+        "SubjectFrench": "Ajustements de service Lakeshore West",
+        "BodyEnglish": "Jan. 24 – 25: No GO Transit service at Port Credit GO due to planned construction. Sign up for On the GO alerts.",
+        "BodyFrench": "24-25 janvier : Aucun service GO Transit à la gare GO de Port Credit en raison de travaux prévus.Abonnez-vous aux alertes On the GO.",
+        "Category": "General Information",
+        "SubCategory": "E-Ticket",
+        "Lines": [
+          {
+            "Code": "LW"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "PO"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000496140",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-19 00:08:03",
+        "SubjectEnglish": "Lakeshore West Service Adjustments",
+        "SubjectFrench": "Ajustements de service Lakeshore West",
+        "BodyEnglish": "Jan. 24 – 25: No GO Transit service at Long Branch GO due to planned construction. Sign up for On the GO alerts.",
+        "BodyFrench": "24-25 janvier : Aucun service GO Transit à la gare GO de Long Branch en raison de travaux prévus.Abonnez-vous aux alertes On the GO.",
+        "Category": "General Information",
+        "SubCategory": "E-Ticket",
+        "Lines": [
+          {
+            "Code": "LW"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "LO"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000497672",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-20 15:37:40",
+        "SubjectEnglish": "Accessibility ramp is out of service.",
+        "SubjectFrench": "La rampe d’accessibilité est hors service.",
+        "BodyEnglish": "The accessibility ramp at Langstaff GO is temporarily out of service until further notice due to an operational issue. If you require the accessibility coach at Langstaff GO, here’s what you need to know: - Shuttle service is available between 06:00- 08:30 and 16:00 - 19:40.- Call 416-398-2222 and dial ‘0’ to book a shuttle.- Note: Dignity Shuttle services must be booked 48 hours in advance.- If you’re travelling south towards Union Station; prearrange a Dignity shuttle from Langstaff to Old Cummer GO.- If you’re travelling north toward Bloomington; prearrange a Dignity shuttle from Langstaff to Richmond Hill GO.- If you’re travelling to Langstaff GO; Exit the train at Old Cummer or Richmond Hill GO, to access your prearranged Dignity shuttle.",
+        "BodyFrench": "La rampe d’accessibilité à la gare GO de Langstaff est temporairement hors service jusqu’à nouvel ordre en raison d’un problème opérationnel. Si vous avez besoin de la voiture accessible à la gare GO de Langstaff, voici ce que vous devez savoir : - Le service de navette est offert de 6 h à 8 h 30 et de 16 h à 19 h 40.-Composez le 416-398-2222 et appuyez sur le « 0 » pour réserver une navette.- Remarque : Les services de navette Dignity doivent être réservés 48 heures à l’avance.- Si vous voyagez en direction sud vers la gare Union, réservez une navette Dignity de la gare GO de Langstaff à la gare GO d’Old Cummer.- Si vous voyagez en direction nord vers Bloomington, réservez une navette Dignity de la gare GO de Langstaff à la gare GO de Richmond Hill.- Si vous voyagez vers la gare GO de Langstaff; sortez du train à la gare GO d’Old Cummer ou à la gare GO de Richmond Hill, pour accéder à votre navette Dignity réservée.",
+        "Category": "General Information",
+        "SubCategory": "Station General Information",
+        "Lines": [
+          {
+            "Code": "RH"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "LA"
+          }
+        ],
+        "Trips": []
+      }
+    ]
+  }
+}
