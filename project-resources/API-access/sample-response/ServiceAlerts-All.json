@@ -1,46 +1,59 @@
 {
-  "apiVersion": "1.0",
-  "data": {
-    "Alerts": [
+  "Metadata": {
+    "TimeStamp": "2026-01-24 04:59:26",
+    "ErrorCode": "200",
+    "ErrorMessage": "OK"
+  },
+  "Messages": {
+    "Message": [
       {
-        "AlertId": 1001,
-        "AlertType": "SERVICE_CHANGE",
-        "Severity": "MAJOR",
-        "Title": "Lakeshore East Line Maintenance",
-        "Description": "Starting Jan 22, temporary bus bridges replace train service on Lakeshore East between Pickering and Union Station during weekday peak hours for ongoing infrastructure upgrades.",
-        "AffectedLines": ["LE"],
-        "StartDate": "2026-01-22T04:30:00Z",
-        "EndDate": "2026-02-28T23:59:59Z",
-        "IsActive": true,
-        "UpdatedAt": "2026-01-24T15:30:00Z"
+        "Code": "M0000497954",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-22 13:52:46",
+        "SubjectEnglish": "Elevator out of service",
+        "SubjectFrench": "Ascenseur hors service",
+        "BodyEnglish": "The elevator connecting the tunnel to platform 2 is out of service. Customers who need this elevator should board the train at Guildwood GO or Pickering GO. An update will be provided as more information becomes available. We thank you for your patience. Visit the Rouge Hill GO Station page to find helpful information on departures, a station map and a listing of all the services we have available. For Accessibility support during elevator outages, contact us here for assistance.",
+        "BodyFrench": "L'ascenseur qui relie le tunnel au quai 2 est hors service. Les clients qui ont besoin de cet ascenseur doivent monter dans le train à la gare GO de Guildwood ou à la gare GO de Pickering. Visitez la page de la gare GO de Rouge Hill pour trouver des informations utiles, notamment sur les départs, un plan de la gare et tous les services que nous proposons. Pour obtenir de l'aide en matière d'accessibilité pendant les pannes d'ascenseur, communiquez avec nous ici pour obtenir de l'assistance.",
+        "Category": "Amenity",
+        "SubCategory": "Elevator-Escalator Disruption",
+        "Lines": [
+          {
+            "Code": "LE"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "RO"
+          }
+        ],
+        "Trips": []
       },
       {
-        "AlertId": 1002,
-        "AlertType": "DELAY",
-        "Severity": "MINOR",
-        "Title": "Minor Delays Expected",
-        "Description": "Minor delays of up to 10 minutes expected on westbound service due to signal maintenance at Ajax.",
-        "AffectedLines": ["LE"],
-        "AffectedDirection": "To Union Station",
-        "StartDate": "2026-01-24T20:00:00Z",
-        "EndDate": "2026-01-24T23:59:59Z",
-        "IsActive": true,
-        "UpdatedAt": "2026-01-24T19:45:00Z"
-      },
-      {
-        "AlertId": 1003,
-        "AlertType": "SERVICE_CHANGE",
-        "Severity": "MINOR",
-        "Title": "Weekend Schedule Change",
-        "Description": "Weekend service schedule adjusted. Consult GO website for details.",
-        "AffectedLines": ["LE"],
-        "StartDate": "2026-01-25T00:00:00Z",
-        "EndDate": "2026-01-27T23:59:59Z",
-        "IsActive": false,
-        "UpdatedAt": "2026-01-23T10:00:00Z"
+        "Code": "M0000498321",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-23 08:15:32",
+        "SubjectEnglish": "Service delays expected",
+        "SubjectFrench": "Des retards de service sont prévus",
+        "BodyEnglish": "Minor delays of 5-10 minutes are expected on Lakeshore East due to signal maintenance at Ajax GO Station. Thank you for your patience.",
+        "BodyFrench": "Des retards mineurs de 5-10 minutes sont prévus sur Lakeshore East en raison des travaux de maintenance des signaux à la gare GO d'Ajax. Merci de votre patience.",
+        "Category": "Service Disruption",
+        "SubCategory": "Delays",
+        "Lines": [
+          {
+            "Code": "LE"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "AJ"
+          }
+        ],
+        "Trips": []
       }
     ]
-  },
-  "ErrorMessage": null,
-  "Success": true
+  }
 }
