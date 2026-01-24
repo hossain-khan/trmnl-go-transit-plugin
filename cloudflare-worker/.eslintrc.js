@@ -12,10 +12,10 @@ module.exports = {
   rules: {
     'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     'no-console': 'off', // Allow console for logging in Workers
-    'semi': ['error', 'never'],
-    'quotes': ['error', 'single', { avoidEscape: true }],
+    semi: ['error', 'never'],
+    quotes: ['error', 'single', { avoidEscape: true }],
     'comma-dangle': ['error', 'only-multiline'],
-    'indent': ['error', 2],
+    indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
     'no-trailing-spaces': 'error',
     'eol-last': ['error', 'always'],
