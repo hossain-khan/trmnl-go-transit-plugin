@@ -198,34 +198,47 @@ const worker = {
 
       // 6. Set cache headers based on response status
       const cacheHeaders = getCacheHeaders(
-        clonedResponse.status,
+        originResponse.status,
         env.BROWSER_TTL,
         env.EDGE_TTL,
         env.STALE_WHILE_REVALIDATE_TTL
       )
-      clonedResponse.headers.set('Cache-Control', cacheHeaders)
 
-      // 7. Add observability headers
+      // 7. Create new response with modified headers
+      const responseHeaders = new Headers(clonedResponse.headers)
+      responseHeaders.set('Cache-Control', cacheHeaders)
+
+      // 8. Add observability headers
       if (env.ENABLE_OBSERVABILITY_HEADERS !== 'false') {
-        clonedResponse.headers.set('X-Cache', 'MISS')
-        clonedResponse.headers.set('X-Proxy-Version', '1.0')
-        clonedResponse.headers.set('X-Proxy-Time-Ms', originTime.toString())
+        responseHeaders.set('X-Cache', 'MISS')
+        responseHeaders.set('X-Proxy-Version', '1.0')
+        responseHeaders.set('X-Proxy-Time-Ms', originTime.toString())
       }
 
-      // 8. Add CORS headers
-      addCorsHeaders(clonedResponse)
+      // 9. Add CORS headers
+      responseHeaders.set('Access-Control-Allow-Origin', '*')
+      responseHeaders.set('Access-Control-Allow-Methods', 'GET, OPTIONS')
+      responseHeaders.set('Access-Control-Allow-Headers', 'Content-Type')
+      responseHeaders.set('Access-Control-Max-Age', '86400') // 24 hours
 
-      // 9. Cache response asynchronously in background
+      // Create new response with updated headers
+      const finalResponse = new Response(clonedResponse.body, {
+        status: clonedResponse.status,
+        statusText: clonedResponse.statusText,
+        headers: responseHeaders,
+      })
+
+      // 10. Cache response asynchronously in background
       // Only cache successful responses (2xx) and errors (5xx for short TTL)
-      if (clonedResponse.ok || clonedResponse.status >= 500) {
-        ctx.waitUntil(cache.put(cacheKey, clonedResponse.clone()))
+      if (finalResponse.ok || finalResponse.status >= 500) {
+        ctx.waitUntil(cache.put(cacheKey, finalResponse.clone()))
         logEvent(env, 'CACHE_MISS_STORED', {
-          status: clonedResponse.status,
+          status: finalResponse.status,
           path: url.pathname,
         })
       }
 
-      return clonedResponse
+      return finalResponse
     } catch (error) {
       logEvent(env, 'WORKER_ERROR', {
         message: error.message,
