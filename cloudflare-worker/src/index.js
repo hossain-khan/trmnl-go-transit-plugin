@@ -317,7 +317,6 @@ async function fetchOrigin(url, env, _ctx) {
     console.log('[fetchOrigin] Got response, status:', response.status, 'ok:', response.ok)
 
     clearTimeout(timeout)
-    console.log('[fetchOrigin] Response status:', response.status)
     return response
   } catch (err) {
     clearTimeout(timeout)
