@@ -1,0 +1,59 @@
+{
+  "Metadata": {
+    "TimeStamp": "2026-01-24 04:59:26",
+    "ErrorCode": "200",
+    "ErrorMessage": "OK"
+  },
+  "Messages": {
+    "Message": [
+      {
+        "Code": "M0000497954",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-22 13:52:46",
+        "SubjectEnglish": "Elevator out of service",
+        "SubjectFrench": "Ascenseur hors service",
+        "BodyEnglish": "The elevator connecting the tunnel to platform 2 is out of service. Customers who need this elevator should board the train at Guildwood GO or Pickering GO. An update will be provided as more information becomes available. We thank you for your patience. Visit the Rouge Hill GO Station page to find helpful information on departures, a station map and a listing of all the services we have available. For Accessibility support during elevator outages, contact us here for assistance.",
+        "BodyFrench": "L'ascenseur qui relie le tunnel au quai 2 est hors service. Les clients qui ont besoin de cet ascenseur doivent monter dans le train à la gare GO de Guildwood ou à la gare GO de Pickering. Visitez la page de la gare GO de Rouge Hill pour trouver des informations utiles, notamment sur les départs, un plan de la gare et tous les services que nous proposons. Pour obtenir de l'aide en matière d'accessibilité pendant les pannes d'ascenseur, communiquez avec nous ici pour obtenir de l'assistance.",
+        "Category": "Amenity",
+        "SubCategory": "Elevator-Escalator Disruption",
+        "Lines": [
+          {
+            "Code": "LE"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "RO"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000498321",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-23 08:15:32",
+        "SubjectEnglish": "Service delays expected",
+        "SubjectFrench": "Des retards de service sont prévus",
+        "BodyEnglish": "Minor delays of 5-10 minutes are expected on Lakeshore East due to signal maintenance at Ajax GO Station. Thank you for your patience.",
+        "BodyFrench": "Des retards mineurs de 5-10 minutes sont prévus sur Lakeshore East en raison des travaux de maintenance des signaux à la gare GO d'Ajax. Merci de votre patience.",
+        "Category": "Service Disruption",
+        "SubCategory": "Delays",
+        "Lines": [
+          {
+            "Code": "LE"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "AJ"
+          }
+        ],
+        "Trips": []
+      }
+    ]
+  }
+}
