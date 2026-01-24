@@ -1,0 +1,46 @@
+{
+  "apiVersion": "1.0",
+  "data": {
+    "Alerts": [
+      {
+        "AlertId": 1001,
+        "AlertType": "SERVICE_CHANGE",
+        "Severity": "MAJOR",
+        "Title": "Lakeshore East Line Maintenance",
+        "Description": "Starting Jan 22, temporary bus bridges replace train service on Lakeshore East between Pickering and Union Station during weekday peak hours for ongoing infrastructure upgrades.",
+        "AffectedLines": ["LE"],
+        "StartDate": "2026-01-22T04:30:00Z",
+        "EndDate": "2026-02-28T23:59:59Z",
+        "IsActive": true,
+        "UpdatedAt": "2026-01-24T15:30:00Z"
+      },
+      {
+        "AlertId": 1002,
+        "AlertType": "DELAY",
+        "Severity": "MINOR",
+        "Title": "Minor Delays Expected",
+        "Description": "Minor delays of up to 10 minutes expected on westbound service due to signal maintenance at Ajax.",
+        "AffectedLines": ["LE"],
+        "AffectedDirection": "To Union Station",
+        "StartDate": "2026-01-24T20:00:00Z",
+        "EndDate": "2026-01-24T23:59:59Z",
+        "IsActive": true,
+        "UpdatedAt": "2026-01-24T19:45:00Z"
+      },
+      {
+        "AlertId": 1003,
+        "AlertType": "SERVICE_CHANGE",
+        "Severity": "MINOR",
+        "Title": "Weekend Schedule Change",
+        "Description": "Weekend service schedule adjusted. Consult GO website for details.",
+        "AffectedLines": ["LE"],
+        "StartDate": "2026-01-25T00:00:00Z",
+        "EndDate": "2026-01-27T23:59:59Z",
+        "IsActive": false,
+        "UpdatedAt": "2026-01-23T10:00:00Z"
+      }
+    ]
+  },
+  "ErrorMessage": null,
+  "Success": true
+}

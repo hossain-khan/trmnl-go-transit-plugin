@@ -1,0 +1,192 @@
+{
+  "apiVersion": "1.0",
+  "data": {
+    "Stations": [
+      {
+        "StationId": 1,
+        "StationCode": "OSH",
+        "StationName": "Oshawa GO",
+        "City": "Oshawa",
+        "Province": "ON",
+        "Latitude": 43.8887,
+        "Longitude": -79.0417,
+        "Address": "430 Farewell Street",
+        "Zip": "L1H 0C2",
+        "AccessibilityFeatures": [
+          "Accessible Parking",
+          "Elevator Access",
+          "Accessible Washrooms"
+        ],
+        "Facilities": [
+          "Parking",
+          "Restaurant",
+          "Washrooms",
+          "Waiting Room"
+        ],
+        "IsAccessible": true,
+        "ServiceLines": ["LE"]
+      },
+      {
+        "StationId": 2,
+        "StationCode": "WHI",
+        "StationName": "Whitby GO",
+        "City": "Whitby",
+        "Province": "ON",
+        "Latitude": 43.8726,
+        "Longitude": -79.1167,
+        "Address": "207 Dundas Street West",
+        "Zip": "L1N 2H9",
+        "AccessibilityFeatures": [
+          "Accessible Parking",
+          "Elevator Access"
+        ],
+        "Facilities": ["Parking", "Waiting Room"],
+        "IsAccessible": true,
+        "ServiceLines": ["LE"]
+      },
+      {
+        "StationId": 3,
+        "StationCode": "AJX",
+        "StationName": "Ajax GO",
+        "City": "Ajax",
+        "Province": "ON",
+        "Latitude": 43.8523,
+        "Longitude": -79.0397,
+        "Address": "10 Church Street",
+        "Zip": "L1S 1J2",
+        "AccessibilityFeatures": [
+          "Accessible Parking",
+          "Elevator Access",
+          "Accessible Washrooms"
+        ],
+        "Facilities": [
+          "Parking",
+          "Restaurant",
+          "Washrooms",
+          "Waiting Room"
+        ],
+        "IsAccessible": true,
+        "ServiceLines": ["LE"]
+      },
+      {
+        "StationId": 4,
+        "StationCode": "PKG",
+        "StationName": "Pickering GO",
+        "City": "Pickering",
+        "Province": "ON",
+        "Latitude": 43.8319,
+        "Longitude": -79.0789,
+        "Address": "1 Bayly Street",
+        "Zip": "L1V 1K8",
+        "AccessibilityFeatures": [
+          "Accessible Parking",
+          "Elevator Access",
+          "Accessible Washrooms"
+        ],
+        "Facilities": [
+          "Parking",
+          "Restaurant",
+          "Washrooms",
+          "Waiting Room"
+        ],
+        "IsAccessible": true,
+        "ServiceLines": ["LE"]
+      },
+      {
+        "StationId": 5,
+        "StationCode": "RHI",
+        "StationName": "Rouge Hill GO",
+        "City": "Scarborough",
+        "Province": "ON",
+        "Latitude": 43.7946,
+        "Longitude": -79.1456,
+        "Address": "200 Grange Road",
+        "Zip": "M1L 2V8",
+        "AccessibilityFeatures": [
+          "Accessible Parking",
+          "Accessible Washrooms"
+        ],
+        "Facilities": ["Parking", "Waiting Room"],
+        "IsAccessible": true,
+        "ServiceLines": ["LE"]
+      },
+      {
+        "StationId": 6,
+        "StationCode": "GLD",
+        "StationName": "Guildwood GO",
+        "City": "Scarborough",
+        "Province": "ON",
+        "Latitude": 43.7639,
+        "Longitude": -79.1889,
+        "Address": "2 Guildwood Court",
+        "Zip": "M1E 1H6",
+        "AccessibilityFeatures": [
+          "Accessible Parking",
+          "Elevator Access",
+          "Accessible Washrooms"
+        ],
+        "Facilities": [
+          "Parking",
+          "Restaurant",
+          "Washrooms",
+          "Waiting Room"
+        ],
+        "IsAccessible": true,
+        "ServiceLines": ["LE"]
+      },
+      {
+        "StationId": 7,
+        "StationCode": "EGL",
+        "StationName": "Eglinton GO",
+        "City": "Toronto",
+        "Province": "ON",
+        "Latitude": 43.7315,
+        "Longitude": -79.2506,
+        "Address": "1 York Street",
+        "Zip": "M5J 1R2",
+        "AccessibilityFeatures": [
+          "Accessible Parking",
+          "Elevator Access",
+          "Accessible Washrooms"
+        ],
+        "Facilities": [
+          "Parking",
+          "Restaurant",
+          "Washrooms",
+          "Waiting Room"
+        ],
+        "IsAccessible": true,
+        "ServiceLines": ["LE"]
+      },
+      {
+        "StationId": 8,
+        "StationCode": "UNI",
+        "StationName": "Union Station",
+        "City": "Toronto",
+        "Province": "ON",
+        "Latitude": 43.6426,
+        "Longitude": -79.3871,
+        "Address": "65 Front Street West",
+        "Zip": "M5J 1E6",
+        "AccessibilityFeatures": [
+          "Accessible Parking",
+          "Elevator Access",
+          "Accessible Washrooms",
+          "Braille Signage"
+        ],
+        "Facilities": [
+          "Parking",
+          "Restaurant",
+          "Washrooms",
+          "Waiting Room",
+          "Food Court",
+          "Retail"
+        ],
+        "IsAccessible": true,
+        "ServiceLines": ["LE", "LSW", "MB"]
+      }
+    ]
+  },
+  "ErrorMessage": null,
+  "Success": true
+}
