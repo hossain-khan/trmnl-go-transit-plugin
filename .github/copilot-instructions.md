@@ -794,6 +794,45 @@ Before committing or pushing changes, run these locally to ensure the CI workflo
 
 If any check fails, fix locally and re-run before pushing to avoid CI failures.
 
+### Cloudflare Workers: Production Deployment & Testing
+
+**⚠️ IMPORTANT**: Do NOT use `wrangler dev` (local development server) for testing the proxy. The local wrangler dev environment on macOS has limitations with external HTTPS requests and will return `502 Bad Gateway` errors even when the origin API is working correctly.
+
+**Recommended Workflow**:
+
+1. **Make code changes** to `cloudflare-worker/src/index.js`
+2. **Run quality checks locally**:
+   ```bash
+   cd cloudflare-worker && npm run quality
+   ```
+3. **Deploy directly to production**:
+   ```bash
+   cd cloudflare-worker && npm run deploy
+   ```
+4. **Test from production URL**:
+   ```bash
+   # Health check
+   curl https://trmnl-go-transit-proxy.hk-c91.workers.dev/health
+   
+   # Real API test
+   curl "https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=OS"
+   ```
+
+**Why Not Local Dev Server?**
+
+- `wrangler dev` on macOS cannot make external HTTPS requests to the Metrolinx API
+- Returns internal `502 "internal error; reference = ..."` errors that don't reflect real issues
+- Cloudflare production environment handles fetch requests correctly
+- Production testing gives accurate results for both functionality and performance
+
+**Why This is Safe**:
+
+- Cloudflare Workers deploys are instant (typically <2 seconds)
+- Can roll back or fix issues immediately
+- No risk to existing users - new code deploys atomically
+- All CI checks run before code reaches main branch
+- Easy to verify each change works in real environment
+
 ## Future Considerations
 
 - Support for additional TRMNL devices as they're released
