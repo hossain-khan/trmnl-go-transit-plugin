@@ -251,6 +251,7 @@ function createCacheKey(originBaseUrl, url) {
   // Validate the cache key URL
   try {
     new URL(cacheKeyUrl)
+    // eslint-disable-next-line no-unused-vars
   } catch (_err) {
     throw new Error(`Invalid cache key URL: ${cacheKeyUrl}`)
   }
