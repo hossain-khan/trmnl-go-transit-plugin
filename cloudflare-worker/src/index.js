@@ -1,19 +1,19 @@
 /**
  * GO Transit Proxy API Worker
- * 
+ *
  * High-performance, edge-cached proxy for the Metrolinx Open Data API
  * Running on Cloudflare Workers
- * 
+ *
  * Architecture:
  * Client → Cloudflare Worker (proxy + caching) → Cloudflare Cache → Metrolinx API
- * 
+ *
  * Key Features:
  * - Deterministic cache key normalization
  * - Stale-while-revalidate with fallback
  * - Timeout handling (3s default)
  * - CORS support for web clients
  * - Comprehensive observability headers and logging
- * 
+ *
  * References:
  * - PROXY_API_SERVER.md - Code examples and best practices
  * - PROXY_API_SERVER_PRD.md - Detailed requirements
@@ -27,13 +27,35 @@
 const worker = {
   async fetch(request, env, ctx) {
     try {
+      // 0. Health check endpoint
+      const url = new URL(request.url)
+      if (url.pathname === '/health') {
+        return new Response(
+          JSON.stringify({
+            status: 'ok',
+            timestamp: new Date().toISOString(),
+            env: {
+              ORIGIN_BASE_URL: env.ORIGIN_BASE_URL ? '***' : 'missing',
+              ORIGIN_AUTH_TOKEN: env.ORIGIN_AUTH_TOKEN ? '***' : 'missing',
+            },
+          }),
+          {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          }
+        )
+      }
+
       // Validate environment configuration
       if (!env.ORIGIN_BASE_URL || !env.ORIGIN_AUTH_TOKEN) {
-        return createErrorResponse(500, 'Server Configuration Error - Missing environment variables', env)
+        return createErrorResponse(
+          500,
+          'Server Configuration Error - Missing environment variables',
+          env
+        )
       }
 
       // 1. Validate request
-      const url = new URL(request.url)
       const validationError = validateRequest(request, url)
       if (validationError) {
         return validationError
@@ -68,12 +90,12 @@ const worker = {
           })
           return createErrorResponse(504, 'Gateway Timeout', env)
         }
-        
+
         console.error('[ORIGIN_FETCH_ERROR]', {
           error: err.message,
           path: url.pathname,
           originUrl: `${env.ORIGIN_BASE_URL}${url.pathname}${url.search}`,
-          stack: err.stack
+          stack: err.stack,
         })
         logEvent(env, 'ORIGIN_FETCH_ERROR', {
           error: err.message,
@@ -147,7 +169,7 @@ const worker = {
       })
       return createErrorResponse(500, 'Internal Server Error', env)
     }
-  }
+  },
 }
 
 /**
@@ -183,17 +205,17 @@ function createCacheKey(originBaseUrl, url) {
   if (!originBaseUrl) {
     throw new Error('ORIGIN_BASE_URL is not defined')
   }
-  
+
   const normalizedParams = normalizeParams(url.searchParams)
   const cacheKeyUrl = `${originBaseUrl}${url.pathname}${normalizedParams ? '?' + normalizedParams : ''}`
-  
+
   // Validate the cache key URL
   try {
     new URL(cacheKeyUrl)
   } catch (err) {
     throw new Error(`Invalid cache key URL: ${cacheKeyUrl}`)
   }
-  
+
   return new Request(cacheKeyUrl, { method: 'GET' })
 }
 
@@ -206,7 +228,7 @@ function createCacheKey(originBaseUrl, url) {
 function normalizeParams(params) {
   // GO Transit API parameter allowlist
   const allowlist = ['station_id', 'limit', 'direction']
-  
+
   return [...params.entries()]
     .filter(([key]) => allowlist.includes(key))
     .sort(([a], [b]) => a.localeCompare(b))
@@ -233,29 +255,29 @@ async function fetchOrigin(url, env, ctx) {
     // ORIGIN_BASE_URL is: https://api.openmetrolinx.com/OpenDataAPI/
     // url.pathname is: /api/V1/ServiceataGlance/Trains/All
     // We want: https://api.openmetrolinx.com/OpenDataAPI/api/V1/...
-    
+
     let baseUrl = env.ORIGIN_BASE_URL
     let pathName = url.pathname
-    
+
     // Remove trailing slash from base
     if (baseUrl.endsWith('/')) {
       baseUrl = baseUrl.slice(0, -1)
     }
-    
+
     // Remove leading slash from path if it exists
     if (pathName.startsWith('/')) {
       pathName = pathName.slice(1)
     }
-    
+
     const fullUrl = `${baseUrl}/${pathName}${url.search}`
-    
+
     // Add authentication key to query params
     const originUrlObj = new URL(fullUrl)
     originUrlObj.searchParams.set('key', env.ORIGIN_AUTH_TOKEN)
     const originUrl = originUrlObj.toString()
-    
+
     console.log('[fetchOrigin] Fetching:', originUrl.replace(env.ORIGIN_AUTH_TOKEN, '***'))
-    
+
     const response = await fetch(originUrl, {
       method: 'GET',
       headers: {
@@ -263,7 +285,7 @@ async function fetchOrigin(url, env, ctx) {
       },
       signal: controller.signal,
     })
-    
+
     console.log('[fetchOrigin] Got response, status:', response.status, 'ok:', response.ok)
 
     clearTimeout(timeout)
@@ -315,20 +337,23 @@ function addCorsHeaders(response) {
  * Create error response with appropriate status code
  */
 function createErrorResponse(status, statusText, env) {
-  const response = new Response(JSON.stringify({
-    error: statusText,
-    status: status,
-    timestamp: new Date().toISOString(),
-  }), {
-    status: status,
-    statusText: statusText,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  const response = new Response(
+    JSON.stringify({
+      error: statusText,
+      status: status,
+      timestamp: new Date().toISOString(),
+    }),
+    {
+      status: status,
+      statusText: statusText,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  )
 
   addCorsHeaders(response)
-  
+
   if (env.ENABLE_OBSERVABILITY_HEADERS !== 'false') {
     response.headers.set('X-Cache', 'ERROR')
     response.headers.set('X-Proxy-Version', '1.0')
@@ -347,7 +372,7 @@ export default worker
 function logEvent(env, eventType, context = {}) {
   const logLevel = env.LOG_LEVEL || 'info'
   const environment = env.ENVIRONMENT || 'development'
-  
+
   // Only log at appropriate level
   const levels = { debug: 0, info: 1, warn: 2, error: 3 }
   const currentLevel = levels[logLevel] || 1
@@ -359,7 +384,7 @@ function logEvent(env, eventType, context = {}) {
 
   const timestamp = new Date().toISOString()
   const message = `[${timestamp}] [${environment}] [${eventType}] - ${JSON.stringify(context)}`
-  
+
   if (eventType.includes('ERROR')) {
     console.error(message)
   } else {
