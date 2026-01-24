@@ -3,50 +3,36 @@ main = "src/index.js"
 compatibility_date = "2026-01-23"
 compatibility_flags = ["nodejs_compat"]
 
-# Cloudflare Pages Functions (if deploying via Pages)
-# deployment = { routes = [{ pattern = "/api/*", zone_name = "example.com" }] }
+# Observability - Tail Workers (logs to stdout)
+observability = { enabled = true }
 
-# Environment variables - configured via wrangler secret or .env file
-# These are referenced in the Worker code via env.VARIABLE_NAME
+# Global variables (available in all environments)
+[vars]
+ORIGIN_BASE_URL = "https://api.openmetrolinx.com/OpenDataAPI/"
+ORIGIN_AUTH_TOKEN = "30026517"
+EDGE_TTL = "300"
+BROWSER_TTL = "60"
+STALE_WHILE_REVALIDATE_TTL = "30"
+ORIGIN_TIMEOUT_MS = "3000"
+LOG_LEVEL = "debug"
+DEBUG_PERFORMANCE = "false"
+VALIDATE_PARAMS = "true"
+ENABLE_CORS = "true"
+ENABLE_OBSERVABILITY_HEADERS = "true"
+ALLOW_LOCALHOST = "true"
 
-env:
-  development:
-    name = "trmnl-go-transit-proxy-dev"
-    routes = [
-      { pattern = "localhost/api/*", zone_name = "localhost" }
-    ]
-
-  staging:
-    name = "trmnl-go-transit-proxy-staging"
-    routes = [
-      { pattern = "staging.example.com/api/*", zone_name = "example.com" }
-    ]
-
-  production:
-    name = "trmnl-go-transit-proxy"
-    routes = [
-      { pattern = "api.trmnl-go.com/api/*", zone_name = "trmnl-go.com" }
-    ]
-
-# Build configuration
-[build]
-command = "npm install && npm run build"
-cwd = "./"
-watch_paths = ["src/**/*.js"]
-
-# Watch for file changes during development
-[env.development.build]
-watch_paths = ["src/**/*.js"]
-
-# Package configuration
+# Environment-specific configurations
 [env.development]
-env_variables = { ENVIRONMENT = "development" }
+name = "trmnl-go-transit-proxy-dev"
+vars = { ENVIRONMENT = "development" }
 
 [env.staging]
-env_variables = { ENVIRONMENT = "staging" }
+name = "trmnl-go-transit-proxy-staging"
+vars = { ENVIRONMENT = "staging", LOG_LEVEL = "info" }
 
 [env.production]
-env_variables = { ENVIRONMENT = "production" }
+name = "trmnl-go-transit-proxy"
+vars = { ENVIRONMENT = "production", LOG_LEVEL = "warn" }
 
 # Required secrets (set via: wrangler secret put VARIABLE_NAME --env <env>)
 # These should NOT be committed to git
@@ -67,9 +53,6 @@ env_variables = { ENVIRONMENT = "production" }
 # binding = "DB"
 # database_name = "trmnl-go-transit"
 # database_id = "your-database-id"
-
-# Observability - Tail Workers (logs to stdout)
-observability = { enabled = true }
 
 # Analytics Engine (optional - for custom metrics)
 # [analytics]

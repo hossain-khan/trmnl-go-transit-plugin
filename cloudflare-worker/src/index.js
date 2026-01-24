@@ -24,94 +24,130 @@
  * Main fetch handler for the Worker
  * Processes all incoming requests and returns cached or origin responses
  */
-export default {
+const worker = {
   async fetch(request, env, ctx) {
-    // 1. Validate request
-    const url = new URL(request.url)
-    const validationError = validateRequest(request, url)
-    if (validationError) {
-      return validationError
-    }
-
-    // 2. Normalize cache key
-    const cacheKey = createCacheKey(env.ORIGIN_BASE_URL, url)
-    const cache = caches.default
-
-    // 3. Try cache lookup
-    let response = await cache.match(cacheKey)
-    if (response) {
-      // Cache HIT
-      response = new Response(response.body, response)
-      response.headers.set('X-Cache', 'HIT')
-      addCorsHeaders(response)
-      return response
-    }
-
-    // 4. Cache MISS - fetch from origin
-    const originStart = Date.now()
-    let originResponse
-
     try {
-      originResponse = await fetchOrigin(url, env, ctx)
-    } catch (err) {
-      // Log error and return appropriate response
-      if (err.name === 'AbortError') {
-        logEvent(env, 'ORIGIN_TIMEOUT', {
-          path: url.pathname,
-          timeout_ms: env.ORIGIN_TIMEOUT_MS || 3000,
-        })
-        return createErrorResponse(504, 'Gateway Timeout', env)
+      // Validate environment configuration
+      if (!env.ORIGIN_BASE_URL || !env.ORIGIN_AUTH_TOKEN) {
+        return createErrorResponse(500, 'Server Configuration Error - Missing environment variables', env)
       }
-      
-      logEvent(env, 'ORIGIN_FETCH_ERROR', {
-        error: err.message,
+
+      // 1. Validate request
+      const url = new URL(request.url)
+      const validationError = validateRequest(request, url)
+      if (validationError) {
+        return validationError
+      }
+
+      // 2. Normalize cache key
+      const cacheKey = createCacheKey(env.ORIGIN_BASE_URL, url)
+      const cache = caches.default
+
+      // 3. Try cache lookup
+      let response = await cache.match(cacheKey)
+      if (response) {
+        // Cache HIT
+        response = new Response(response.body, response)
+        response.headers.set('X-Cache', 'HIT')
+        addCorsHeaders(response)
+        return response
+      }
+
+      // 4. Cache MISS - fetch from origin
+      const originStart = Date.now()
+      let originResponse
+
+      try {
+        originResponse = await fetchOrigin(url, env, ctx)
+      } catch (err) {
+        // Log error and return appropriate response
+        if (err.name === 'AbortError') {
+          logEvent(env, 'ORIGIN_TIMEOUT', {
+            path: url.pathname,
+            timeout_ms: env.ORIGIN_TIMEOUT_MS || 3000,
+          })
+          return createErrorResponse(504, 'Gateway Timeout', env)
+        }
+        
+        console.error('[ORIGIN_FETCH_ERROR]', {
+          error: err.message,
+          path: url.pathname,
+          originUrl: `${env.ORIGIN_BASE_URL}${url.pathname}${url.search}`,
+          stack: err.stack
+        })
+        logEvent(env, 'ORIGIN_FETCH_ERROR', {
+          error: err.message,
+          path: url.pathname,
+        })
+        // Return error with details for debugging
+        const response = new Response(
+          JSON.stringify({
+            error: 'Bad Gateway',
+            details: err.message,
+            status: 502,
+            timestamp: new Date().toISOString(),
+          }),
+          {
+            status: 502,
+            statusText: 'Bad Gateway',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        addCorsHeaders(response)
+        return response
+      }
+
+      // 5. Process origin response
+      const originTime = Date.now() - originStart
+      logEvent(env, 'ORIGIN_FETCH', {
+        status: originResponse.status,
+        time_ms: originTime,
         path: url.pathname,
       })
-      return createErrorResponse(502, 'Bad Gateway', env)
-    }
 
-    // 5. Process origin response
-    const originTime = Date.now() - originStart
-    logEvent(env, 'ORIGIN_FETCH', {
-      status: originResponse.status,
-      time_ms: originTime,
-      path: url.pathname,
-    })
+      // Clone response before reading body (body can only be consumed once)
+      const clonedResponse = originResponse.clone()
 
-    // Clone response before reading body (body can only be consumed once)
-    const clonedResponse = originResponse.clone()
+      // 6. Set cache headers based on response status
+      const cacheHeaders = getCacheHeaders(
+        clonedResponse.status,
+        env.BROWSER_TTL,
+        env.EDGE_TTL,
+        env.STALE_WHILE_REVALIDATE_TTL
+      )
+      clonedResponse.headers.set('Cache-Control', cacheHeaders)
 
-    // 6. Set cache headers based on response status
-    const cacheHeaders = getCacheHeaders(
-      clonedResponse.status,
-      env.BROWSER_TTL,
-      env.EDGE_TTL,
-      env.STALE_WHILE_REVALIDATE_TTL
-    )
-    clonedResponse.headers.set('Cache-Control', cacheHeaders)
+      // 7. Add observability headers
+      if (env.ENABLE_OBSERVABILITY_HEADERS !== 'false') {
+        clonedResponse.headers.set('X-Cache', 'MISS')
+        clonedResponse.headers.set('X-Proxy-Version', '1.0')
+        clonedResponse.headers.set('X-Proxy-Time-Ms', originTime.toString())
+      }
 
-    // 7. Add observability headers
-    if (env.ENABLE_OBSERVABILITY_HEADERS !== 'false') {
-      clonedResponse.headers.set('X-Cache', 'MISS')
-      clonedResponse.headers.set('X-Proxy-Version', '1.0')
-      clonedResponse.headers.set('X-Proxy-Time-Ms', originTime.toString())
-    }
+      // 8. Add CORS headers
+      addCorsHeaders(clonedResponse)
 
-    // 8. Add CORS headers
-    addCorsHeaders(clonedResponse)
+      // 9. Cache response asynchronously in background
+      // Only cache successful responses (2xx) and errors (5xx for short TTL)
+      if (clonedResponse.ok || clonedResponse.status >= 500) {
+        ctx.waitUntil(cache.put(cacheKey, clonedResponse.clone()))
+        logEvent(env, 'CACHE_MISS_STORED', {
+          status: clonedResponse.status,
+          path: url.pathname,
+        })
+      }
 
-    // 9. Cache response asynchronously in background
-    // Only cache successful responses (2xx) and errors (5xx for short TTL)
-    if (clonedResponse.ok || clonedResponse.status >= 500) {
-      ctx.waitUntil(cache.put(cacheKey, clonedResponse.clone()))
-      logEvent(env, 'CACHE_MISS_STORED', {
-        status: clonedResponse.status,
-        path: url.pathname,
+      return clonedResponse
+    } catch (error) {
+      console.error('[WORKER_ERROR]', {
+        message: error.message,
+        stack: error.stack,
       })
+      return createErrorResponse(500, 'Internal Server Error', env)
     }
-
-    return clonedResponse
-  },
+  }
 }
 
 /**
@@ -144,8 +180,19 @@ function validateRequest(request, url) {
  * Cache key does NOT include origin domain (proxy always uses same origin)
  */
 function createCacheKey(originBaseUrl, url) {
+  if (!originBaseUrl) {
+    throw new Error('ORIGIN_BASE_URL is not defined')
+  }
+  
   const normalizedParams = normalizeParams(url.searchParams)
   const cacheKeyUrl = `${originBaseUrl}${url.pathname}${normalizedParams ? '?' + normalizedParams : ''}`
+  
+  // Validate the cache key URL
+  try {
+    new URL(cacheKeyUrl)
+  } catch (err) {
+    throw new Error(`Invalid cache key URL: ${cacheKeyUrl}`)
+  }
   
   return new Request(cacheKeyUrl, { method: 'GET' })
 }
@@ -169,30 +216,58 @@ function normalizeParams(params) {
 
 /**
  * Fetch from origin API with timeout and authentication
+ * Metrolinx API uses query parameter 'key' for authentication
  * Throws AbortError on timeout, Error on other failures
  */
 async function fetchOrigin(url, env, ctx) {
+  if (!env.ORIGIN_BASE_URL || !env.ORIGIN_AUTH_TOKEN) {
+    throw new Error('Missing required environment variables: ORIGIN_BASE_URL or ORIGIN_AUTH_TOKEN')
+  }
+
   const controller = new AbortController()
   const timeoutMs = parseInt(env.ORIGIN_TIMEOUT_MS) || 3000
   const timeout = setTimeout(() => controller.abort(), timeoutMs)
 
   try {
-    const originUrl = `${env.ORIGIN_BASE_URL}${url.pathname}${url.search}`
+    // Construct origin URL carefully to avoid double slashes
+    // ORIGIN_BASE_URL is: https://api.openmetrolinx.com/OpenDataAPI/
+    // url.pathname is: /api/V1/ServiceataGlance/Trains/All
+    // We want: https://api.openmetrolinx.com/OpenDataAPI/api/V1/...
+    
+    let baseUrl = env.ORIGIN_BASE_URL
+    let pathName = url.pathname
+    
+    // Remove trailing slash from base
+    if (baseUrl.endsWith('/')) {
+      baseUrl = baseUrl.slice(0, -1)
+    }
+    
+    // Remove leading slash from path if it exists
+    if (pathName.startsWith('/')) {
+      pathName = pathName.slice(1)
+    }
+    
+    const fullUrl = `${baseUrl}/${pathName}${url.search}`
+    
+    // Add authentication key to query params
+    const originUrlObj = new URL(fullUrl)
+    originUrlObj.searchParams.set('key', env.ORIGIN_AUTH_TOKEN)
+    const originUrl = originUrlObj.toString()
+    
+    console.log('[fetchOrigin] Fetching:', originUrl.replace(env.ORIGIN_AUTH_TOKEN, '***'))
     
     const response = await fetch(originUrl, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${env.ORIGIN_AUTH_TOKEN}`,
         'User-Agent': 'TRMNL-GO-Transit-Proxy/1.0',
       },
       signal: controller.signal,
-      cf: {
-        cacheTtl: 0, // Disable automatic Cloudflare caching
-        mirage: false,
-      },
     })
+    
+    console.log('[fetchOrigin] Got response, status:', response.status, 'ok:', response.ok)
 
     clearTimeout(timeout)
+    console.log('[fetchOrigin] Response status:', response.status)
     return response
   } catch (err) {
     clearTimeout(timeout)
@@ -261,6 +336,8 @@ function createErrorResponse(status, statusText, env) {
 
   return response
 }
+
+export default worker
 
 /**
  * Log event for monitoring and debugging

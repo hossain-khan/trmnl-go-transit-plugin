@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "High-performance, edge-cached proxy API service for GO Transit (Metrolinx) running on Cloudflare Workers",
   "main": "src/index.js",
-  "type": "module",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
