@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: '24.6.0'
           cache: 'npm'
-          cache-dependency-path: 'cloudflare-worker/package-lock.json'
+          cache-dependency-path: '**/package-lock.json'
       
       - name: Install dependencies
         working-directory: cloudflare-worker
@@ -54,7 +54,7 @@ jobs:
         with:
           node-version: '24.6.0'
           cache: 'npm'
-          cache-dependency-path: 'cloudflare-worker/package-lock.json'
+          cache-dependency-path: '**/package-lock.json'
       
       - name: Install dependencies
         working-directory: cloudflare-worker
