@@ -6,8 +6,6 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "deploy:staging": "wrangler deploy --env staging",
-    "deploy:production": "wrangler deploy --env production",
     "build": "echo 'No build step required for Workers'",
     "test": "echo 'Tests not yet implemented'",
     "lint": "eslint src/",
@@ -15,9 +13,7 @@
     "format": "prettier --write '**/*.{js,json,md}'",
     "format:check": "prettier --check '**/*.{js,json,md}'",
     "quality": "npm run format:check && npm run lint",
-    "preview": "wrangler publish --env development",
-    "tail": "wrangler tail",
-    "logs": "wrangler tail --env development"
+    "tail": "wrangler tail"
   },
   "keywords": [
     "cloudflare-workers",
@@ -35,6 +31,9 @@
     "eslint": "^9.39.2",
     "prettier": "^3.8.1",
     "wrangler": "^3.48.0"
+  },
+  "dependencies": {
+    "hono": "^4.0.0"
   },
   "engines": {
     "node": ">=18.0.0"

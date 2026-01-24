@@ -6,7 +6,7 @@ compatibility_flags = ["nodejs_compat"]
 # Observability - Tail Workers (logs to stdout)
 observability = { enabled = true }
 
-# Global variables (available in all environments)
+# Configuration variables
 [vars]
 ORIGIN_BASE_URL = "https://api.openmetrolinx.com/OpenDataAPI/"
 ORIGIN_AUTH_TOKEN = "30026517"
@@ -19,28 +19,7 @@ DEBUG_PERFORMANCE = "false"
 VALIDATE_PARAMS = "true"
 ENABLE_CORS = "true"
 ENABLE_OBSERVABILITY_HEADERS = "true"
-ALLOW_LOCALHOST = "true"
-
-# Environment-specific configurations
-[env.development]
-name = "trmnl-go-transit-proxy-dev"
-vars = { ENVIRONMENT = "development" }
-
-[env.staging]
-name = "trmnl-go-transit-proxy-staging"
-vars = { ENVIRONMENT = "staging", LOG_LEVEL = "info" }
-
-[env.production]
-name = "trmnl-go-transit-proxy"
-vars = { ENVIRONMENT = "production", LOG_LEVEL = "warn" }
-
-# Required secrets (set via: wrangler secret put VARIABLE_NAME --env <env>)
-# These should NOT be committed to git
-# - ORIGIN_BASE_URL
-# - ORIGIN_AUTH_TOKEN
-# - EDGE_TTL
-# - BROWSER_TTL
-# - ORIGIN_TIMEOUT_MS
+ENVIRONMENT = "production"
 
 # Optional KV namespace (for future enhancements like rate limiting)
 # [[kv_namespaces]]
@@ -53,7 +32,3 @@ vars = { ENVIRONMENT = "production", LOG_LEVEL = "warn" }
 # binding = "DB"
 # database_name = "trmnl-go-transit"
 # database_id = "your-database-id"
-
-# Analytics Engine (optional - for custom metrics)
-# [analytics]
-# enabled = true
