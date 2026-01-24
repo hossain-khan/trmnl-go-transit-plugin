@@ -21,17 +21,17 @@ Issue #5 "Implement timeout & error handling with stale fallback" has been **suc
 
 ## Acceptance Criteria Status
 
-| Criterion | Status | Implementation |
-|-----------|--------|----------------|
-| Implement AbortController for origin request timeout | ✅ | Lines 277-279, 318, 322 |
-| Set default timeout to `env.ORIGIN_TIMEOUT_MS` (3000ms) | ✅ | Line 278 |
-| Return 504 Gateway Timeout if no stale cache available | ✅ | Line 101 |
-| Fallback to stale cached response on timeout (stale-while-revalidate) | ✅ | Lines 90-98 |
-| Log timeout errors with format: `ORIGIN_TIMEOUT: Exceeded {ms}ms` | ✅ | Line 88 |
-| Cache 5xx error responses with short TTL (max-age=10, s-maxage=10) | ✅ | Line 312 |
-| Never cache 4xx errors | ✅ | Line 319 |
-| Clear timeouts properly to prevent memory leaks | ✅ | Lines 318, 322 |
-| Log origin 5xx errors: `ORIGIN_ERROR: {status} from {origin}` | ✅ | Line 144 |
+| Criterion                                                             | Status | Implementation          |
+| --------------------------------------------------------------------- | ------ | ----------------------- |
+| Implement AbortController for origin request timeout                  | ✅     | Lines 277-279, 318, 322 |
+| Set default timeout to `env.ORIGIN_TIMEOUT_MS` (3000ms)               | ✅     | Line 278                |
+| Return 504 Gateway Timeout if no stale cache available                | ✅     | Line 101                |
+| Fallback to stale cached response on timeout (stale-while-revalidate) | ✅     | Lines 90-98             |
+| Log timeout errors with format: `ORIGIN_TIMEOUT: Exceeded {ms}ms`     | ✅     | Line 88                 |
+| Cache 5xx error responses with short TTL (max-age=10, s-maxage=10)    | ✅     | Line 312                |
+| Never cache 4xx errors                                                | ✅     | Line 319                |
+| Clear timeouts properly to prevent memory leaks                       | ✅     | Lines 318, 322          |
+| Log origin 5xx errors: `ORIGIN_ERROR: {status} from {origin}`         | ✅     | Line 144                |
 
 ---
 
@@ -48,7 +48,7 @@ try {
   if (err.name === 'AbortError') {
     const timeoutMs = env.ORIGIN_TIMEOUT_MS || 3000
     console.error(`ORIGIN_TIMEOUT: Exceeded ${timeoutMs}ms`)
-    
+
     // Check for stale cached response
     const staleResponse = await cache.match(cacheKey)
     if (staleResponse) {
@@ -58,7 +58,7 @@ try {
       addCorsHeaders(response)
       return response
     }
-    
+
     // No stale cache available, return 504
     return createErrorResponse(504, 'Gateway Timeout', env)
   }
@@ -67,6 +67,7 @@ try {
 ```
 
 **Features**:
+
 - Uses AbortController with configurable timeout (default 3000ms)
 - Checks cache for stale response on timeout
 - Returns stale response with `X-Cache: STALE` header if available
@@ -83,7 +84,7 @@ try {
 // Handle 5xx errors with stale fallback
 if (originResponse.status >= 500) {
   console.error(`ORIGIN_ERROR: ${originResponse.status} from ${env.ORIGIN_BASE_URL}`)
-  
+
   // Check for stale cached response
   const staleResponse = await cache.match(cacheKey)
   if (staleResponse) {
@@ -93,13 +94,14 @@ if (originResponse.status >= 500) {
     addCorsHeaders(response)
     return response
   }
-  
+
   // No stale cache available, cache the error response with short TTL
   console.log(`Caching 5xx error response for ${url.pathname} with 10s TTL`)
 }
 ```
 
 **Features**:
+
 - Detects 5xx errors from origin
 - Checks cache for stale response
 - Returns stale response if available
@@ -134,6 +136,7 @@ function getCacheHeaders(status, browserTtl, edgeTtl, swrTtl) {
 ```
 
 **Cache Policies**:
+
 - **2xx responses**: Full caching with stale-while-revalidate (60s/300s/30s)
 - **4xx responses**: No caching (`no-store`) - bad requests fail fast
 - **5xx responses**: Short caching (10s) - prevents origin hammering
@@ -153,15 +156,16 @@ try {
   const response = await fetch(originUrl, {
     signal: controller.signal,
   })
-  clearTimeout(timeout)  // ✅ Clear on success
+  clearTimeout(timeout) // ✅ Clear on success
   return response
 } catch (err) {
-  clearTimeout(timeout)  // ✅ Clear on error
+  clearTimeout(timeout) // ✅ Clear on error
   throw err
 }
 ```
 
 **Safety Features**:
+
 - `clearTimeout()` called in both success and error paths
 - Prevents memory leaks from accumulated timeouts
 - Ensures proper cleanup of resources
@@ -192,7 +196,7 @@ export default [
     },
     rules: {
       'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      'semi': ['error', 'never'],
+      semi: ['error', 'never'],
       // ... other rules
     },
   },
@@ -213,6 +217,7 @@ npm run lint
 **New File**: `TESTING_GUIDE.md`
 
 Comprehensive manual testing guide covering:
+
 1. Timeout returns 504 when no stale cache
 2. Timeout returns stale response when available
 3. 5xx errors return stale response when available
@@ -220,6 +225,7 @@ Comprehensive manual testing guide covering:
 5. 4xx errors not cached
 
 Each test scenario includes:
+
 - Setup steps
 - Expected results
 - curl commands for verification
@@ -318,14 +324,14 @@ Access-Control-Allow-Origin: *
 
 ## Performance Characteristics
 
-| Scenario | Latency | Cache Behavior |
-|----------|---------|----------------|
-| Cache HIT | <50ms | Immediate return from cache |
-| Cache MISS (Success) | ~500ms | Origin fetch + cache store |
-| Timeout → Stale | ~3000ms | Timeout + stale cache lookup |
-| Timeout → No Cache | ~3000ms | Timeout + 504 response |
-| 5xx → Stale | ~500ms | Origin fetch + stale cache lookup |
-| 5xx → No Cache | ~500ms | Origin fetch + error cache (10s) |
+| Scenario             | Latency | Cache Behavior                    |
+| -------------------- | ------- | --------------------------------- |
+| Cache HIT            | <50ms   | Immediate return from cache       |
+| Cache MISS (Success) | ~500ms  | Origin fetch + cache store        |
+| Timeout → Stale      | ~3000ms | Timeout + stale cache lookup      |
+| Timeout → No Cache   | ~3000ms | Timeout + 504 response            |
+| 5xx → Stale          | ~500ms  | Origin fetch + stale cache lookup |
+| 5xx → No Cache       | ~500ms  | Origin fetch + error cache (10s)  |
 
 ---
 
@@ -407,6 +413,7 @@ Access-Control-Allow-Origin: *
 ✅ **APPROVE for merge**
 
 All acceptance criteria have been successfully implemented and verified:
+
 - Timeout handling with stale fallback
 - 5xx error handling with stale fallback
 - Correct cache policies (10s for 5xx, no-store for 4xx)
@@ -415,6 +422,7 @@ All acceptance criteria have been successfully implemented and verified:
 - Comprehensive testing documentation
 
 **Next Steps**:
+
 1. Review and approve this PR
 2. Merge to main branch
 3. Deploy to staging for end-to-end testing

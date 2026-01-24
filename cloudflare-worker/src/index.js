@@ -30,7 +30,7 @@ const worker = {
       // 0. Health check endpoint
       const url = new URL(request.url)
       if (url.pathname === '/health') {
-        return new Response(
+        const healthResponse = new Response(
           JSON.stringify({
             status: 'ok',
             timestamp: new Date().toISOString(),
@@ -44,6 +44,8 @@ const worker = {
             headers: { 'Content-Type': 'application/json' },
           }
         )
+        addCorsHeaders(healthResponse)
+        return healthResponse
       }
 
       // Validate environment configuration
@@ -202,23 +204,32 @@ const worker = {
 
 /**
  * Validate incoming request
- * - Only GET and OPTIONS methods allowed
- * - Request size within limits
- * Returns error response if validation fails, null if valid
+ * - Only GET and OPTIONS methods allowed (security best practice)
+ * - Handles CORS preflight OPTIONS requests with 204 No Content
+ * - Returns error response if validation fails, null if valid
+ *
+ * CORS Policy:
+ * - All responses include CORS headers for web client compatibility
+ * - Restricted to safe HTTP methods: GET (data fetching), OPTIONS (preflight)
+ * - Allow-Origin: * (public API, no authentication required)
  */
 function validateRequest(request, _url) {
-  // Check method
+  // Handle CORS preflight requests (OPTIONS)
+  // Browser sends OPTIONS before actual request to check CORS policy
   if (request.method === 'OPTIONS') {
     const response = new Response(null, { status: 204 })
     addCorsHeaders(response)
     return response
   }
 
+  // Only allow GET requests for data fetching
   if (request.method !== 'GET') {
-    return new Response(null, {
+    const response = new Response(null, {
       status: 405,
       statusText: 'Method Not Allowed',
     })
+    addCorsHeaders(response)
+    return response
   }
 
   return null
@@ -350,8 +361,38 @@ function getCacheHeaders(status, browserTtl, edgeTtl, swrTtl) {
 }
 
 /**
- * Add CORS headers to response
- * Allows web clients to make requests to the Worker
+ * Add CORS (Cross-Origin Resource Sharing) headers to response
+ *
+ * Purpose:
+ * - Enables web browsers to make requests from any origin (domain)
+ * - Required for web clients (React, Vue, etc.) to call the Worker API directly
+ * - Without CORS headers, browsers block cross-origin requests (security policy)
+ *
+ * CORS Headers Explained:
+ * - Access-Control-Allow-Origin: '*'
+ *   Allows requests from any domain (public API, no authentication)
+ *
+ * - Access-Control-Allow-Methods: 'GET, OPTIONS'
+ *   Restricts to safe HTTP methods only (GET for data, OPTIONS for preflight)
+ *   Prevents modification operations (POST, PUT, DELETE, PATCH)
+ *
+ * - Access-Control-Allow-Headers: 'Content-Type'
+ *   Allows client to specify Content-Type header in requests
+ *
+ * - Access-Control-Max-Age: '86400' (24 hours)
+ *   Browsers cache preflight response for 24h to reduce OPTIONS requests
+ *
+ * Applied to ALL responses:
+ * - Successful responses (2xx)
+ * - Error responses (4xx, 5xx)
+ * - Cached responses (HIT, MISS, STALE)
+ * - Preflight OPTIONS requests (204 No Content)
+ * - Health check endpoint
+ *
+ * Security Considerations:
+ * - Allow-Origin: * is safe because this is a public, read-only API
+ * - No credentials (cookies, auth tokens) are sent with requests
+ * - Methods restricted to GET and OPTIONS only (no data modification)
  */
 function addCorsHeaders(response) {
   response.headers.set('Access-Control-Allow-Origin', '*')

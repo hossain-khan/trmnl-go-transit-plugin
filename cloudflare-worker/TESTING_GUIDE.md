@@ -7,15 +7,18 @@ This document describes how to test the timeout and error handling features with
 ### 1. Timeout Returns 504 When No Stale Cache
 
 **Setup:**
+
 - Clear cache
 - Mock origin to take >3s to respond
 
 **Expected Result:**
+
 - Worker returns 504 Gateway Timeout
 - Log shows: `ORIGIN_TIMEOUT: Exceeded 3000ms`
 - No X-Cache: STALE header
 
 **How to Test:**
+
 ```bash
 # Deploy to Cloudflare Workers
 npm run deploy:staging
@@ -32,18 +35,21 @@ npm run tail
 ### 2. Timeout Returns Stale Response When Available
 
 **Setup:**
+
 1. First request: Normal response (caches data)
 2. Wait for cache to become stale (after TTL expires)
 3. Mock origin to take >3s to respond
 4. Second request: Should return stale cache
 
 **Expected Result:**
+
 - Worker returns cached response (200 OK)
 - Log shows: `ORIGIN_TIMEOUT: Exceeded 3000ms`
 - Log shows: `STALE_FALLBACK: Returning stale cache for /path (timeout)`
 - Response has header: `X-Cache: STALE`
 
 **How to Test:**
+
 ```bash
 # 1. Make first request (caches response)
 curl https://your-worker.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=1234
@@ -68,17 +74,20 @@ npm run tail
 ### 3. 5xx Errors Return Stale Response When Available
 
 **Setup:**
+
 1. First request: Normal response (caches data)
 2. Mock origin to return 500 error
 3. Second request: Should return stale cache
 
 **Expected Result:**
+
 - Worker returns cached response (200 OK)
 - Log shows: `ORIGIN_ERROR: 500 from https://api.openmetrolinx.com/OpenDataAPI/`
 - Log shows: `STALE_FALLBACK: Returning stale cache for /path (origin 5xx)`
 - Response has header: `X-Cache: STALE`
 
 **How to Test:**
+
 ```bash
 # 1. Make first request (caches response)
 curl https://your-worker.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=1234
@@ -100,10 +109,12 @@ npm run tail
 ### 4. 5xx Errors Cached for 10 Seconds When No Stale Cache
 
 **Setup:**
+
 - Clear cache
 - Mock origin to return 500 error
 
 **Expected Result:**
+
 - Worker returns 500 error
 - Log shows: `ORIGIN_ERROR: 500 from https://api.openmetrolinx.com/OpenDataAPI/`
 - Log shows: `Caching 5xx error response for /path with 10s TTL`
@@ -111,6 +122,7 @@ npm run tail
 - Response has header: `X-Cache: MISS`
 
 **How to Test:**
+
 ```bash
 # 1. Clear cache (deploy new version)
 # 2. Use invalid API key to trigger 5xx
@@ -133,15 +145,18 @@ npm run tail
 ### 5. 4xx Errors Not Cached
 
 **Setup:**
+
 - Mock origin to return 400 error
 
 **Expected Result:**
+
 - Worker returns 400 error
 - Response has header: `Cache-Control: no-store`
 - No caching occurs
 - Subsequent requests also return 400 (not cached)
 
 **How to Test:**
+
 ```bash
 # 1. Send invalid request (e.g., missing required params)
 curl -v https://your-worker.workers.dev/api/V1/ServiceataGlance/Trains/All
@@ -160,16 +175,19 @@ curl -v https://your-worker.workers.dev/api/V1/ServiceataGlance/Trains/All
 Check logs for these exact formats:
 
 ### Timeout Log Format
+
 ```
 ORIGIN_TIMEOUT: Exceeded 3000ms
 ```
 
 ### Origin Error Log Format
+
 ```
 ORIGIN_ERROR: 500 from https://api.openmetrolinx.com/OpenDataAPI/
 ```
 
 ### Stale Fallback Log Format
+
 ```
 STALE_FALLBACK: Returning stale cache for /api/V1/ServiceataGlance/Trains/All (timeout)
 STALE_FALLBACK: Returning stale cache for /api/V1/ServiceataGlance/Trains/All (origin 5xx)
@@ -194,6 +212,7 @@ Check for these response headers:
 ## Local Testing Notes
 
 **⚠️ Warning**: Local testing with `wrangler dev` has limitations:
+
 - HTTPS fetch may fail with "internal error" (Miniflare limitation)
 - Stale cache behavior may not work correctly locally
 - Timeout behavior may differ from production
@@ -205,12 +224,14 @@ Check for these response headers:
 ## Automated Testing (Future)
 
 For automated testing, consider:
+
 - **Vitest** with `@cloudflare/workers-types`
 - **Miniflare** mocks for Cache API
 - **MSW (Mock Service Worker)** for origin mocking
 - **Playwright** for end-to-end tests
 
 Example test structure:
+
 ```javascript
 import { describe, it, expect, vi } from 'vitest'
 import worker from './src/index.js'
