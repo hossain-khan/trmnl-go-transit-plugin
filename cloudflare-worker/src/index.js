@@ -77,6 +77,11 @@ const worker = {
         return response
       }
 
+      // Log cache miss
+      logEvent(env, 'CACHE_MISS', {
+        path: `${url.pathname}${url.search}`,
+      })
+
       // 4. Cache MISS - fetch from origin
       const originStart = Date.now()
       let originResponse
@@ -87,12 +92,25 @@ const worker = {
         // Log error and return appropriate response
         if (err.name === 'AbortError') {
           const timeoutMs = env.ORIGIN_TIMEOUT_MS || 3000
-          console.error(`ORIGIN_TIMEOUT: Exceeded ${timeoutMs}ms`)
+          logEvent(env, 'ORIGIN_TIMEOUT', {
+            timeout_ms: timeoutMs,
+            path: url.pathname,
+          })
 
           // Check for stale cached response
           const staleResponse = await cache.match(cacheKey)
           if (staleResponse) {
-            console.log(`STALE_FALLBACK: Returning stale cache for ${url.pathname} (timeout)`)
+            // Calculate age of stale response
+            const cacheDate = staleResponse.headers.get('Date')
+            const ageSeconds = cacheDate
+              ? Math.floor((Date.now() - new Date(cacheDate).getTime()) / 1000)
+              : null
+
+            logEvent(env, 'STALE_FALLBACK', {
+              path: url.pathname,
+              age_seconds: ageSeconds,
+              reason: 'timeout',
+            })
             const response = new Response(staleResponse.body, staleResponse)
             response.headers.set('X-Cache', 'STALE')
             addCorsHeaders(response)
@@ -103,12 +121,6 @@ const worker = {
           return createErrorResponse(504, 'Gateway Timeout', env)
         }
 
-        console.error('[ORIGIN_FETCH_ERROR]', {
-          error: err.message,
-          path: url.pathname,
-          originUrl: `${env.ORIGIN_BASE_URL}${url.pathname}${url.search}`,
-          stack: err.stack,
-        })
         logEvent(env, 'ORIGIN_FETCH_ERROR', {
           error: err.message,
           path: url.pathname,
@@ -135,20 +147,38 @@ const worker = {
 
       // 5. Process origin response
       const originTime = Date.now() - originStart
-      logEvent(env, 'ORIGIN_FETCH', {
-        status: originResponse.status,
-        time_ms: originTime,
-        path: url.pathname,
-      })
+
+      // Log successful origin fetch
+      if (originResponse.ok) {
+        logEvent(env, 'ORIGIN_FETCH_SUCCESS', {
+          status: originResponse.status,
+          time_ms: originTime,
+          path: url.pathname,
+        })
+      }
 
       // Handle 5xx errors with stale fallback
       if (originResponse.status >= 500) {
-        console.error(`ORIGIN_ERROR: ${originResponse.status} from ${env.ORIGIN_BASE_URL}`)
+        logEvent(env, 'ORIGIN_ERROR', {
+          status: originResponse.status,
+          origin: env.ORIGIN_BASE_URL,
+          path: url.pathname,
+        })
 
         // Check for stale cached response
         const staleResponse = await cache.match(cacheKey)
         if (staleResponse) {
-          console.log(`STALE_FALLBACK: Returning stale cache for ${url.pathname} (origin 5xx)`)
+          // Calculate age of stale response
+          const cacheDate = staleResponse.headers.get('Date')
+          const ageSeconds = cacheDate
+            ? Math.floor((Date.now() - new Date(cacheDate).getTime()) / 1000)
+            : null
+
+          logEvent(env, 'STALE_FALLBACK', {
+            path: url.pathname,
+            age_seconds: ageSeconds,
+            reason: 'origin_5xx',
+          })
           const response = new Response(staleResponse.body, staleResponse)
           response.headers.set('X-Cache', 'STALE')
           addCorsHeaders(response)
@@ -156,7 +186,11 @@ const worker = {
         }
 
         // No stale cache available, cache the error response with short TTL
-        console.log(`Caching 5xx error response for ${url.pathname} with 10s TTL`)
+        logEvent(env, 'CACHE_ERROR_RESPONSE', {
+          path: url.pathname,
+          status: originResponse.status,
+          ttl_seconds: 10,
+        })
       }
 
       // Clone response before reading body (body can only be consumed once)
@@ -193,7 +227,7 @@ const worker = {
 
       return clonedResponse
     } catch (error) {
-      console.error('[WORKER_ERROR]', {
+      logEvent(env, 'WORKER_ERROR', {
         message: error.message,
         stack: error.stack,
       })
@@ -316,8 +350,6 @@ async function fetchOrigin(url, env, _ctx) {
     originUrlObj.searchParams.set('key', env.ORIGIN_AUTH_TOKEN)
     const originUrl = originUrlObj.toString()
 
-    console.log('[fetchOrigin] Fetching:', originUrl.replace(env.ORIGIN_AUTH_TOKEN, '***'))
-
     const response = await fetch(originUrl, {
       method: 'GET',
       headers: {
@@ -325,8 +357,6 @@ async function fetchOrigin(url, env, _ctx) {
       },
       signal: controller.signal,
     })
-
-    console.log('[fetchOrigin] Got response, status:', response.status, 'ok:', response.ok)
 
     clearTimeout(timeout)
     return response
@@ -437,25 +467,49 @@ export default worker
  * Log event for monitoring and debugging
  * Format: [TIMESTAMP] [LEVEL] [EVENT] - {context}
  * In production, logs are sent to Cloudflare Logpush → Axiom
+ *
+ * Logging Destinations:
+ * - Development: console.log() → Cloudflare Worker dashboard logs
+ * - Staging/Production: Cloudflare Logpush → Axiom (primary) + S3 (backup)
+ *
+ * Event Types and Levels:
+ * - ERROR level: ORIGIN_ERROR, ORIGIN_TIMEOUT, ORIGIN_FETCH_ERROR, WORKER_ERROR
+ * - WARN level: STALE_FALLBACK, CACHE_ERROR_RESPONSE
+ * - INFO level: CACHE_MISS, ORIGIN_FETCH_SUCCESS, CACHE_MISS_STORED
  */
 function logEvent(env, eventType, context = {}) {
   const logLevel = env.LOG_LEVEL || 'info'
-  const environment = env.ENVIRONMENT || 'development'
+
+  // Determine event level based on event type
+  let eventLevel
+  let levelName
+
+  if (eventType.includes('ERROR')) {
+    eventLevel = 3 // error
+    levelName = 'ERROR'
+  } else if (eventType.includes('TIMEOUT') || eventType.includes('STALE_FALLBACK')) {
+    eventLevel = 2 // warn
+    levelName = 'WARN'
+  } else {
+    eventLevel = 1 // info
+    levelName = 'INFO'
+  }
 
   // Only log at appropriate level
   const levels = { debug: 0, info: 1, warn: 2, error: 3 }
   const currentLevel = levels[logLevel] || 1
-  const eventLevel = eventType.includes('ERROR') ? 3 : 1
 
   if (eventLevel < currentLevel) {
     return
   }
 
   const timestamp = new Date().toISOString()
-  const message = `[${timestamp}] [${environment}] [${eventType}] - ${JSON.stringify(context)}`
+  const message = `[${timestamp}] [${levelName}] [${eventType}] - ${JSON.stringify(context)}`
 
-  if (eventType.includes('ERROR')) {
+  if (eventLevel >= 3) {
     console.error(message)
+  } else if (eventLevel >= 2) {
+    console.warn(message)
   } else {
     console.log(message)
   }
