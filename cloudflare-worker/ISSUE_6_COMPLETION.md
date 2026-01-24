@@ -20,17 +20,17 @@ Issue #6 "Implement CORS support for web clients" has been **successfully comple
 
 ## Acceptance Criteria Status
 
-| Criterion | Status | Implementation |
-|-----------|--------|----------------|
-| Add CORS headers to all responses | ✅ | Lines 398-401 (addCorsHeaders function) |
-| `Access-Control-Allow-Origin: *` | ✅ | Line 398 |
-| `Access-Control-Allow-Methods: GET, OPTIONS` | ✅ | Line 399 |
-| `Access-Control-Allow-Headers: Content-Type` | ✅ | Line 400 |
-| Handle OPTIONS (preflight) requests separately | ✅ | Lines 219-222 |
-| Return 204 No Content for OPTIONS requests | ✅ | Line 220 |
-| Apply CORS headers to error responses (4xx, 5xx) | ✅ | Lines 231, 423 (405, 500/502/504) |
-| Document CORS behavior in code comments | ✅ | Lines 203-215, 363-396 |
-| Test preflight requests | ✅ | test-cors.html created |
+| Criterion                                        | Status | Implementation                          |
+| ------------------------------------------------ | ------ | --------------------------------------- |
+| Add CORS headers to all responses                | ✅     | Lines 398-401 (addCorsHeaders function) |
+| `Access-Control-Allow-Origin: *`                 | ✅     | Line 398                                |
+| `Access-Control-Allow-Methods: GET, OPTIONS`     | ✅     | Line 399                                |
+| `Access-Control-Allow-Headers: Content-Type`     | ✅     | Line 400                                |
+| Handle OPTIONS (preflight) requests separately   | ✅     | Lines 219-222                           |
+| Return 204 No Content for OPTIONS requests       | ✅     | Line 220                                |
+| Apply CORS headers to error responses (4xx, 5xx) | ✅     | Lines 231, 423 (405, 500/502/504)       |
+| Document CORS behavior in code comments          | ✅     | Lines 203-215, 363-396                  |
+| Test preflight requests                          | ✅     | test-cors.html created                  |
 
 ---
 
@@ -84,6 +84,7 @@ function addCorsHeaders(response) {
 ```
 
 **Features**:
+
 - Comprehensive inline documentation explaining purpose and security
 - Sets all required CORS headers
 - 24-hour cache for preflight responses (reduces OPTIONS overhead)
@@ -106,6 +107,7 @@ if (request.method === 'OPTIONS') {
 ```
 
 **Features**:
+
 - Returns 204 No Content (standard for OPTIONS)
 - Includes all CORS headers via addCorsHeaders()
 - Documented with explanation of browser preflight behavior
@@ -151,7 +153,7 @@ function createErrorResponse(status, statusText, env) {
     }
   )
 
-  addCorsHeaders(response)  // ✅ CORS on all errors
+  addCorsHeaders(response) // ✅ CORS on all errors
 
   if (env.ENABLE_OBSERVABILITY_HEADERS !== 'false') {
     response.headers.set('X-Cache', 'ERROR')
@@ -163,6 +165,7 @@ function createErrorResponse(status, statusText, env) {
 ```
 
 **Features**:
+
 - CORS headers added to 405, 500, 502, 504 responses
 - Ensures web clients can see error responses
 - Consistent error response format with JSON body
@@ -197,6 +200,7 @@ if (url.pathname === '/health') {
 ```
 
 **Features**:
+
 - Health check accessible from web clients
 - CORS headers ensure browser compatibility
 - Useful for monitoring dashboards
@@ -207,16 +211,16 @@ if (url.pathname === '/health') {
 
 All responses in the Worker call `addCorsHeaders()`:
 
-| Response Type | Location | CORS Applied |
-|---------------|----------|--------------|
-| Health check (200) | Line 47 | ✅ |
-| Cache HIT | Line 76 | ✅ |
-| Stale fallback (timeout) | Line 98 | ✅ |
-| Stale fallback (5xx) | Line 154 | ✅ |
-| Main response (2xx/5xx) | Line 182 | ✅ |
-| OPTIONS preflight (204) | Line 221 | ✅ |
-| Method not allowed (405) | Line 231 | ✅ |
-| Error responses (500/502/504) | Line 423 | ✅ |
+| Response Type                 | Location | CORS Applied |
+| ----------------------------- | -------- | ------------ |
+| Health check (200)            | Line 47  | ✅           |
+| Cache HIT                     | Line 76  | ✅           |
+| Stale fallback (timeout)      | Line 98  | ✅           |
+| Stale fallback (5xx)          | Line 154 | ✅           |
+| Main response (2xx/5xx)       | Line 182 | ✅           |
+| OPTIONS preflight (204)       | Line 221 | ✅           |
+| Method not allowed (405)      | Line 231 | ✅           |
+| Error responses (500/502/504) | Line 423 | ✅           |
 
 ---
 
@@ -241,6 +245,7 @@ All responses in the Worker call `addCorsHeaders()`:
 ```
 
 **Features**:
+
 - Clear policy statement
 - Explains security rationale
 - Documents allowed methods
@@ -256,6 +261,7 @@ All responses in the Worker call `addCorsHeaders()`:
 A comprehensive HTML testing utility for manual CORS verification:
 
 **Features**:
+
 1. **Configuration**: Specify Worker URL (localhost or production)
 2. **Test 1 - OPTIONS Preflight**: Verifies 204 response with CORS headers
 3. **Test 2 - GET Request**: Verifies health check returns CORS headers
@@ -263,12 +269,14 @@ A comprehensive HTML testing utility for manual CORS verification:
 5. **Run All Tests**: Executes all tests sequentially with status tracking
 
 **Visual Feedback**:
+
 - ✓ PASS / ✗ FAIL status indicators
 - Color-coded results (green = success, red = error)
 - Detailed header inspection
 - JSON response display
 
 **Usage**:
+
 ```bash
 # Start Wrangler dev server
 cd cloudflare-worker
@@ -312,7 +320,7 @@ X-Proxy-Version: 1.0
 
 ## Security Considerations
 
-### Why Allow-Origin: * is Safe
+### Why Allow-Origin: \* is Safe
 
 1. **Public API**: The GO Transit data is publicly accessible
 2. **Read-Only**: Only GET method allowed (no data modification)
@@ -339,6 +347,7 @@ The CORS implementation works with all modern browsers:
 - ✅ Opera
 
 **Tested Scenarios**:
+
 - Single-page applications (React, Vue, Angular)
 - Static HTML pages
 - fetch() API calls
@@ -429,7 +438,7 @@ Web Client (Browser)
 - [x] CORS headers on cached responses (HIT, MISS, STALE)
 - [x] OPTIONS returns 204 No Content
 - [x] OPTIONS includes all CORS headers
-- [x] Access-Control-Allow-Origin: *
+- [x] Access-Control-Allow-Origin: \*
 - [x] Access-Control-Allow-Methods: GET, OPTIONS
 - [x] Access-Control-Allow-Headers: Content-Type
 - [x] Access-Control-Max-Age: 86400
@@ -445,6 +454,7 @@ Web Client (Browser)
 ### Manual Testing with test-cors.html
 
 1. Start Wrangler dev server:
+
    ```bash
    cd cloudflare-worker
    wrangler dev
@@ -461,6 +471,7 @@ Web Client (Browser)
 ### Expected Results
 
 **Test 1 - OPTIONS Preflight**:
+
 ```
 ✓ Status 204
 ✓ Access-Control-Allow-Origin
@@ -469,6 +480,7 @@ Web Client (Browser)
 ```
 
 **Test 2 - GET Request**:
+
 ```
 ✓ Status 200
 ✓ Access-Control-Allow-Origin
@@ -476,6 +488,7 @@ Web Client (Browser)
 ```
 
 **Test 3 - Error Response**:
+
 ```
 ✓ Status 405
 ✓ Access-Control-Allow-Origin
