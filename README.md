@@ -40,8 +40,30 @@ Real-time GO Transit departure and arrival information on your TRMNL display.
 
 1. **API Access Key**: Your Metrolinx Open Data Access Key
    - Register at [GO Transit Open Data](https://www.gotransit.com/en/open-data)
-2. **Home Station**: Select your primary GO station
-3. **Direction Filter** (optional): Filter for specific direction
+   - Keys are free and activate within 24-48 hours
+2. **Home Station**: Select your primary GO station from the list
+3. **Line Filter** (optional): Filter departures for a specific GO Transit line
+
+### Optional Settings
+
+- **Time Format**: Choose between 12-hour (9:34 PM) or 24-hour (21:34) display
+- **Show Alerts**: Enable/disable service alerts and notifications
+- **Departures Count**: Show 2 or 3 upcoming departures per direction
+- **Refresh Interval**: How often to fetch new data (5-30 minutes)
+
+### How It Works
+
+The plugin fetches real-time data from the Metrolinx API via a Cloudflare Workers proxy:
+
+1. **Data Fetching**: GitHub Actions runs `scripts/update-go-transit.js` every 5-15 minutes
+2. **API Integration**: Script fetches from Stop/NextService and ServiceAlert endpoints
+3. **Data Transformation**: API response is transformed to plugin template format
+4. **Status Calculation**: Compares scheduled vs. actual times to determine delays
+5. **Template Rendering**: TRMNL renders the appropriate layout with live data
+
+**API Endpoints Used:**
+- `Stop/NextService/{StopCode}` - Real-time departure predictions
+- `ServiceUpdate/ServiceAlert/All` - Active service alerts and delays
 
 ## Data Sources
 

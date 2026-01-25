@@ -108,7 +108,7 @@ function formatTime(timeString, format = '12h') {
   const date = new Date(timeString.replace(' ', 'T'));
   
   if (format === '24h') {
-    return date.toLocaleTimeString('en-US', {
+    return date.toLocaleTimeString('en-GB', {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false
