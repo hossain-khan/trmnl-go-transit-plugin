@@ -31,6 +31,9 @@ jobs:
         env:
           GO_TRANSIT_API_KEY: ${{ secrets.GO_TRANSIT_API_KEY }}
           STATION_ID: ${{ vars.STATION_ID || 'OS' }}
+          LINE_FILTER: ${{ vars.LINE_FILTER || 'all' }}
+          TIME_FORMAT: ${{ vars.TIME_FORMAT || '12h' }}
+          SHOW_ALERTS: ${{ vars.SHOW_ALERTS || 'true' }}
         run: |
           if [ -f scripts/update-go-transit.js ]; then
             node scripts/update-go-transit.js
