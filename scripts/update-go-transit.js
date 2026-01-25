@@ -35,8 +35,8 @@ const STATION_NAMES = {
   'EG': 'Eglinton GO',
   'GU': 'Guildwood GO',
   'RO': 'Rouge Hill GO',
-  'PI': 'Pickering GO',
-  'PIN': 'Pickering GO',
+  'PI': 'Pickering GO',  // Primary code
+  'PIN': 'Pickering GO', // Alternate code (used in some API responses)
   'AJ': 'Ajax GO',
   'WH': 'Whitby GO',
   'OS': 'Oshawa GO',
@@ -100,12 +100,20 @@ async function fetchGOTransitData(endpoint) {
 }
 
 /**
+ * Parse API time string to Date object
+ */
+function parseApiTimeString(timeString) {
+  if (!timeString) return null;
+  return new Date(timeString.replace(' ', 'T'));
+}
+
+/**
  * Parse time string and format for display
  */
 function formatTime(timeString, format = '12h') {
   if (!timeString) return '--:--';
   
-  const date = new Date(timeString.replace(' ', 'T'));
+  const date = parseApiTimeString(timeString);
   
   if (format === '24h') {
     return date.toLocaleTimeString('en-GB', {
@@ -128,8 +136,8 @@ function formatTime(timeString, format = '12h') {
 function calculateStatus(scheduledTime, computedTime) {
   if (!scheduledTime || !computedTime) return 'On Time';
   
-  const scheduled = new Date(scheduledTime.replace(' ', 'T'));
-  const computed = new Date(computedTime.replace(' ', 'T'));
+  const scheduled = parseApiTimeString(scheduledTime);
+  const computed = parseApiTimeString(computedTime);
   
   const diffMinutes = (computed - scheduled) / (1000 * 60);
   
@@ -174,8 +182,8 @@ function getNextDepartures(departures, count = 3) {
   const sorted = departures
     .filter(d => d.ComputedDepartureTime)
     .sort((a, b) => {
-      const timeA = new Date(a.ComputedDepartureTime.replace(' ', 'T'));
-      const timeB = new Date(b.ComputedDepartureTime.replace(' ', 'T'));
+      const timeA = parseApiTimeString(a.ComputedDepartureTime);
+      const timeB = parseApiTimeString(b.ComputedDepartureTime);
       return timeA - timeB;
     });
   
@@ -183,7 +191,7 @@ function getNextDepartures(departures, count = 3) {
   // In production, only return future departures
   const now = new Date();
   const future = sorted.filter(d => {
-    const depTime = new Date(d.ComputedDepartureTime.replace(' ', 'T'));
+    const depTime = parseApiTimeString(d.ComputedDepartureTime);
     return depTime > now;
   });
   
@@ -364,10 +372,13 @@ async function transformData(nextServiceData, alertsData) {
     
     if (relevantAlerts.length > 0) {
       hasAlerts = true;
-      // Combine alert subjects
+      // Combine alert subjects, avoiding double periods
       alertText = relevantAlerts
-        .map(a => a.SubjectEnglish)
-        .join('. ') + '.';
+        .map(a => {
+          const subject = a.SubjectEnglish;
+          return subject.endsWith('.') ? subject : subject + '.';
+        })
+        .join(' ');
     }
   }
 

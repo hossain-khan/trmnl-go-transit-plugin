@@ -4,25 +4,25 @@
   "line_code": "LE",
   "direction_1": {
     "label": "To Union Station",
-    "arriving": "12:46 AM",
+    "arriving": "12:48 AM",
     "arriving_status": "On Time",
-    "next": "1:16 AM",
+    "next": "1:18 AM",
     "next_status": "On Time",
-    "later": "1:46 AM",
+    "later": "1:48 AM",
     "later_status": "On Time"
   },
   "direction_2": {
     "label": "To Oshawa",
-    "arriving": "12:54 AM",
+    "arriving": "12:56 AM",
     "arriving_status": "On Time",
-    "next": "1:24 AM",
+    "next": "1:26 AM",
     "next_status": "On Time",
-    "later": "1:54 AM",
+    "later": "1:56 AM",
     "later_status": "On Time"
   },
   "alerts": "",
   "has_alerts": false,
-  "updated_at": "2026-01-25T00:42:24.001Z",
+  "updated_at": "2026-01-25T00:44:57.769Z",
   "station_position": 1,
   "total_stations": 8,
   "stations": [
