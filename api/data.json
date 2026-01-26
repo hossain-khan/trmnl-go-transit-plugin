@@ -1,29 +1,29 @@
 {
-  "station": "Oshawa GO",
+  "station": "Union Station",
   "line_name": "Lakeshore East",
   "line_code": "LE",
   "direction_1": {
     "label": "To Union Station",
-    "arriving": "1:47 PM",
+    "arriving": "1:48 PM",
     "arriving_status": "On Time",
-    "next": "2:17 PM",
+    "next": "2:18 PM",
     "next_status": "On Time",
-    "later": "2:47 PM",
+    "later": "2:48 PM",
     "later_status": "On Time"
   },
   "direction_2": {
     "label": "To Oshawa",
-    "arriving": "1:55 PM",
+    "arriving": "1:56 PM",
     "arriving_status": "On Time",
-    "next": "2:25 PM",
+    "next": "2:26 PM",
     "next_status": "On Time",
-    "later": "2:55 PM",
+    "later": "2:56 PM",
     "later_status": "On Time"
   },
   "alerts": "",
   "has_alerts": false,
-  "updated_at": "2026-01-26T13:43:10.890Z",
-  "station_position": 1,
+  "updated_at": "2026-01-26T13:44:17.502Z",
+  "station_position": 9,
   "total_stations": 9,
   "stations": [
     "Oshawa",
