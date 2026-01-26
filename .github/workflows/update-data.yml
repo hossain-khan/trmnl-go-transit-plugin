@@ -29,10 +29,30 @@ jobs:
       
       - name: Update GO Transit data
         env:
+          # Metrolinx / GO Transit API key (required)
+          # Configure as a repository secret:
+          #   Settings → Secrets and variables → Actions → Secrets → New repository secret
+          # The API key is only used to enable/disable API calls. Actual authentication
+          # is handled by the Cloudflare Workers proxy (cloudflare-worker/wrangler.toml).
           GO_TRANSIT_API_KEY: ${{ secrets.GO_TRANSIT_API_KEY }}
+          
+          # Optional settings provided via GitHub repository "Actions variables"
+          # To configure: Settings → Secrets and variables → Actions → Variables → New variable
+          
+          # STATION_ID: GO Transit station code (e.g., "OS" for Oshawa, "UN" for Union)
+          # Default: "OS" (Oshawa GO)
           STATION_ID: ${{ vars.STATION_ID || 'OS' }}
+          
+          # LINE_FILTER: Filter to specific line code (e.g., "LE" for Lakeshore East) or "all"
+          # Default: "all" (show all lines at the station)
           LINE_FILTER: ${{ vars.LINE_FILTER || 'all' }}
+          
+          # TIME_FORMAT: Time display format - "12h" (9:34 PM) or "24h" (21:34)
+          # Default: "12h"
           TIME_FORMAT: ${{ vars.TIME_FORMAT || '12h' }}
+          
+          # SHOW_ALERTS: Include service alerts - "true" or "false"
+          # Default: "true"
           SHOW_ALERTS: ${{ vars.SHOW_ALERTS || 'true' }}
         run: |
           if [ -f scripts/update-go-transit.js ]; then

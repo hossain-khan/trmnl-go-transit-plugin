@@ -5,7 +5,9 @@
  * and updates the data.json and api/data.json files for the TRMNL plugin.
  * 
  * Environment Variables:
- * - GO_TRANSIT_API_KEY: Your Metrolinx API access key
+ * - GO_TRANSIT_API_KEY: Optional flag to enable/disable API calls. When absent, 
+ *   sample data is used. The actual API authentication is handled by the Cloudflare
+ *   Workers proxy (configured in cloudflare-worker/wrangler.toml).
  * - STATION_ID: The station code (e.g., 'OS' for Oshawa, 'UN' for Union)
  * - LINE_FILTER: Optional filter for specific line (e.g., 'LE' for Lakeshore East)
  * - TIME_FORMAT: '12h' or '24h' (default: 12h)
@@ -57,14 +59,28 @@ const STATION_NAMES = {
   // Add more as needed
 };
 
-// Line stations mapping
+// Line stations mapping (ordered from outer terminal toward Union or vice versa)
 const LINE_STATIONS = {
-  'LE': ['Oshawa', 'Whitby', 'Ajax', 'Pickering', 'Rouge Hill', 'Guildwood', 'Eglinton', 'Union'],
-  'LW': ['Union', 'Exhibition', 'Mimico', 'Long Branch', 'Port Credit', 'Clarkson', 'Oakville', 'Bronte', 'Appleby', 'Burlington', 'Aldershot'],
+  // Lakeshore East
+  'LE': ['Oshawa', 'Whitby', 'Ajax', 'Pickering', 'Rouge Hill', 'Guildwood', 'Eglinton', 'Danforth', 'Union'],
+  // Lakeshore West
+  'LW': ['Union', 'Exhibition', 'Mimico', 'Long Branch', 'Port Credit', 'Clarkson', 'Oakville', 'Bronte', 'Appleby', 'Burlington', 'Aldershot', 'Hamilton GO Centre', 'West Harbour', 'St. Catharines', 'Niagara Falls'],
+  // Richmond Hill line
+  'RH': ['Gormley', 'Richmond Hill', 'Langstaff', 'Old Cummer', 'Oriole', 'Union'],
+  // Stouffville line
+  'ST': ['Old Elm', 'Stouffville', 'Mount Joy', 'Markham', 'Centennial', 'Unionville', 'Milliken', 'Agincourt', 'Kennedy', 'Scarborough', 'Danforth', 'Union'],
+  // Milton line
+  'ML': ['Milton', 'Lisgar', 'Meadowvale', 'Streetsville', 'Erindale', 'Cooksville', 'Dixie', 'Kipling', 'Mimico', 'Exhibition', 'Union'],
+  // Kitchener line
+  'KI': ['Kitchener', 'Guelph Central', 'Acton', 'Georgetown', 'Mount Pleasant', 'Brampton', 'Bramalea', 'Malton', 'Etobicoke North', 'Weston', 'Bloor', 'Union'],
+  // Barrie line
+  'BR': ['Allandale Waterfront', 'Barrie South', 'Bradford', 'East Gwillimbury', 'Newmarket', 'Aurora', 'King City', 'Maple', 'Rutherford', 'Downsview Park', 'Union'],
 };
 
 /**
  * Fetch data from GO Transit API via Cloudflare proxy
+ * Note: API authentication is handled by the Cloudflare Workers proxy.
+ * The API_KEY environment variable is only used to enable/disable API calls.
  */
 async function fetchGOTransitData(endpoint) {
   if (!API_KEY) {
@@ -87,9 +103,12 @@ async function fetchGOTransitData(endpoint) {
     
     const data = await response.json();
     
-    // Check for API errors in metadata
-    if (data.Metadata && data.Metadata.ErrorCode !== '200') {
-      throw new Error(`API Error: ${data.Metadata.ErrorMessage}`);
+    // Check for API errors in metadata (handle both string and numeric ErrorCode)
+    if (data.Metadata) {
+      const errorCode = String(data.Metadata.ErrorCode);
+      if (errorCode !== '200') {
+        throw new Error(`API Error: ${data.Metadata.ErrorMessage}`);
+      }
     }
     
     return data;
@@ -101,10 +120,16 @@ async function fetchGOTransitData(endpoint) {
 
 /**
  * Parse API time string to Date object
+ * Returns null if the time string is invalid or parsing fails
  */
 function parseApiTimeString(timeString) {
   if (!timeString) return null;
-  return new Date(timeString.replace(' ', 'T'));
+  const date = new Date(timeString.replace(' ', 'T'));
+  // Check if date is valid
+  if (isNaN(date.getTime())) {
+    return null;
+  }
+  return date;
 }
 
 /**
@@ -114,6 +139,9 @@ function formatTime(timeString, format = '12h') {
   if (!timeString) return '--:--';
   
   const date = parseApiTimeString(timeString);
+  
+  // Return fallback if date parsing failed
+  if (!date) return '--:--';
   
   if (format === '24h') {
     return date.toLocaleTimeString('en-GB', {
@@ -138,6 +166,9 @@ function calculateStatus(scheduledTime, computedTime) {
   
   const scheduled = parseApiTimeString(scheduledTime);
   const computed = parseApiTimeString(computedTime);
+  
+  // Return 'On Time' if either date is invalid
+  if (!scheduled || !computed) return 'On Time';
   
   const diffMinutes = (computed - scheduled) / (1000 * 60);
   
@@ -363,21 +394,40 @@ async function transformData(nextServiceData, alertsData) {
     
     // Filter alerts for this line and station
     const relevantAlerts = messages.filter(msg => {
-      const affectsLine = msg.Lines && msg.Lines.some(l => l.Code === lineCode);
-      const affectsStation = msg.Stops && msg.Stops.some(s => s.Code === STATION_ID);
+      if (!msg) return false;
+      
+      // Handle Lines array safely
+      const lines = msg.Lines
+        ? (Array.isArray(msg.Lines) ? msg.Lines : [msg.Lines])
+        : [];
+      const stops = msg.Stops
+        ? (Array.isArray(msg.Stops) ? msg.Stops : [msg.Stops])
+        : [];
+      
+      // Check if alert affects the line or station
+      const affectsLine = lines.some(l => l && (l.Code === lineCode || l.LineCode === lineCode));
+      const affectsStation = stops.some(s => s && (s.Code === STATION_ID || s.StopCode === STATION_ID));
       const isServiceAlert = msg.Category === 'Service Disruption' || msg.SubCategory === 'Delays';
       
-      return (affectsLine || affectsStation) && isServiceAlert;
+      // When a specific line is filtered, require the alert to affect that line
+      const lineFilterApplied = LINE_FILTER && LINE_FILTER !== 'all';
+      const matchesScope = lineFilterApplied 
+        ? (affectsLine && (affectsStation || stops.length === 0))
+        : (affectsLine || affectsStation);
+      
+      return matchesScope && isServiceAlert;
     });
     
     if (relevantAlerts.length > 0) {
       hasAlerts = true;
-      // Combine alert subjects, avoiding double periods
+      // Combine alert subjects, avoiding double periods and handling null values
       alertText = relevantAlerts
         .map(a => {
+          if (!a || !a.SubjectEnglish) return '';
           const subject = a.SubjectEnglish;
           return subject.endsWith('.') ? subject : subject + '.';
         })
+        .filter(Boolean)
         .join(' ');
     }
   }
