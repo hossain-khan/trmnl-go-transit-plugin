@@ -99,10 +99,11 @@ The `wrangler.toml` file contains:
    npm run deploy   # Deploys to Cloudflare
    ```
 4. **Test from production URL**:
+
    ```bash
    # Health check
    curl https://trmnl-go-transit-proxy.hk-c91.workers.dev/health
-   
+
    # Real API test
    curl "https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=OS"
    ```
@@ -155,6 +156,7 @@ npx wrangler publish --dry-run
 **Automated Deployment (Recommended):**
 
 The repository has CI/CD configured via GitHub Actions (`.github/workflows/ci.yml`):
+
 - Automatic deployment on push to `main` branch
 - Quality checks (Prettier, ESLint) run before deployment
 - Validates `wrangler.toml` configuration
@@ -356,6 +358,7 @@ dist/
 ✅ **Production Ready** - The Cloudflare Worker proxy is fully implemented and deployed.
 
 **Implemented Features:**
+
 - ✅ API proxying with Hono framework
 - ✅ Intelligent caching with Cache API
 - ✅ CORS support for all origins

@@ -18,12 +18,12 @@ Real-time GO Transit departure and arrival information on your TRMNL display.
 
 ## Demo
 
-| Layout | Preview |
-|--------|---------|
-| **Full** | <img src="project-resources/assets/demo/preview-full.png" alt="Full Layout" width="400"/> |
+| Layout              | Preview                                                                                                         |
+| ------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Full**            | <img src="project-resources/assets/demo/preview-full.png" alt="Full Layout" width="400"/>                       |
 | **Half Horizontal** | <img src="project-resources/assets/demo/preview-half-horizontal.png" alt="Half Horizontal Layout" width="400"/> |
-| **Half Vertical** | <img src="project-resources/assets/demo/preview-half-vertical.png" alt="Half Vertical Layout" width="200"/> |
-| **Quadrant** | <img src="project-resources/assets/demo/preview-quadrant.png" alt="Quadrant Layout" width="200"/> |
+| **Half Vertical**   | <img src="project-resources/assets/demo/preview-half-vertical.png" alt="Half Vertical Layout" width="200"/>     |
+| **Quadrant**        | <img src="project-resources/assets/demo/preview-quadrant.png" alt="Quadrant Layout" width="200"/>               |
 
 ## Features
 
@@ -58,6 +58,7 @@ The plugin is configurable through the TRMNL plugin settings interface:
 ## Data Sources
 
 This plugin uses the [Metrolinx Open Data API](http://api.openmetrolinx.com/OpenDataAPI/Help/Index/en):
+
 - Real-time trip updates via `/ServiceataGlance/Trains/All`
 - Service alerts via `/ServiceUpdate/ServiceAlert/All`
 - Station information via GTFS data
@@ -124,6 +125,7 @@ TRMNL Device → GitHub Pages (data.json) → Cloudflare Worker → Metrolinx AP
 ```
 
 **Benefits:**
+
 - **Caching**: Reduces API calls and improves response times
 - **Reliability**: Handles timeouts and errors gracefully
 - **Security**: API key stored securely in Cloudflare, not exposed to clients
