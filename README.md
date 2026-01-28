@@ -1,6 +1,6 @@
 # GO Transit Dashboard for TRMNL
 
-<img src="assets/icon/go-transit-icon.png" align="right" alt="GO Transit Icon" width="120"/>
+<img src="project-resources/assets/icon/GO_Transit_logo-square.png" align="right" alt="GO Transit Icon" width="120"/>
 
 Real-time GO Transit departure and arrival information on your TRMNL display.
 
@@ -27,28 +27,42 @@ Real-time GO Transit departure and arrival information on your TRMNL display.
 
 ## Features
 
-- **Real-time Updates**: Departure times refresh every 5 minutes
+- **Real-time Updates**: Departure times refresh every 5-15 minutes via Cloudflare Worker proxy
 - **Multiple Directions**: View trains in both directions from your station
 - **Service Alerts**: Stay informed about delays and maintenance
 - **Station Position**: Visual indicator showing your station on the line
 - **Four Layouts**: Full, half horizontal, half vertical, and quadrant views
 - **E-ink Optimized**: Clean, high-contrast design for TRMNL displays
+- **52+ Stations**: Support for major GO Rail stations across all lines
+- **Customizable**: Time format (12h/24h), line filtering, and departure count options
 
 ## Configuration
 
+The plugin is configurable through the TRMNL plugin settings interface:
+
 ### Required Settings
 
-1. **API Access Key**: Your Metrolinx Open Data Access Key
-   - Register at [GO Transit Open Data](https://www.gotransit.com/en/open-data)
-2. **Home Station**: Select your primary GO station
-3. **Direction Filter** (optional): Filter for specific direction
+1. **Metrolinx API Key**: Your Metrolinx Open Data API access key (free)
+   - Register at [Metrolinx Developer Portal](http://api.openmetrolinx.com/OpenDataAPI/Help/Registration/Register)
+   - Takes 24-48 hours to activate
+2. **GO Station**: Select from 52+ major GO Transit stations
+
+### Optional Settings
+
+- **Filter by Line**: Optionally filter departures to a specific transit line (useful for multi-line stations like Union)
+- **Time Format**: Choose between 12-hour (9:34 PM) or 24-hour (21:34) format
+- **Show Service Alerts**: Toggle display of active service alerts
+- **Departures to Show**: Choose 2 or 3 upcoming departures per direction
+- **Data Refresh Interval**: Set update frequency (5, 10, 15, or 30 minutes)
 
 ## Data Sources
 
-This plugin uses the [Metrolinx Open Data API](https://www.gotransit.com/en/open-data):
-- Real-time trip updates
-- Service alerts
-- Station schedules
+This plugin uses the [Metrolinx Open Data API](http://api.openmetrolinx.com/OpenDataAPI/Help/Index/en):
+- Real-time trip updates via `/ServiceataGlance/Trains/All`
+- Service alerts via `/ServiceUpdate/ServiceAlert/All`
+- Station information via GTFS data
+
+Data is proxied through a Cloudflare Worker for improved reliability, caching, and performance.
 
 ## Project Structure
 
@@ -56,31 +70,67 @@ This plugin uses the [Metrolinx Open Data API](https://www.gotransit.com/en/open
 trmnl-go-transit-plugin/
 ├── .github/
 │   ├── workflows/
-│   │   ├── pages.yml          # GitHub Pages deployment
-│   │   └── update-data.yml    # Scheduled data updates
+│   │   ├── ci.yml               # Cloudflare Worker CI/CD
+│   │   ├── pages.yml            # GitHub Pages deployment
+│   │   └── update-data.yml      # Scheduled data updates
 │   └── copilot-instructions.md
 ├── api/
-│   └── data.json              # Public API endpoint
-├── assets/
-│   ├── icon/                  # Plugin icons
-│   └── demo/                  # Demo screenshots
+│   └── data.json                # Public API endpoint (served via GitHub Pages)
+├── cloudflare-worker/           # Cloudflare Worker proxy for Metrolinx API
+│   ├── src/
+│   │   └── index.js             # Worker implementation with Hono
+│   ├── wrangler.toml            # Cloudflare configuration
+│   ├── package.json
+│   └── README.md
 ├── project-resources/
+│   ├── assets/
+│   │   ├── demo/                # Plugin screenshots
+│   │   ├── icon/                # Plugin icons
+│   │   └── logo/                # GO Transit branding
 │   ├── docs/
-│   │   ├── PRD.md             # Product requirements
-│   │   └── NEW_RECIPE_GUIDE.md
-│   └── GO-GTFS/               # GO Transit GTFS data
+│   │   ├── PRD.md               # Product requirements
+│   │   ├── METROLINX_API.md     # API documentation
+│   │   ├── PROXY_API_SERVER_PRD.md  # Proxy requirements
+│   │   └── NEW_RECIPE_GUIDE.md  # Plugin creation guide
+│   ├── API-access/              # API registration docs & samples
+│   └── GO-GTFS/                 # GO Transit GTFS data
 ├── scripts/
-│   └── update-go-transit.js   # Data update script
+│   └── update-go-transit.js     # Data update script
 ├── templates/
-│   ├── full.liquid            # Full-screen layout
-│   ├── half_horizontal.liquid # Half horizontal layout
-│   ├── half_vertical.liquid   # Half vertical layout
-│   └── quadrant.liquid        # Quadrant layout
-├── data.json                  # Current transit data
-├── index.html                 # Local preview page
-├── settings.yml               # Plugin configuration
+│   ├── full.liquid              # Full-screen layout
+│   ├── half_horizontal.liquid   # Half horizontal layout
+│   ├── half_vertical.liquid     # Half vertical layout
+│   ├── quadrant.liquid          # Quadrant layout
+│   └── preview/                 # Preview templates with sample data
+│       ├── full.liquid
+│       ├── half_horizontal.liquid
+│       ├── half_vertical.liquid
+│       └── quadrant.liquid
+├── data.json                    # Current transit data
+├── index.html                   # Local preview page
+├── plugin-config.yml            # User-facing configuration fields
+├── settings.yml                 # TRMNL plugin settings
 └── README.md
 ```
+
+---
+
+## Architecture
+
+This plugin uses a **Cloudflare Worker** as a proxy between TRMNL and the Metrolinx API:
+
+```
+TRMNL Device → GitHub Pages (data.json) → Cloudflare Worker → Metrolinx API
+```
+
+**Benefits:**
+- **Caching**: Reduces API calls and improves response times
+- **Reliability**: Handles timeouts and errors gracefully
+- **Security**: API key stored securely in Cloudflare, not exposed to clients
+- **CORS**: Enables web-based testing and development
+- **Monitoring**: Request logging and cache hit/miss tracking
+
+See [cloudflare-worker/README.md](cloudflare-worker/README.md) for deployment details.
 
 ---
 

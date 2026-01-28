@@ -15,50 +15,31 @@ This is the Cloudflare Workers implementation of the GO Transit proxy API servic
 1. **Install Wrangler CLI** (Cloudflare's development tool)
 
 ```bash
-npm install -g @cloudflare/wrangler
+npm install -g wrangler
 # or use npx wrangler if you prefer not to install globally
 ```
 
-2. **Configure environment variables**
-
-```bash
-# Copy the example file
-cp .env.example .env
-
-# Edit .env with your values
-# IMPORTANT: Never commit .env to git!
-nano .env
-```
-
-3. **Set API secrets** (for production/staging)
-
-Secrets should not be stored in `.env` for security. Instead, use Wrangler's secret management:
-
-```bash
-# Development (read from .env file)
-# No action needed - Wrangler will load from .env
-
-# Staging
-wrangler secret put ORIGIN_AUTH_TOKEN --env staging
-
-# Production
-wrangler secret put ORIGIN_AUTH_TOKEN --env production
-```
-
-4. **Install dependencies**
+2. **Install dependencies**
 
 ```bash
 npm install
 ```
 
-5. **Start local development server**
+3. **Configure secrets** (for production)
 
 ```bash
-wrangler dev
-# Server will start on http://localhost:8787
+# Set API key secret in Cloudflare
+wrangler secret put ORIGIN_AUTH_TOKEN
+# When prompted, paste your Metrolinx API key
 
-# Test the Worker
-curl "http://localhost:8787/api/V1/ServiceataGlance/Trains/All?station_id=OS"
+# Verify deployment configuration
+wrangler deploy --dry-run
+```
+
+4. **Deploy**
+
+```bash
+npm run deploy
 ```
 
 ## Project Structure
@@ -104,53 +85,127 @@ The `wrangler.toml` file contains:
 
 ### Local Development
 
-```bash
-# Start dev server with hot reload
-wrangler dev
+⚠️ **IMPORTANT**: Do NOT use `wrangler dev` (local development server) for testing the proxy. The local wrangler dev environment has limitations with external HTTPS requests and may return `502 Bad Gateway` errors even when the origin API is working correctly.
 
-# In another terminal, test the API
-curl -i "http://localhost:8787/api/V1/ServiceataGlance/Trains/All?station_id=OS&key=YOUR_KEY"
-```
+**Recommended workflow:**
+
+1. **Make code changes** to `src/index.js`
+2. **Run quality checks locally**:
+   ```bash
+   npm run quality  # Runs Prettier + ESLint
+   ```
+3. **Deploy directly to production**:
+   ```bash
+   npm run deploy   # Deploys to Cloudflare
+   ```
+4. **Test from production URL**:
+   ```bash
+   # Health check
+   curl https://trmnl-go-transit-proxy.hk-c91.workers.dev/health
+   
+   # Real API test
+   curl "https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=OS"
+   ```
+
+**Why not local dev server?**
+
+- `wrangler dev` on some systems cannot make external HTTPS requests to the Metrolinx API
+- Returns internal `502 "internal error"` that don't reflect real issues
+- Cloudflare production environment handles fetch requests correctly
+- Production testing gives accurate results for both functionality and performance
+
+**Why this is safe:**
+
+- Cloudflare Workers deploys are instant (typically <2 seconds)
+- Can roll back or fix issues immediately
+- No risk to existing users - new code deploys atomically
+- All CI checks run before code reaches main branch
+- Easy to verify each change works in real environment
 
 ### Testing
 
-```bash
-# Run tests (configure in package.json)
-npm test
+⚠️ **Note**: Local testing with `wrangler dev` is not recommended (see Development Workflow above).
 
+**Production testing:**
+
+```bash
+# Test after deployment
+curl -i "https://trmnl-go-transit-proxy.hk-c91.workers.dev/health"
+curl -i "https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=OS"
+```
+
+**Pre-deployment checks:**
+
+```bash
 # Check code with linter
 npm run lint
 
 # Format code
 npm run format
+
+# Run all quality checks
+npm run quality
+
+# Dry-run deployment (validate config)
+npx wrangler publish --dry-run
 ```
 
 ### Deployment
 
-```bash
-# Deploy to staging
-wrangler deploy --env staging
+**Automated Deployment (Recommended):**
 
+The repository has CI/CD configured via GitHub Actions (`.github/workflows/ci.yml`):
+- Automatic deployment on push to `main` branch
+- Quality checks (Prettier, ESLint) run before deployment
+- Validates `wrangler.toml` configuration
+
+**Manual Deployment:**
+
+```bash
 # Deploy to production
-wrangler deploy --env production
+npm run deploy
+# or
+wrangler deploy
 
 # Check deployment status
-wrangler status
+wrangler deployments list
+```
+
+**First-time Setup:**
+
+```bash
+# Authenticate with Cloudflare
+wrangler login
+
+# Set production secrets (API key)
+wrangler secret put ORIGIN_AUTH_TOKEN
+
+# Verify configuration
+wrangler deploy --dry-run
 ```
 
 ## API Endpoints
 
-The Worker proxies requests to the Metrolinx API. All requests must include query parameters:
+The Worker proxies requests to the Metrolinx API. The worker automatically adds your API key from environment variables.
 
-### Example Request
+### Example Requests
 
 ```bash
-curl "https://your-worker.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=OS"
+# Service at a glance (train departures)
+curl "https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=OS"
+
+# Service alerts
+curl "https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceUpdate/ServiceAlert/All"
+
+# Health check
+curl "https://trmnl-go-transit-proxy.hk-c91.workers.dev/health"
 ```
+
+**Note**: The API key is automatically added by the Worker from the `ORIGIN_AUTH_TOKEN` environment variable. Client requests do not need to include the key.
 
 ### Supported Endpoints
 
-See [METROLINX_API.md](../../project-resources/docs/METROLINX_API.md) for full API documentation.
+See [METROLINX_API.md](../project-resources/docs/METROLINX_API.md) for full API documentation.
 
 **Key endpoints:**
 
@@ -234,15 +289,16 @@ nano .env  # Add your API key
 
 **Causes**:
 
-- Cache-Control headers not set
+- Cache-Control headers not set properly
 - Query parameters not normalized
-- Different parameters create different cache keys
+- Different request variations create different cache keys
 
 **Solutions**:
 
-- Check `EDGE_TTL` and `BROWSER_TTL` env vars
-- Verify parameter allowlist includes your params
-- Test with same URL twice: `?station_id=OS` should HIT on second request
+- Check `EDGE_TTL` and `BROWSER_TTL` env vars are set
+- Verify requests use same URL format: `?station_id=OS` should HIT on second request
+- Check cache headers in response: `X-Cache: HIT` or `MISS`
+- Note: First request to any URL will always be MISS
 
 ### CORS errors in browser
 
@@ -290,20 +346,21 @@ dist/
 
 ## Related Documentation
 
-- [PROXY_API_SERVER.md](../../project-resources/docs/PROXY_API_SERVER.md) - Code examples and best practices
-- [PROXY_API_SERVER_PRD.md](../../project-resources/docs/PROXY_API_SERVER_PRD.md) - Detailed requirements
-- [METROLINX_API.md](../../project-resources/docs/METROLINX_API.md) - API endpoint docs
+- [Main README](../README.md) - Plugin overview and installation
+- [PROXY_API_SERVER_PRD.md](../project-resources/docs/PROXY_API_SERVER_PRD.md) - Detailed requirements
+- [METROLINX_API.md](../project-resources/docs/METROLINX_API.md) - API endpoint docs
 - [Cloudflare Workers Docs](https://developers.cloudflare.com/workers/)
 
-## Next Steps
+## Status
 
-1. ✅ [Issue #3] Setup: Initialize project (YOU ARE HERE)
-2. [ ] [Issue #4] Implement core Worker proxy logic
-3. [ ] [Issue #5] Implement timeout & error handling
-4. [ ] [Issue #6] Implement CORS support
-5. [ ] [Issue #7] Implement logging & observability
-6. [ ] [Issue #8-10] API integration
-7. [ ] [Issue #11] Testing & validation
-8. [ ] [Issue #12] Production deployment
+✅ **Production Ready** - The Cloudflare Worker proxy is fully implemented and deployed.
 
-See [GITHUB_ISSUES_CREATED.md](../../project-resources/docs/GITHUB_ISSUES_CREATED.md) for the full roadmap.
+**Implemented Features:**
+- ✅ API proxying with Hono framework
+- ✅ Intelligent caching with Cache API
+- ✅ CORS support for all origins
+- ✅ Comprehensive error handling
+- ✅ Request logging and debugging
+- ✅ Environment-based configuration
+- ✅ CI/CD via GitHub Actions
+- ✅ Production deployment
