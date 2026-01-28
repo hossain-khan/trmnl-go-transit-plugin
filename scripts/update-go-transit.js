@@ -8,7 +8,8 @@
  * - GO_TRANSIT_API_KEY: Your Metrolinx API access key
  * - STATION_ID: The station code (e.g., 'OS' for Oshawa, 'UN' for Union)
  * 
- * API Documentation: https://www.gotransit.com/en/open-data
+ * API Documentation: http://api.openmetrolinx.com/OpenDataAPI/Help/Index/en
+ * Registration: http://api.openmetrolinx.com/OpenDataAPI/Help/Registration/Register
  */
 
 const fs = require('fs');

@@ -2,6 +2,8 @@
 
 This guide walks you through creating a new TRMNL recipe project from scratch, based on the proven structure of the Max Payne Quotes plugin.
 
+> **Note**: This guide is maintained in the GO Transit Dashboard plugin repository as a reference for creating TRMNL plugins. The GO Transit plugin itself uses a more advanced setup with Cloudflare Workers for API proxying - see the main [README.md](../../README.md) for this plugin's specific architecture.
+
 ## Prerequisites
 
 - GitHub account
