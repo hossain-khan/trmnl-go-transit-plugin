@@ -8,7 +8,7 @@ This is the Cloudflare Workers implementation of the GO Transit proxy API servic
 
 - Node.js 18+ and npm
 - Cloudflare account (free tier works)
-- Metrolinx API key (obtain from [GO Transit Open Data Portal](https://www.gotransit.com/en/open-data))
+- Metrolinx API key (obtain from [Metrolinx Developer Portal](http://api.openmetrolinx.com/OpenDataAPI/Help/Registration/Register))
 
 ### Setup
 
