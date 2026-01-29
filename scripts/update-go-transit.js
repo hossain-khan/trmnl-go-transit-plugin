@@ -24,7 +24,6 @@ const STATION_ID = process.env.STATION_ID || 'OS'; // Default to Oshawa
 const STATION_NAMES = {
   // Lakeshore East Line
   'UN': 'Union Station',
-  'EX': 'Exhibition GO',
   'DA': 'Danforth GO',
   'SC': 'Scarborough GO',
   'EG': 'Eglinton GO',
@@ -35,6 +34,7 @@ const STATION_NAMES = {
   'WH': 'Whitby GO',
   'OS': 'Oshawa GO',
   // Lakeshore West Line
+  'EX': 'Exhibition GO',
   'MI': 'Mimico GO',
   'LO': 'Long Branch GO',
   'PO': 'Port Credit GO',
@@ -162,11 +162,12 @@ function formatTime(timeString, use24Hour = false) {
  * Determine departure status from API data
  */
 function getDepartureStatus(scheduled, computed, departureStatus) {
-  // DepartureStatus: E = Early, L = Late, O = On Time, C = Cancelled
+  // DepartureStatus codes: E = Early, L = Late, O = On Time, C = Cancelled
   if (departureStatus === 'C') return 'Cancelled';
   if (departureStatus === 'L') return 'Delayed';
+  if (departureStatus === 'E') return 'Early';
   
-  // Check if actual time differs from scheduled
+  // If no explicit status, calculate from time difference
   const scheduledTime = new Date(scheduled).getTime();
   const computedTime = new Date(computed).getTime();
   const diffMinutes = Math.floor((computedTime - scheduledTime) / 60000);
@@ -249,10 +250,16 @@ function parseAlerts(alertsData, stationId, lineCode) {
     return { alerts: '', has_alerts: false };
   }
 
-  // Combine alerts, prioritizing service disruptions
-  const alertTexts = relevantAlerts
-    .filter(msg => msg.Category === 'Service Disruption' || relevantAlerts.length <= 2)
-    .slice(0, 2) // Limit to 2 alerts
+  // Prioritize service disruptions, then add other alerts if needed to reach 2 total
+  const serviceDisruptions = relevantAlerts.filter(msg => msg.Category === 'Service Disruption');
+  const otherAlerts = relevantAlerts.filter(msg => msg.Category !== 'Service Disruption');
+  
+  const alertsToShow = [
+    ...serviceDisruptions.slice(0, 2),
+    ...otherAlerts.slice(0, Math.max(0, 2 - serviceDisruptions.length))
+  ];
+
+  const alertTexts = alertsToShow
     .map(msg => msg.SubjectEnglish || msg.BodyEnglish)
     .join('. ');
 
