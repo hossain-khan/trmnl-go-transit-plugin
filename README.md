@@ -59,8 +59,8 @@ The plugin is configurable through the TRMNL plugin settings interface:
 
 This plugin uses the [Metrolinx Open Data API](http://api.openmetrolinx.com/OpenDataAPI/Help/Index/en):
 
-- Real-time trip updates via `/ServiceataGlance/Trains/All`
-- Service alerts via `/ServiceUpdate/ServiceAlert/All`
+- Real-time departure times via `/Stop/NextService/{StopCode}` - Returns next departures for a specific station
+- Service alerts via `/ServiceUpdate/ServiceAlert/All` - Returns active service alerts and disruptions
 - Station information via GTFS data
 
 Data is proxied through a Cloudflare Worker for improved reliability, caching, and performance.
