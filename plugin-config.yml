@@ -49,8 +49,8 @@
   name: Time Format
   description: Choose how departure times are displayed.
   options:
-    - "12-hour (9:34 PM): 12h"
-    - "24-hour (21:34): 24h"
+    - "12-hour (9:34 PM)": 12h
+    - "24-hour (21:34)": 24h
   default: 12h
 
 - keyname: show_alerts
@@ -65,8 +65,8 @@
   name: Departures to Show
   description: Number of upcoming departures per direction.
   options:
-    - "2 (Arriving + Next): 2"
-    - "3 (Arriving + Next + Later): 3"
-  default: 3
+    - "2 (Arriving + Next)": "2"
+    - "3 (Arriving + Next + Later)": "3"
+  default: "3"
   help_text: Quadrant layout always shows 2 departures due to space constraints.
 
