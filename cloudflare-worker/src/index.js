@@ -14,6 +14,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
+import { LINES_AND_STATIONS } from './stations.js'
 
 const app = new Hono()
 
@@ -32,6 +33,103 @@ app.get('/health', (c) => {
       version: '1.0',
     },
     200
+  )
+})
+
+/**
+ * Get all GO Transit lines
+ * Used for xhrSelect in plugin configuration
+ *
+ * Handles both GET and POST requests
+ * Returns: [{ "Lakeshore East": "LE" }, { "Stouffville": "ST" }, ...]
+ */
+const linesHandler = (c) => {
+  const lines = Object.entries(LINES_AND_STATIONS).map(([code, data]) => ({
+    [data.name]: code,
+  }))
+  return c.json(lines, 200)
+}
+
+app.get('/api/V1/lines', linesHandler)
+app.post('/api/V1/lines', linesHandler)
+
+/**
+ * Get stations for a specific GO Transit line
+ * Used for xhrSelect dependent dropdown in plugin configuration
+ *
+ * Handles both GET and POST requests (xhrSelect sends POST by default)
+ * Example: GET /api/V1/stations-by-line/LE
+ * Returns: [{ "Union Station": "UN" }, { "Exhibition GO": "EX" }, ...]
+ */
+const stationsHandler = (c) => {
+  // Get line code from URL parameter (for GET requests)
+  let lineCode = c.req.param('line_code')
+
+  // If not in URL, try to get from POST body (xhrSelect sends it as sibling setting)
+  if (!lineCode && c.req.method === 'POST') {
+    // For POST requests, check the request body for the line value
+    // This is a fallback in case URL interpolation doesn't work
+    try {
+      // The body might contain settings_custom_fields_values_line
+      // For now, we'll just use the URL param approach
+    } catch {
+      // Ignore parse errors
+    }
+  }
+
+  // Normalize and validate
+  if (!lineCode || lineCode === 'undefined') {
+    return c.json(
+      {
+        error: 'Line code is required',
+        message: 'Please select a line first',
+        available_lines: Object.keys(LINES_AND_STATIONS),
+      },
+      400
+    )
+  }
+
+  lineCode = lineCode.toUpperCase()
+
+  // Check if line exists
+  if (!LINES_AND_STATIONS[lineCode]) {
+    return c.json(
+      {
+        error: 'Line not found',
+        available_lines: Object.keys(LINES_AND_STATIONS),
+      },
+      404
+    )
+  }
+
+  // Return stations for this line
+  const stations = LINES_AND_STATIONS[lineCode].stations
+  return c.json(stations, 200)
+}
+
+app.get('/api/V1/stations-by-line/:line_code', stationsHandler)
+app.post('/api/V1/stations-by-line/:line_code', stationsHandler)
+
+// Catch-all for empty line code (e.g., when ##{{line}} is not yet interpolated)
+app.get('/api/V1/stations-by-line/', (c) => {
+  return c.json(
+    {
+      error: 'Line code is required',
+      message: 'Please select a line first',
+      available_lines: Object.keys(LINES_AND_STATIONS),
+    },
+    400
+  )
+})
+
+app.post('/api/V1/stations-by-line/', (c) => {
+  return c.json(
+    {
+      error: 'Line code is required',
+      message: 'Please select a line first',
+      available_lines: Object.keys(LINES_AND_STATIONS),
+    },
+    400
   )
 })
 
