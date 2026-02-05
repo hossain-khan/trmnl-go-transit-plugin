@@ -14,6 +14,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
+import { LINES_AND_STATIONS } from './stations.js'
 
 const app = new Hono()
 
@@ -33,6 +34,32 @@ app.get('/health', (c) => {
     },
     200
   )
+})
+
+/**
+ * Get stations for a specific GO Transit line
+ * Used for xhrSelect dependent dropdown in plugin configuration
+ *
+ * Example: GET /api/V1/stations-by-line/LE
+ * Returns: [{ "Union Station": "UN" }, { "Exhibition GO": "EX" }, ...]
+ */
+app.get('/api/V1/stations-by-line/:line_code', (c) => {
+  const lineCode = c.req.param('line_code').toUpperCase()
+
+  // Check if line exists
+  if (!LINES_AND_STATIONS[lineCode]) {
+    return c.json(
+      {
+        error: 'Line not found',
+        available_lines: Object.keys(LINES_AND_STATIONS),
+      },
+      404
+    )
+  }
+
+  // Return stations for this line
+  const stations = LINES_AND_STATIONS[lineCode].stations
+  return c.json(stations, 200)
 })
 
 /**
