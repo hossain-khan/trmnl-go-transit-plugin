@@ -14,7 +14,7 @@
   description: |
     GO Transit Dashboard displays real-time departure information for your preferred GO Rail or Bus station.
     Features include two-direction schedules, service alerts, and responsive layouts for all TRMNL devices.
-    Data is sourced from the Metrolinx Open Data API and updated every 5-15 minutes.
+    Data is sourced from the Metrolinx Open Data API with intelligent edge caching for optimal performance.
   github_url: https://github.com/hossain-khan/trmnl-go-transit-plugin
   learn_more_url: https://www.gotransit.com/
 
@@ -152,36 +152,3 @@
   default: 3
   help_text: Quadrant layout always shows 2 departures due to space constraints.
 
-# =============================================================================
-# ADVANCED OPTIONS
-# =============================================================================
-# Note: GO Transit operates entirely within the Eastern Time zone (America/Toronto),
-# so no time zone configuration is needed.
-- keyname: api_key
-  field_type: password
-  name: Metrolinx API Key
-  description: |
-    Your Metrolinx Open Data API key for accessing real-time data.
-    Get one free at <a href="http://api.openmetrolinx.com/OpenDataAPI/Help/Registration/Register">Metrolinx Developer Portal</a>.
-  placeholder: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-  help_text: Required. The API key is free and takes 24-48 hours to activate.
-
-- keyname: refresh_interval
-  field_type: select
-  name: Data Refresh Interval
-  description: How often to fetch new departure data from the API.
-  options:
-    - "5 minutes: 5"
-    - "10 minutes: 10"
-    - "15 minutes: 15"
-    - "30 minutes: 30"
-  default: 10
-  optional: true
-  help_text: More frequent updates use more API calls. 10 minutes is recommended.
-
-# =============================================================================
-# CONDITIONAL VALIDATION
-# =============================================================================
-# Note: The line_filter field is particularly useful for stations served by 
-# multiple lines (e.g., Union Station serves all 7 lines). Users can filter
-# to see only departures for their specific commute.
