@@ -40,10 +40,11 @@ app.get('/health', (c) => {
  * Get stations for a specific GO Transit line
  * Used for xhrSelect dependent dropdown in plugin configuration
  *
+ * Handles both GET and POST requests (xhrSelect sends POST by default)
  * Example: GET /api/V1/stations-by-line/LE
  * Returns: [{ "Union Station": "UN" }, { "Exhibition GO": "EX" }, ...]
  */
-app.get('/api/V1/stations-by-line/:line_code', (c) => {
+const stationsHandler = (c) => {
   const lineCode = c.req.param('line_code').toUpperCase()
 
   // Check if line exists
@@ -60,7 +61,10 @@ app.get('/api/V1/stations-by-line/:line_code', (c) => {
   // Return stations for this line
   const stations = LINES_AND_STATIONS[lineCode].stations
   return c.json(stations, 200)
-})
+}
+
+app.get('/api/V1/stations-by-line/:line_code', stationsHandler)
+app.post('/api/V1/stations-by-line/:line_code', stationsHandler)
 
 /**
  * Proxy all API requests to Metrolinx
