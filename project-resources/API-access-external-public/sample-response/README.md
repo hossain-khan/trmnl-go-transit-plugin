@@ -215,6 +215,109 @@ GET /external/go/serviceupdate/en/all
 
 ---
 
+### Composer-UN-Departures-ServiceUpdates-2026-02-05.json
+**Request**: 
+```
+GET /composer/en/UN/departures/serviceupdates
+```
+
+**Details**:
+- **Station**: Union Station (UN)
+- **Language**: English (en)
+- **Date**: February 5, 2026
+- **Time**: 09:36 AM ET
+- **Type**: Station-specific departures + service updates (combined)
+- **File Size**: ~3.2 KB (uncompressed)
+- **Response Time**: Captured at 2026-02-05 09:36 UTC
+- **LastUpdated**: 2026-02-05T09:36:58.8166998-05:00
+
+**Unique Features**:
+- **Station-Focused**: Only data for this specific station, not system-wide
+- **Composition**: Combines Trains (upcoming departures) + Buses (upcoming departures) + Stations (alerts)
+- **Parameterized**: Different response for each station code (OS, UN, WH, etc.)
+- **Compact**: Much smaller than system-wide endpoints (3.2 KB vs 18 KB for `/all`)
+
+**Response Structure**:
+```json
+{
+  "LastUpdated": "2026-02-05T09:36:58.8166998-05:00",
+  "TotalUpdates": 1,
+  "Trains": {
+    "TotalUpdates": 0,
+    "Train": [],
+    "Status": null
+  },
+  "Buses": {
+    "TotalUpdates": 0,
+    "Bus": [],
+    "Status": null
+  },
+  "Stations": {
+    "TotalUpdates": 1,
+    "Station": [
+      {
+        "StationName": "Union Station",
+        "StationCode": "UN",
+        "Status": "1 Updates",
+        "Notifications": { "Notification": [...] },
+        "TotalUpdates": 1
+      }
+    ]
+  }
+}
+```
+
+(Note: This sample captured at 9:36 AM shows no trains/buses departing soon, only station alerts)
+
+**Sample Station Alert**:
+```json
+{
+  "SubCategory": "SADIS",
+  "Code": "UN",
+  "Name": "Union Station",
+  "MessageSubject": "The elevator in Scotiabank Galleria is out of service",
+  "MessageBody": "<style>...</style><div class=\"masteroverridePublic_En\">We have been advised that the elevator located in the Scotiabank Galleria is temporarily out of service. To navigate from the bus terminal to the train station... [full HTML message]</div>",
+  "PostedDateTime": "01/18/2026 23:11:22",
+  "Status": "UPD",
+  "ServiceMode": "Station",
+  "TripNumbers": []
+}
+```
+
+**Key Fields**:
+- **LastUpdated**: ISO 8601 timestamp when endpoint was last updated
+- **TotalUpdates**: Count of all updates across Trains + Buses + Stations
+- **Trains**: Empty array when no trains departing soon, populated with upcoming trains when available
+- **Buses**: Empty array when no buses departing soon, populated with upcoming buses when available
+- **Stations**: Array of stations with alerts (usually just one - the requested station)
+
+**When This Endpoint is Most Useful**:
+- **Morning (6-9 AM)**: Shows upcoming trains/buses departing from the station
+- **Off-Peak (10 PM-5 AM)**: Trains/Buses arrays empty, only station alerts shown
+- **During Incidents**: TotalUpdates increases, Trains/Buses may include status updates
+
+**Use Cases**:
+- **Station Display Board**: Real-time widget showing next 3-5 departures
+- **Mobile App**: Station detail page showing "what's leaving now/next"
+- **Desktop Dashboard**: Commuter home screen "my station status"
+- **Accessibility Check**: Quick lookup "any elevator outages at my station?"
+- **Station Quick Look**: Instead of calling multiple endpoints, single call gets all station info
+- **Widget Development**: Compact response perfect for small displays/mobile
+
+**Differences from Other Endpoints**:
+
+| Aspect | Composer | Service Updates All | Timetable |
+|--------|----------|-------------------|-----------|
+| **Scope** | One station | All of system | Two stations (A→B) |
+| **Departures** | ✅ Current/next | ❌ No | ✅ All day's trips |
+| **Alerts** | ✅ Station alerts | ✅ System/line/station | ❌ No |
+| **Response** | ~3-5 KB | ~15-50 KB | ~50-100 KB |
+| **Use Case** | Station widget | Comprehensive dashboard | Journey planner |
+| **Real-time** | More dynamic | Static system view | Static schedule |
+| **Parameterized** | Yes (per station) | No (system-wide) | Yes (O-D pair) |
+
+---
+
 ## How to Use These Samples
 
 ### 1. Direct File Usage - Timetable
@@ -561,6 +664,7 @@ All samples conform to this schema:
 | FareCalculator-OS-UN-2026-02-05.json | `/farecalculator/all-concessions-fare` | 5 fares | ~2.5 KB | Fare quotes, eligibility display |
 | ServiceUpdate-General-2026-02-05.json | `/serviceupdate/en/general` | 1 alert | ~3.6 KB | General system alerts only |
 | ServiceUpdate-All-2026-02-05.json | `/serviceupdate/en/all` | 38 alerts | ~18+ KB | Comprehensive dashboard (general + lines + stations) |
+| Composer-UN-Departures-ServiceUpdates-2026-02-05.json | `/composer/en/UN/departures/serviceupdates` | Station alerts (1) | ~3.2 KB | Station-specific departures + alerts widget |
 
 **Combined Usage Matrix**:
 ```

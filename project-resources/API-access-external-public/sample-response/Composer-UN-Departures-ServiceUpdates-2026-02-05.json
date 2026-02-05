@@ -1,0 +1,41 @@
+{
+  "LastUpdated": "2026-02-05T09:36:58.8166998-05:00",
+  "TotalUpdates": 1,
+  "Trains": {
+    "TotalUpdates": 0,
+    "Train": [],
+    "Status": null
+  },
+  "Buses": {
+    "TotalUpdates": 0,
+    "Bus": [],
+    "Status": null
+  },
+  "Stations": {
+    "TotalUpdates": 1,
+    "Station": [
+      {
+        "StationName": "Union Station",
+        "StationCode": "UN",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SADIS",
+              "Code": "UN",
+              "Name": "Union Station",
+              "MessageSubject": "The elevator in Scotiabank Galleria is out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><div><span lang=\"EN-CA\">We have been advised that the elevator located in the Scotiabank Galleria is temporarily out of service.<o:p></o:p></span></div><div><span lang=\"EN-CA\">&nbsp;</span></div><div><span lang=\"EN-CA\">To navigate <b>from the bus terminal to the train station</b>, follow these steps:<o:p></o:p></span></div><div><span lang=\"EN-CA\">1. Exit the doors to Lakeshore Boulevard.<o:p></o:p></span></div><div><span lang=\"EN-CA\">2. Turn right, towards the intersection of Lakeshore Boulevard and Bay Street.<o:p></o:p></span></div><div><span lang=\"EN-CA\">3. Cross the street, to the northwest corner of Bay Street.<o:p></o:p></span></div><div><span lang=\"EN-CA\">4. Turn right and walk north on Bay Street.<o:p></o:p></span></div><div><span lang=\"EN-CA\">5. Scotiabank Galleria is located on the left, before entering the Bay West Teamway.<o:p></o:p></span></div><div><span lang=\"EN-CA\">&nbsp;</span></div><div><span lang=\"EN-CA\">To navigate <b>from the train station to the bus terminal</b>, follow these steps:<o:p></o:p></span></div><div><span lang=\"EN-CA\">1. Exit the doors to Bay Street.<o:p></o:p></span></div><div><span lang=\"EN-CA\">2. Turn right, proceed towards the intersection of Lakeshore Boulevard and Bay Street.<o:p></o:p></span></div><div><span lang=\"EN-CA\">3. Turn left and cross Bay Street, continuing straight on Lake Shore Boulevard.<o:p></o:p></span></div><div><span lang=\"EN-CA\">4. Enter the bus terminal on the left.</span></div></div><div><br></div></div>",
+              "PostedDateTime": "01/18/2026 23:11:22",
+              "Status": "UPD",
+              "ServiceMode": "Station",
+              "TripNumbers": []
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      }
+    ],
+    "Status": null
+  }
+}

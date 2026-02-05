@@ -3,7 +3,7 @@
 **Status**: ✅ Discovered & Documented (Not Authenticated)  
 **Access Level**: Public (No API Key Required)  
 **Last Updated**: February 5, 2026
-**Endpoints Documented**: 4 (Timetable, Fare Calculator, Service Updates General, Service Updates All)
+**Endpoints Documented**: 5 (Timetable, Fare Calculator, Service Updates General, Service Updates All, Composer)
 
 ---
 
@@ -17,6 +17,7 @@ Multiple endpoints have been discovered and reverse-engineered by observing netw
 2. **Fare Calculator Endpoint** (`/farecalculator/all-concessions-fare`) - Fare quotes and concession info
 3. **Service Updates General Endpoint** (`/serviceupdate/en/general`) - System-wide service alerts only
 4. **Service Updates All Endpoint** (`/serviceupdate/en/all`) - All service updates (general, lines, stations)
+5. **Composer Endpoint** (`/composer/{lang}/{station}/departures/serviceupdates`) - Station-specific departures + service updates (combined)
 
 ---
 
@@ -27,6 +28,7 @@ Multiple endpoints have been discovered and reverse-engineered by observing netw
 https://api.metrolinx.com/external/go/schedules/         # Timetable & journey planning
 https://api.metrolinx.com/external/go/farecalculator/    # Fare calculation & concessions
 https://api.metrolinx.com/external/go/serviceupdate/     # Service updates & alerts
+https://api.metrolinx.com/external/go/composer/          # Composer (station-specific)
 ```
 
 ### Endpoints
@@ -34,6 +36,7 @@ https://api.metrolinx.com/external/go/serviceupdate/     # Service updates & ale
 - **Fare Calculator**: `/farecalculator/all-concessions-fare` - Get fares and discounts for a trip
 - **Service Updates General**: `/serviceupdate/en/general` - Get system-wide general service alerts only
 - **Service Updates All**: `/serviceupdate/en/all` - Get all service updates (general + lines + stations)
+- **Composer**: `/composer/{lang}/{station}/departures/serviceupdates` - Get station-specific departures + service updates combined
 
 ### Available Languages
 - English: `/en/`
@@ -627,6 +630,222 @@ Date: Thu, 05 Feb 2026 09:30:00 GMT
 
 ---
 
+## Endpoint: GET /composer/{lang}/{station}/departures/serviceupdates
+
+### Purpose
+Retrieve **station-specific** departures and service updates in a single API call. This endpoint combines train/bus schedule information with relevant service alerts for a specific station.
+
+**Key Differentiator**: Unlike the Service Updates endpoints (which are system-wide), the Composer endpoint is **parameterized by station code** and returns only data relevant to that station.
+
+### URL Parameters
+
+| Parameter | Type | Required | Example | Description |
+|-----------|------|----------|---------|-------------|
+| `{lang}` | String | Yes | `en` | Language code: `en` (English) or `fr` (French) |
+| `{station}` | String | Yes | `UN` | Station code (e.g., "UN" for Union Station, "OS" for Oshawa) |
+
+### Complete URL Examples
+```
+https://api.metrolinx.com/external/go/composer/en/UN/departures/serviceupdates
+https://api.metrolinx.com/external/go/composer/en/OS/departures/serviceupdates
+https://api.metrolinx.com/external/go/composer/fr/UN/departures/serviceupdates
+```
+
+### cURL Example
+```bash
+curl 'https://api.metrolinx.com/external/go/composer/en/UN/departures/serviceupdates' \
+  -H 'Accept-Language: en-US,en;q=0.9' \
+  -H 'Connection: keep-alive' \
+  -H 'DNT: 1' \
+  -H 'Origin: https://www.gotransit.com' \
+  -H 'Referer: https://www.gotransit.com/' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: cross-site' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \
+  -H 'accept: application/json' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="8", "Chromium";v="144", "Google Chrome";v="144"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"'
+```
+
+### Response Example
+
+**HTTP Headers**:
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Encoding: gzip
+Cache-Control: public, max-age=3600
+Date: Thu, 05 Feb 2026 09:36:58 GMT
+Content-Length: ~3-5 KB (compressed, varies by station activity)
+```
+
+**Response Body** (after decompression):
+```json
+{
+  "LastUpdated": "2026-02-05T09:36:58.8166998-05:00",
+  "TotalUpdates": 1,
+  "Trains": {
+    "TotalUpdates": 0,
+    "Train": [],
+    "Status": null
+  },
+  "Buses": {
+    "TotalUpdates": 0,
+    "Bus": [],
+    "Status": null
+  },
+  "Stations": {
+    "TotalUpdates": 1,
+    "Station": [
+      {
+        "StationName": "Union Station",
+        "StationCode": "UN",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SADIS",
+              "Code": "UN",
+              "Name": "Union Station",
+              "MessageSubject": "The elevator in Scotiabank Galleria is out of service",
+              "MessageBody": "<style>...</style><div class=\"masteroverridePublic_En\"><div><span lang=\"EN-CA\">We have been advised that the elevator located in the Scotiabank Galleria is temporarily out of service...</span></div></div>",
+              "PostedDateTime": "01/18/2026 23:11:22",
+              "Status": "UPD",
+              "ServiceMode": "Station",
+              "TripNumbers": []
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      }
+    ],
+    "Status": null
+  }
+}
+```
+
+### Response Structure
+
+The Composer response is organized into three main sections:
+
+| Section | Type | Purpose |
+|---------|------|---------|
+| **LastUpdated** | ISO 8601 Timestamp | When the response was generated |
+| **TotalUpdates** | Integer | Total number of updates across all sections |
+| **Trains** | Object | Train service info (currently empty in this example) |
+| **Buses** | Object | Bus service info (currently empty in this example) |
+| **Stations** | Object | Station-specific alerts and accessibility updates |
+
+### Trains Section
+
+```json
+{
+  "TotalUpdates": 0,
+  "Train": [
+    // Array of train services at this station
+    // When populated, each train contains:
+    // - LineCode: "LE" (Lakeshore East)
+    // - RouteName: "Lakeshore East"
+    // - Status: "On Time", "Delayed", etc.
+    // - Notifications: Any service alerts for this train
+  ],
+  "Status": null  // Overall status for train services
+}
+```
+
+### Buses Section
+
+```json
+{
+  "TotalUpdates": 0,
+  "Bus": [
+    // Array of bus services at this station
+    // Similar structure to Trains
+  ],
+  "Status": null
+}
+```
+
+### Stations Section
+
+```json
+{
+  "TotalUpdates": 1,
+  "Station": [
+    {
+      "StationName": "Union Station",
+      "StationCode": "UN",
+      "Status": "1 Updates",
+      "Notifications": {
+        "Notification": [
+          {
+            "SubCategory": "SADIS",          // Category (e.g., SADIS = Station Accessibility)
+            "Code": "UN",                    // Station code
+            "Name": "Union Station",         // Station name
+            "MessageSubject": "...",         // Alert title (plain text)
+            "MessageBody": "<div>...</div>", // Alert body (HTML formatted, may be long)
+            "PostedDateTime": "01/18/2026 23:11:22",  // When alert was posted
+            "Status": "UPD",                 // Status code (UPD, CAN, etc.)
+            "ServiceMode": "Station",        // Where this applies: "Station" or "Train" or "Bus"
+            "TripNumbers": []                // Affected trip numbers (empty for station alerts)
+          }
+        ]
+      },
+      "TotalUpdates": 1  // Number of notifications for this station
+    }
+  ],
+  "Status": null
+}
+```
+
+### Notification Fields Explained
+
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| **SubCategory** | String | Type of update (SADIS = accessibility, etc.) | `"SADIS"`, `"SERVICE_ALERT"` |
+| **Code** | String | Station or service code | `"UN"` (Union), `"LE"` (Lakeshore East) |
+| **Name** | String | Human-readable name | `"Union Station"` |
+| **MessageSubject** | String | Brief title, plain text | `"Elevator temporarily out of service"` |
+| **MessageBody** | String | Detailed message, **HTML formatted** | `"<div>We have been advised...</div>"` |
+| **PostedDateTime** | String | When posted (MM/DD/YYYY HH:MM:SS format) | `"01/18/2026 23:11:22"` |
+| **Status** | String | Alert status code | `"UPD"` = Updated, `"CAN"` = Cancelled |
+| **ServiceMode** | String | What service this affects | `"Station"`, `"Train"`, `"Bus"` |
+| **TripNumbers** | Array | Trip numbers affected (empty for station updates) | `[]` or `["LE001", "LE002"]` |
+
+### Caching Strategy
+
+| Setting | Value | Reason |
+|---------|-------|--------|
+| **Cache Control** | `max-age=3600` | 1-hour browser cache |
+| **CDN Cache** | ~5 minutes | Departures change frequently at stations |
+| **Recommended Polling** | 30-60 seconds | For real-time dashboards |
+
+**Note**: Composer endpoint data is more volatile than schedules (which are 24-hour cached) because it includes live departures and service alerts.
+
+### Unique Advantages
+
+Compared to calling multiple endpoints separately:
+
+| Benefit | Details |
+|---------|---------|
+| **Single Call** | Get departures + alerts in one request instead of 2-3 calls |
+| **Station-Focused** | Returns only data for one station, not system-wide |
+| **Faster Integration** | No need to cross-reference data from multiple endpoints |
+| **Less Data** | Smaller payload than `/serviceupdate/en/all` (system-wide) |
+| **UI-Optimized** | Response structure designed for station display widgets |
+
+### Use Cases for Composer Endpoint
+
+1. **Station Display Boards**: Show upcoming trains/buses + relevant alerts for a specific station
+2. **Mobile App Station View**: Display comprehensive station info (departures + accessibility) in one tab
+3. **Dashboard Widget**: Real-time station status for GO Transit website homepage
+4. **Accessibility Info**: Quick lookup of elevator/accessibility issues at a station
+5. **Commuter Alert**: "What's departing from my home station right now?"
+
+---
+
 ## Use Cases
 
 ### ✅ Suitable For: Timetable Endpoint
@@ -661,6 +880,15 @@ Date: Thu, 05 Feb 2026 09:30:00 GMT
 - **Complete Data Source**: Full status for integration with third-party transit apps
 - **Route Planning**: Show line-specific issues when users plan trips
 - **Station Pages**: Display station-specific accessibility alerts
+
+### ✅ Suitable For: Composer Endpoint (`/composer/{lang}/{station}/departures/serviceupdates`)
+- **Station Display Widget**: Show upcoming departures + station alerts in one view
+- **Mobile App Station Tab**: Single endpoint for all station-related info
+- **Station-Specific Dashboard**: Real-time board showing trains, buses, and alerts
+- **Accessibility Lookup**: Quick check for elevator/accessible route info at a station
+- **Commuter Journey Start**: "What's leaving from my home station right now?"
+- **Station Comparison**: Load multiple station widgets (separate API calls per station)
+- **Responsive Web Interface**: Low-bandwidth response (~3-5 KB) suitable for mobile
 
 ### ❌ NOT Suitable For
 - **Real-Time Arrival Board**: No delay or current status information (use Open Data API)
@@ -753,8 +981,41 @@ Look for the `trips` array and extract:
 
 Sample responses are provided in the `sample-response/` directory:
 
-- `Timetable-OS-UN-2026-02-05.json` - OS → UN on Feb 5, 2026 (28 trips)
-- `Timetable-UN-OS-2026-02-05.json` - UN → OS on Feb 5, 2026 (reverse direction)
+| Endpoint | File | Coverage | Size |
+|----------|------|----------|------|
+| **Timetable** | `Timetable-OS-UN-2026-02-05.json` | OS → UN on Feb 5, 2026 | 73 KB |
+| **Fare Calculator** | `FareCalculator-OS-UN-2026-02-05.json` | 5 fare types (Full, Student, Senior, Child, Presto) | 2.5 KB |
+| **Service Updates General** | `ServiceUpdate-General-2026-02-05.json` | Union Station service recovery alert | 3.6 KB |
+| **Service Updates All** | `ServiceUpdate-All-2026-02-05.json` | 38 aggregated updates (1 general + 23 lines + 14 stations) | 18 KB |
+| **Composer** | `Composer-UN-Departures-ServiceUpdates-2026-02-05.json` | Union Station departures + alerts | 3.2 KB |
+
+### Using Sample Files in Development
+
+**JavaScript**:
+```javascript
+// Load sample response
+const response = await fetch('./sample-response/Composer-UN-Departures-ServiceUpdates-2026-02-05.json');
+const composerData = await response.json();
+
+console.log('Station:', composerData.Stations.Station[0].StationName);
+console.log('Total Updates:', composerData.TotalUpdates);
+console.log('Trains Available:', composerData.Trains.TotalUpdates);
+console.log('Buses Available:', composerData.Buses.TotalUpdates);
+console.log('Station Alerts:', composerData.Stations.Station[0].TotalUpdates);
+```
+
+**HTML/Testing**:
+```html
+<!-- Test Composer endpoint with real sample data -->
+<script>
+  fetch('./sample-response/Composer-UN-Departures-ServiceUpdates-2026-02-05.json')
+    .then(r => r.json())
+    .then(data => {
+      // Render station status widget
+      renderComposerWidget(data);
+    });
+</script>
+```
 
 ---
 
