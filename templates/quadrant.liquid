@@ -19,7 +19,7 @@
       <!-- Direction 1 -->
       <div class="column gap--medium" data-overflow="true">
         <div>
-          <span class="title title--small" style="display:block">{{ data.direction_1.label | split: "To " | last }}</span>
+          <span class="title title--small" style="display:block">{{ direction_1.label | split: "To " | last }}</span>
         </div>
         
         <!-- Arriving -->
@@ -28,8 +28,8 @@
           <div class="content text--black">
             <span class="label label--small label--inverted mb--1">arriving</span>
             <span>
-              <span class="value value--medium">{{ data.direction_1.arriving | split: " " | first }}</span>
-              <span class="value value--xsmall">{{ data.direction_1.arriving | split: " " | last }}</span>
+              <span class="value value--medium">{{ direction_1.arriving | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ direction_1.arriving | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -40,8 +40,8 @@
           <div class="content text--gray-35">
             <span class="label label--small label--outline mb--1">next</span>
             <span>
-              <span class="value value--medium">{{ data.direction_1.next | split: " " | first }}</span>
-              <span class="value value--xsmall">{{ data.direction_1.next | split: " " | last }}</span>
+              <span class="value value--medium">{{ direction_1.next | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ direction_1.next | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -50,7 +50,7 @@
       <!-- Direction 2 -->
       <div class="column gap--medium" data-overflow="true">
         <div>
-          <span class="title title--small" style="display:block">{{ data.direction_2.label | split: "To " | last }}</span>
+          <span class="title title--small" style="display:block">{{ direction_2.label | split: "To " | last }}</span>
         </div>
         
         <!-- Arriving -->
@@ -59,8 +59,8 @@
           <div class="content text--black">
             <span class="label label--small label--inverted mb--1">arriving</span>
             <span>
-              <span class="value value--medium">{{ data.direction_2.arriving | split: " " | first }}</span>
-              <span class="value value--xsmall">{{ data.direction_2.arriving | split: " " | last }}</span>
+              <span class="value value--medium">{{ direction_2.arriving | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ direction_2.arriving | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -71,8 +71,8 @@
           <div class="content text--gray-35">
             <span class="label label--small label--outline mb--1">next</span>
             <span>
-              <span class="value value--medium">{{ data.direction_2.next | split: " " | first }}</span>
-              <span class="value value--xsmall">{{ data.direction_2.next | split: " " | last }}</span>
+              <span class="value value--medium">{{ direction_2.next | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ direction_2.next | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -84,5 +84,5 @@
 </div>
 
 <div class="title_bar m--0">
-  <span class="title">{{ data.station }}</span>
+  <span class="title">{{ station }}</span>
 </div>

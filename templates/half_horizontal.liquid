@@ -15,8 +15,8 @@
   <!-- Direction 1 -->
   <div class="flex--1">
     <div class="mb--1">
-      <span class="title title--small" style="display: block;">{{ data.direction_1.label | split: "To " | last }}</span>
-      <span class="description">{{ data.direction_1.label }}</span>
+      <span class="title title--small" style="display: block;">{{ direction_1.label | split: "To " | last }}</span>
+      <span class="description">{{ direction_1.label }}</span>
     </div>
     <div class="flex flex--col flex--left gap--small">
       
@@ -26,8 +26,8 @@
         <div class="content">
           <span class="label label--small label--inverted mb--1">arriving</span>
           <span>
-            <span class="value">{{ data.direction_1.arriving | split: " " | first }}</span>
-            <span class="value value--small">{{ data.direction_1.arriving | split: " " | last }}</span>
+            <span class="value">{{ direction_1.arriving | split: " " | first }}</span>
+            <span class="value value--small">{{ direction_1.arriving | split: " " | last }}</span>
           </span>
         </div>
       </div>
@@ -38,8 +38,8 @@
         <div class="content text--gray-35">
           <span class="label label--small label--outline mb--1">next</span>
           <span>
-            <span class="value">{{ data.direction_1.next | split: " " | first }}</span>
-            <span class="value value--small">{{ data.direction_1.next | split: " " | last }}</span>
+            <span class="value">{{ direction_1.next | split: " " | first }}</span>
+            <span class="value value--small">{{ direction_1.next | split: " " | last }}</span>
           </span>
         </div>
       </div>
@@ -50,8 +50,8 @@
   <!-- Direction 2 -->
   <div class="flex--1">
     <div class="mb--1">
-      <span class="title title--small" style="display: block;">{{ data.direction_2.label | split: "To " | last }}</span>
-      <span class="description">{{ data.direction_2.label }}</span>
+      <span class="title title--small" style="display: block;">{{ direction_2.label | split: "To " | last }}</span>
+      <span class="description">{{ direction_2.label }}</span>
     </div>
     <div class="flex flex--col flex--left gap--small">
       
@@ -61,8 +61,8 @@
         <div class="content">
           <span class="label label--small label--inverted mb--1">arriving</span>
           <span>
-            <span class="value">{{ data.direction_2.arriving | split: " " | first }}</span>
-            <span class="value value--small">{{ data.direction_2.arriving | split: " " | last }}</span>
+            <span class="value">{{ direction_2.arriving | split: " " | first }}</span>
+            <span class="value value--small">{{ direction_2.arriving | split: " " | last }}</span>
           </span>
         </div>
       </div>
@@ -73,8 +73,8 @@
         <div class="content text--gray-35">
           <span class="label label--small label--outline mb--1">next</span>
           <span>
-            <span class="value">{{ data.direction_2.next | split: " " | first }}</span>
-            <span class="value value--small">{{ data.direction_2.next | split: " " | last }}</span>
+            <span class="value">{{ direction_2.next | split: " " | first }}</span>
+            <span class="value value--small">{{ direction_2.next | split: " " | last }}</span>
           </span>
         </div>
       </div>
@@ -85,5 +85,5 @@
 </div>
 
 <div class="title_bar m--0">
-  <span class="title">{{ data.station }}</span>
+  <span class="title">{{ station }}</span>
 </div>

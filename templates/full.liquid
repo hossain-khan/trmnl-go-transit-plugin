@@ -62,7 +62,7 @@
     <div class="flex flex--col flex--center-x h--full" style="position: relative;">
       <!-- Line logo/name -->
       <div class="mb--2">
-        <span class="label label--small label--inverted">{{ data.line_code }}</span>
+        <span class="label label--small label--inverted">{{ line_code }}</span>
       </div>
       <span class="description mb--2">Line</span>
       
@@ -70,9 +70,9 @@
       <div class="flex--1 w--full" style="position: relative;">
         <div class="route-line-bg"></div>
         <div class="flex flex--col flex--between h--full" style="position: relative; z-index: 1;">
-          {% for station in data.stations %}
+          {% for station in stations %}
             <div class="station-marker">
-              {% if forloop.index == data.station_position %}
+              {% if forloop.index == station_position %}
                 <div class="station-dot current"></div>
               {% else %}
                 <div class="station-dot"></div>
@@ -100,8 +100,8 @@
       <!-- Direction 1 -->
       <div class="column gap--small">
         <div class="mb--2">
-          <span class="title title--small" style="display: block;">{{ data.direction_1.label | split: "To " | last }}</span>
-          <span class="description">{{ data.direction_1.label }}</span>
+          <span class="title title--small" style="display: block;">{{ direction_1.label | split: "To " | last }}</span>
+          <span class="description">{{ direction_1.label }}</span>
         </div>
         
         <!-- Arriving -->
@@ -110,11 +110,11 @@
           <div class="content">
             <span class="label label--small label--inverted mb--1">arriving</span>
             <span>
-              <span class="value value--small">{{ data.direction_1.arriving | split: " " | first }}</span>
-              <span class="value value--xxsmall">{{ data.direction_1.arriving | split: " " | last }}</span>
+              <span class="value value--small">{{ direction_1.arriving | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_1.arriving | split: " " | last }}</span>
             </span>
-            {% if data.direction_1.arriving_status != "On Time" %}
-              <span class="label label--small label--outline text--gray-35">{{ data.direction_1.arriving_status }}</span>
+            {% if direction_1.arriving_status != "On Time" %}
+              <span class="label label--small label--outline text--gray-35">{{ direction_1.arriving_status }}</span>
             {% endif %}
           </div>
         </div>
@@ -125,8 +125,8 @@
           <div class="content text--gray-35">
             <span class="label label--small label--outline mb--1">next</span>
             <span>
-              <span class="value value--small">{{ data.direction_1.next | split: " " | first }}</span>
-              <span class="value value--xxsmall">{{ data.direction_1.next | split: " " | last }}</span>
+              <span class="value value--small">{{ direction_1.next | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_1.next | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -137,8 +137,8 @@
           <div class="content text--gray-50">
             <span class="label label--small mb--1">later</span>
             <span>
-              <span class="value value--small">{{ data.direction_1.later | split: " " | first }}</span>
-              <span class="value value--xxsmall">{{ data.direction_1.later | split: " " | last }}</span>
+              <span class="value value--small">{{ direction_1.later | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_1.later | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -147,8 +147,8 @@
       <!-- Direction 2 -->
       <div class="column gap--small">
         <div class="mb--2">
-          <span class="title title--small" style="display: block;">{{ data.direction_2.label | split: "To " | last }}</span>
-          <span class="description">{{ data.direction_2.label }}</span>
+          <span class="title title--small" style="display: block;">{{ direction_2.label | split: "To " | last }}</span>
+          <span class="description">{{ direction_2.label }}</span>
         </div>
         
         <!-- Arriving -->
@@ -157,11 +157,11 @@
           <div class="content">
             <span class="label label--small label--inverted mb--1">arriving</span>
             <span>
-              <span class="value value--small">{{ data.direction_2.arriving | split: " " | first }}</span>
-              <span class="value value--xxsmall">{{ data.direction_2.arriving | split: " " | last }}</span>
+              <span class="value value--small">{{ direction_2.arriving | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_2.arriving | split: " " | last }}</span>
             </span>
-            {% if data.direction_2.arriving_status != "On Time" %}
-              <span class="label label--small label--outline text--gray-35">{{ data.direction_2.arriving_status }}</span>
+            {% if direction_2.arriving_status != "On Time" %}
+              <span class="label label--small label--outline text--gray-35">{{ direction_2.arriving_status }}</span>
             {% endif %}
           </div>
         </div>
@@ -172,11 +172,11 @@
           <div class="content text--gray-35">
             <span class="label label--small label--outline mb--1">next</span>
             <span>
-              <span class="value value--small">{{ data.direction_2.next | split: " " | first }}</span>
-              <span class="value value--xxsmall">{{ data.direction_2.next | split: " " | last }}</span>
+              <span class="value value--small">{{ direction_2.next | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_2.next | split: " " | last }}</span>
             </span>
-            {% if data.direction_2.next_status != "On Time" %}
-              <span class="label label--small label--inverted">{{ data.direction_2.next_status }}</span>
+            {% if direction_2.next_status != "On Time" %}
+              <span class="label label--small text--gray-35">{{ direction_2.next_status }}</span>
             {% endif %}
           </div>
         </div>
@@ -187,8 +187,8 @@
           <div class="content text--gray-50">
             <span class="label label--small mb--1">later</span>
             <span>
-              <span class="value value--small">{{ data.direction_2.later | split: " " | first }}</span>
-              <span class="value value--xxsmall">{{ data.direction_2.later | split: " " | last }}</span>
+              <span class="value value--small">{{ direction_2.later | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_2.later | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -197,7 +197,7 @@
     </div>
     
     <!-- Alerts Section -->
-    {% if data.has_alerts %}
+    {% if has_alerts %}
       <div class="mb--2">
         <span class="label label--small label--underline">Alerts</span>
       </div>
@@ -205,8 +205,8 @@
         <div class="item">
           <div class="meta"></div>
           <div class="content">
-            <span class="description" data-clamp="2">{{ data.alerts }}</span>
-            <span class="label label--small label--underline">active: {{ data.updated_at | date: "%D %l:%M %p" }}</span>
+            <span class="description" data-clamp="2">{{ alerts }}</span>
+            <span class="label label--small label--underline">active: {{ updated_at | date: "%D %l:%M %p" }}</span>
           </div>
         </div>
       </div>
@@ -216,5 +216,5 @@
 </div>
 
 <div class="title_bar m--0">
-  <span class="title">{{ data.station }}</span>
+  <span class="title">{{ station }}</span>
 </div>
