@@ -39,7 +39,7 @@ app.get('/health', (c) => {
 /**
  * Get all GO Transit lines
  * Used for xhrSelect in plugin configuration
- * 
+ *
  * Handles both GET and POST requests
  * Returns: [{ "Lakeshore East": "LE" }, { "Stouffville": "ST" }, ...]
  */
@@ -64,7 +64,7 @@ app.post('/api/V1/lines', linesHandler)
 const stationsHandler = (c) => {
   // Get line code from URL parameter (for GET requests)
   let lineCode = c.req.param('line_code')
-  
+
   // If not in URL, try to get from POST body (xhrSelect sends it as sibling setting)
   if (!lineCode && c.req.method === 'POST') {
     // For POST requests, check the request body for the line value
@@ -72,7 +72,7 @@ const stationsHandler = (c) => {
     try {
       // The body might contain settings_custom_fields_values_line
       // For now, we'll just use the URL param approach
-    } catch (e) {
+    } catch {
       // Ignore parse errors
     }
   }
