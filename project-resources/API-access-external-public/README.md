@@ -3,7 +3,7 @@
 **Status**: ✅ Discovered & Documented (Not Authenticated)  
 **Access Level**: Public (No API Key Required)  
 **Last Updated**: February 5, 2026
-**Endpoints Documented**: 5 (Timetable, Fare Calculator, Service Updates General, Service Updates All, Composer)
+**Endpoints Documented**: 6 (Timetable, Fare Calculator, Service Updates General, Service Updates All, Composer, Departures)
 
 ---
 
@@ -18,6 +18,7 @@ Multiple endpoints have been discovered and reverse-engineered by observing netw
 3. **Service Updates General Endpoint** (`/serviceupdate/en/general`) - System-wide service alerts only
 4. **Service Updates All Endpoint** (`/serviceupdate/en/all`) - All service updates (general, lines, stations)
 5. **Composer Endpoint** (`/composer/{lang}/{station}/departures/serviceupdates`) - Station-specific departures + service updates (combined)
+6. **Departures Endpoint** (`/departures/stops/{station}/departures`) - Real-time station departures with pagination and complete itineraries
 
 ---
 
@@ -29,6 +30,7 @@ https://api.metrolinx.com/external/go/schedules/         # Timetable & journey p
 https://api.metrolinx.com/external/go/farecalculator/    # Fare calculation & concessions
 https://api.metrolinx.com/external/go/serviceupdate/     # Service updates & alerts
 https://api.metrolinx.com/external/go/composer/          # Composer (station-specific)
+https://api.metrolinx.com/external/go/departures/        # Real-time departures (paginated)
 ```
 
 ### Endpoints
@@ -37,6 +39,7 @@ https://api.metrolinx.com/external/go/composer/          # Composer (station-spe
 - **Service Updates General**: `/serviceupdate/en/general` - Get system-wide general service alerts only
 - **Service Updates All**: `/serviceupdate/en/all` - Get all service updates (general + lines + stations)
 - **Composer**: `/composer/{lang}/{station}/departures/serviceupdates` - Get station-specific departures + service updates combined
+- **Departures**: `/departures/stops/{station}/departures` - Get paginated real-time departures for a station with full itineraries
 
 ### Available Languages
 - English: `/en/`
@@ -846,6 +849,222 @@ Compared to calling multiple endpoints separately:
 
 ---
 
+## Endpoint: GET /departures/stops/{station}/departures
+
+### Purpose
+Retrieve **paginated, real-time station departures** for both trains and buses at a specific GO Transit station, including complete stop-by-stop itineraries for each trip.
+
+**Key Differentiator**: This endpoint returns actual upcoming departures with full journey details (platforms, next stops, estimated times), making it ideal for real-time departure boards and live station displays.
+
+### URL Parameters
+
+| Parameter | Type | Required | Example | Description |
+|-----------|------|----------|---------|-------------|
+| `{station}` | String | Yes | `UN` | Station code (e.g., "UN" for Union Station, "OS" for Oshawa) |
+| `page` | Integer | No | `1` | Page number for pagination (default: 1) |
+| `pageLimit` | Integer | No | `10` | Number of departures per page (default: 10, max: varies) |
+| `transitTypeName` | String | No | `All` | Filter by transit type: `"All"`, `"Train"`, `"Bus"`, `"Coach"` |
+
+### Complete URL Examples
+```
+https://api.metrolinx.com/external/go/departures/stops/UN/departures?page=1&transitTypeName=All&pageLimit=10
+https://api.metrolinx.com/external/go/departures/stops/OS/departures?page=1&transitTypeName=Train&pageLimit=5
+https://api.metrolinx.com/external/go/departures/stops/UN/departures?page=2&transitTypeName=Bus&pageLimit=20
+```
+
+### cURL Example
+```bash
+curl 'https://api.metrolinx.com/external/go/departures/stops/UN/departures?page=1&transitTypeName=All&pageLimit=10' \
+  -H 'Accept-Language: en-US,en;q=0.9' \
+  -H 'Connection: keep-alive' \
+  -H 'DNT: 1' \
+  -H 'Origin: https://www.gotransit.com' \
+  -H 'Referer: https://www.gotransit.com/' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: cross-site' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \
+  -H 'accept: application/json' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="8", "Chromium";v="144", "Google Chrome";v="144"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"'
+```
+
+### Response Example
+
+**HTTP Headers**:
+```
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Content-Encoding: gzip
+Transfer-Encoding: chunked
+Cache-Control: public, max-age=60
+Date: Thu, 05 Feb 2026 09:47:00 GMT
+```
+
+**Response Body** (after decompression, abbreviated):
+```json
+{
+  "stationCode": "UN",
+  "trainDepartures": {
+    "items": [
+      {
+        "lineCode": "LW",
+        "tripNumber": "1711",
+        "service": "Lakeshore West",
+        "transitType": 1,
+        "transitTypeName": "T",
+        "scheduledTime": "09:47",
+        "scheduledDateTime": "2026-02-05T09:47:00",
+        "platform": "9 & 10",
+        "scheduledPlatform": null,
+        "stopsDisplay": "Exhibition-Mimico-Long Branch",
+        "info": "Proceed / Avancez",
+        "lineColour": "#98002e",
+        "allDepartureStops": {
+          "stayInTrain": false,
+          "tripNumbers": ["1711"],
+          "departureDetailsList": [
+            { "stopName": "Union Station", "departureTime": "09:47", "stopCode": "UN", "isMajorStop": true },
+            { "stopName": "Exhibition GO", "departureTime": "09:54", "stopCode": "EX", "isMajorStop": true },
+            { "stopName": "Long Branch GO", "departureTime": "10:08", "stopCode": "LO", "isMajorStop": true }
+          ]
+        },
+        "zone": null,
+        "gate": null
+      }
+    ],
+    "page": 1,
+    "pageSize": 3,
+    "totalItemCount": 20
+  },
+  "busDepartures": {
+    "items": [],
+    "page": 1,
+    "pageSize": 0,
+    "totalItemCount": 0
+  }
+}
+```
+
+### Response Structure
+
+The Departures response contains two main sections:
+
+| Section | Type | Purpose |
+|---------|------|---------|
+| **stationCode** | String | Station code for which departures are shown |
+| **trainDepartures** | Object | Train departures data with pagination |
+| **busDepartures** | Object | Bus departures data with pagination |
+
+### Train/Bus Departures Section
+
+```json
+{
+  "items": [ /* Array of departure objects */ ],
+  "page": 1,
+  "pageSize": 3,
+  "totalItemCount": 20  // Total departures available (for pagination)
+}
+```
+
+### Departure Item Fields
+
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| **lineCode** | String | Route/line code | `"LW"` (Lakeshore West), `"LE"` (Lakeshore East) |
+| **tripNumber** | String | Unique trip identifier | `"1711"` |
+| **service** | String | Route name | `"Lakeshore West"`, `"Barrie"` |
+| **transitType** | Integer | Service type code | `1` = Train, `2` = Bus |
+| **transitTypeName** | String | Service type name | `"T"` (Train), `"B"` (Bus) |
+| **scheduledTime** | String | Departure time (HH:MM format) | `"09:47"` |
+| **scheduledDateTime** | String | Full ISO 8601 datetime | `"2026-02-05T09:47:00"` |
+| **platform** | String | Platform or track number | `"9 & 10"`, `"11 & 12"`, `"-"` (unknown) |
+| **scheduledPlatform** | String/Null | Scheduled platform (alternative field) | `null` or platform number |
+| **stopsDisplay** | String | Next few stops displayed | `"Exhibition-Mimico-Long Branch"` |
+| **info** | String | Bilingual status message | `"Proceed / Avancez"`, `"Wait / Attendez"` |
+| **lineColour** | String | Line color as hex code | `"#98002e"` (LW), `"#ff0d00"` (LE) |
+| **allDepartureStops** | Object | Complete itinerary with all stops | See below |
+| **zone** | String/Null | Fare zone (if applicable) | `null` or zone number |
+| **gate** | String/Null | Bus gate/door number | `null` for trains, gate number for buses |
+
+### allDepartureStops Structure
+
+```json
+{
+  "stayInTrain": false,              // Whether to stay in same vehicle for connections
+  "tripNumbers": ["1711"],           // Array of trip numbers (may include connections)
+  "departureDetailsList": [          // Complete stop list
+    {
+      "stopName": "Union Station",    // Full station name
+      "departureTime": "09:47",       // Time at this stop
+      "stopCode": "UN",               // Station code
+      "isMajorStop": true             // Whether this is a major stop
+    },
+    // ... more stops ...
+  ]
+}
+```
+
+### Pagination Strategy
+
+| Field | Purpose | Example |
+|-------|---------|---------|
+| **page** | Current page number | `1` |
+| **pageSize** | Number of items on this page | `3` |
+| **totalItemCount** | Total departures available | `20` |
+
+**Example**: With `pageSize=3` and `totalItemCount=20`, you need 7 pages to get all 20 departures (pages 1-7).
+
+**Load More Pattern**:
+```javascript
+// Fetch first page
+const page1 = fetch('/departures/stops/UN/departures?page=1&pageLimit=10');
+
+// Calculate remaining pages
+const totalPages = Math.ceil(data.trainDepartures.totalItemCount / 10);
+const remainingPages = [...Array(totalPages-1)].map((_, i) => 
+  fetch(`/departures/stops/UN/departures?page=${i+2}&pageLimit=10`)
+);
+```
+
+### Caching Strategy
+
+| Setting | Value | Reason |
+|---------|-------|--------|
+| **Cache Control** | `max-age=60` | 1-minute browser cache (departures change frequently) |
+| **CDN Cache** | ~30 seconds | Real-time data requires frequent updates |
+| **Recommended Polling** | 30-60 seconds | For live departure boards |
+| **Stale While Revalidate** | 5-10 seconds | Show stale data while refreshing in background |
+
+### Unique Advantages
+
+Compared to Composer endpoint:
+
+| Benefit | Details |
+|---------|---------|
+| **Pagination** | Handle high-volume departures (20+ per day at major stations) |
+| **Complete Itinerary** | Every stop on the journey, not just summary |
+| **Platform Info** | Shows which platform/track the train uses |
+| **Filter Options** | Can request trains-only, buses-only, or mixed |
+| **Bilingual Info** | Status messages in English/French ("Proceed / Avancez") |
+| **Line Colors** | Useful for styling UI elements by route |
+
+### Use Cases for Departures Endpoint
+
+1. **Real-Time Departure Board**: Live display of next 10-20 departures with platforms
+2. **Mobile App**: Station detail screen with live trains/buses leaving now
+3. **Station Kiosk**: Self-service information displays at GO stations
+4. **Commuter Dashboard**: "What's leaving from my home station in the next hour?"
+5. **Journey Start**: User confirms their outbound trip is on time before leaving home
+6. **Platform Wayfinding**: Show which platform a specific trip departs from
+7. **Transit Status**: Check if buses or trains are running at a station
+8. **Trip Comparisons**: "Which service is leaving soonest - train or bus?"
+9. **Accessibility Planning**: Check for specific trips based on platform location/accessibility
+10. **Notification Triggers**: "Notify me when the 9:47 LW train departs"
+
+---
+
 ## Use Cases
 
 ### ✅ Suitable For: Timetable Endpoint
@@ -871,16 +1090,6 @@ Compared to calling multiple endpoints separately:
 - **System-Wide Notices**: Important announcements affecting all routes
 - **Email/SMS Alerts**: Content for notification systems
 
-### ✅ Suitable For: Service Updates All Endpoint (`/all`)
-- **Comprehensive Dashboard**: Show all system updates in one view
-- **Transit Admin Panel**: Monitor system-wide alerts and line-specific issues
-- **Interactive Maps**: Display location-based alerts (lines + stations)
-- **Detailed Status Pages**: Show updates organized by type (general, lines, stations)
-- **Real-time Operations**: Unified view for dispatch and customer service teams
-- **Complete Data Source**: Full status for integration with third-party transit apps
-- **Route Planning**: Show line-specific issues when users plan trips
-- **Station Pages**: Display station-specific accessibility alerts
-
 ### ✅ Suitable For: Composer Endpoint (`/composer/{lang}/{station}/departures/serviceupdates`)
 - **Station Display Widget**: Show upcoming departures + station alerts in one view
 - **Mobile App Station Tab**: Single endpoint for all station-related info
@@ -889,6 +1098,18 @@ Compared to calling multiple endpoints separately:
 - **Commuter Journey Start**: "What's leaving from my home station right now?"
 - **Station Comparison**: Load multiple station widgets (separate API calls per station)
 - **Responsive Web Interface**: Low-bandwidth response (~3-5 KB) suitable for mobile
+
+### ✅ Suitable For: Departures Endpoint (`/departures/stops/{station}/departures`)
+- **Real-Time Departure Board**: Live station displays with platform information
+- **Mobile Journey Planning**: Confirm departure details before leaving home
+- **Station Kiosks**: Self-service information terminals at GO stations
+- **High-Volume Station**: Handle 20+ departures per day with pagination
+- **Platform Wayfinding**: Show which platform/track each train uses
+- **Service Status Checks**: Verify trains/buses are operating at a station
+- **Trip-Specific Lookup**: Find exact departure time and platform for a trip
+- **Accessibility Routing**: Check platform locations and accessible routes
+- **Comprehensive Itinerary**: Show all stops on the journey, not just summary
+- **Bilingual Displays**: Service info in English ("Proceed") and French ("Avancez")
 
 ### ❌ NOT Suitable For
 - **Real-Time Arrival Board**: No delay or current status information (use Open Data API)
@@ -988,6 +1209,7 @@ Sample responses are provided in the `sample-response/` directory:
 | **Service Updates General** | `ServiceUpdate-General-2026-02-05.json` | Union Station service recovery alert | 3.6 KB |
 | **Service Updates All** | `ServiceUpdate-All-2026-02-05.json` | 38 aggregated updates (1 general + 23 lines + 14 stations) | 18 KB |
 | **Composer** | `Composer-UN-Departures-ServiceUpdates-2026-02-05.json` | Union Station departures + alerts | 3.2 KB |
+| **Departures** | `Departures-UN-2026-02-05.json` | Union Station live departures (3 trains, 0 buses) with full itineraries | 4.3 KB |
 
 ### Using Sample Files in Development
 

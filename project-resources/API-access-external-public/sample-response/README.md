@@ -318,6 +318,93 @@ GET /composer/en/UN/departures/serviceupdates
 
 ---
 
+### Departures-UN-2026-02-05.json
+**Request**: 
+```
+GET /departures/stops/UN/departures?page=1&transitTypeName=All&pageLimit=3
+```
+
+**Details**:
+- **Station**: Union Station (UN)
+- **Date**: February 5, 2026
+- **Time**: 09:47 AM ET (time of capture)
+- **Type**: Real-time station departures with complete itineraries
+- **File Size**: ~4.3 KB (uncompressed)
+- **Response Time**: Captured at 2026-02-05 09:47 UTC
+- **Train Departures**: 3 trains (with pageLimit=3)
+- **Bus Departures**: 0 buses
+- **Pagination Info**: Page 1, pageSize 3, totalItemCount 20
+
+**Unique Features**:
+- **Paginated Results**: Handles paginated response (20+ total departures, fetch 3-5 at a time)
+- **Platform Information**: Shows which platform/track each train uses
+- **Complete Itineraries**: All stops for each trip with times, not just summary
+- **Bilingual Status**: English/French status messages ("Proceed / Avancez")
+- **Line Colors**: Hex color codes for each route for UI styling (#98002e, etc.)
+- **Major Stop Indicators**: Distinguishes major interchange stops in itinerary
+
+**Sample Train Departure** (Lakeshore West at 09:47):
+```json
+{
+  "lineCode": "LW",
+  "tripNumber": "1711",
+  "service": "Lakeshore West",
+  "transitType": 1,
+  "scheduledTime": "09:47",
+  "platform": "9 & 10",
+  "stopsDisplay": "Exhibition-Mimico-Long Branch",
+  "info": "Proceed / Avancez",
+  "lineColour": "#98002e",
+  "allDepartureStops": {
+    "departureDetailsList": [
+      { "stopName": "Union Station", "departureTime": "09:47", "stopCode": "UN", "isMajorStop": true },
+      { "stopName": "Exhibition GO", "departureTime": "09:54", "stopCode": "EX", "isMajorStop": true },
+      { "stopName": "Mimico GO", "departureTime": "10:02", "stopCode": "MI", "isMajorStop": true },
+      { "stopName": "Long Branch GO", "departureTime": "10:08", "stopCode": "LO", "isMajorStop": true },
+      { "stopName": "West Harbour GO", "departureTime": "11:14", "stopCode": "WR", "isMajorStop": true }
+    ]
+  }
+}
+```
+
+**Key Fields**:
+- **lineCode**: Route identifier (LW=Lakeshore West, LE=Lakeshore East, BR=Barrie, etc.)
+- **platform**: Platform/track designation ("9 & 10", "11 & 12", "13")
+- **scheduledTime**: Planned departure time in HH:MM format (24-hour or 12-hour)
+- **allDepartureStops**: Complete list of all stops on this trip's journey
+- **isMajorStop**: Boolean indicating if stop is a major interchange point
+- **transitTypeName**: "T" string for Train, "B" string for Bus
+- **tripNumber**: Unique identifier for this particular journey instance
+
+**Pagination Structure**:
+```json
+{
+  "page": 1,           // Current page number (starts at 1)
+  "pageSize": 3,       // Number of items included on this page
+  "totalItemCount": 20 // Total available departures (sum of all pages)
+}
+```
+
+**Real-World Trains Included in Sample**:
+- **LW (Lakeshore West)** departing at 09:47 → Platform 9&10 → 5 stops including Exhibition and West Harbour
+- **LE (Lakeshore East)** departing at 09:50 → Platform 11&12 → Toward Oshawa direction
+- **BR (Barrie)** departing at 09:54 → Platform 13 → Toward Allandale Waterfront (150 km route)
+- All three trains have complete 8-12 stop itineraries included
+
+**Use Cases**:
+- Testing real-time departure board UI components
+- Building station kiosk and self-service display applications
+- Mobile app station detail screens with live departure updates
+- Platform-specific journey confirmation before boarding
+- Pagination implementation (handling 20/50/100+ departures per station)
+- Accessible wayfinding (platform numbers, stop sequences for navigation)
+- Comprehensive trip itinerary display showing all intermediate stops
+- Bilingual interface development and testing (English/French)
+- Live station status confirmation (verify trains/buses are operating)
+- Performance testing with paginated endpoint responses
+
+---
+
 ## How to Use These Samples
 
 ### 1. Direct File Usage - Timetable
@@ -361,7 +448,37 @@ updateData.Notifications.Notification.forEach(notif => {
 });
 ```
 
-### 4. Direct File Usage - Service Updates (All)
+### 4. Direct File Usage - Departures (Real-time Station Board)
+```javascript
+// Load departures sample for station display board
+const departuresData = JSON.parse(
+  fs.readFileSync('Departures-UN-2026-02-05.json', 'utf8')
+);
+
+console.log(`Station: ${departuresData.stationCode}`);
+console.log(`\nUpcoming Trains (Page 1 of ~${Math.ceil(departuresData.trainDepartures.totalItemCount / departuresData.trainDepartures.pageSize)})`);
+
+departuresData.trainDepartures.items.forEach(train => {
+  const stops = train.allDepartureStops.departureDetailsList;
+  const lastStop = stops[stops.length - 1];
+  
+  console.log(`\n[${train.lineCode}] ${train.service}`);
+  console.log(`  Departs: ${train.scheduledTime} from Platform ${train.platform}`);
+  console.log(`  Arrives: ${lastStop.stopName} at ${lastStop.departureTime}`);
+  console.log(`  Route: ${train.stopsDisplay}`);
+  console.log(`  Status: ${train.info}`);
+});
+
+// Handle pagination
+if (departuresData.trainDepartures.totalItemCount > departuresData.trainDepartures.pageSize) {
+  const nextPage = departuresData.trainDepartures.page + 1;
+  const totalPages = Math.ceil(departuresData.trainDepartures.totalItemCount / departuresData.trainDepartures.pageSize);
+  console.log(`\n[Pagination] Now on page ${departuresData.trainDepartures.page}, ${totalPages} pages available`);
+  console.log(`             Load next ${departuresData.trainDepartures.pageSize} with ?page=${nextPage}`);
+}
+```
+
+### 5. Direct File Usage - Service Updates (All)
 ```javascript
 // Load service updates all sample (comprehensive)
 const allUpdates = JSON.parse(
@@ -389,17 +506,46 @@ allUpdates.Stations.Station.forEach(station => {
 });
 ```
 
-### 5. Testing API Response Handling
+### 6. Testing API Response Handling
 ```javascript
 // Mock all API responses in tests
 const mockTimetable = require('./Timetable-OS-UN-2026-02-05.json');
 const mockFares = require('./FareCalculator-OS-UN-2026-02-05.json');
 const mockUpdateGeneral = require('./ServiceUpdate-General-2026-02-05.json');
 const mockUpdateAll = require('./ServiceUpdate-All-2026-02-05.json');
+const mockDepartures = require('./Departures-UN-2026-02-05.json');
 
 describe('GO Transit API Integration', () => {
   it('should parse timetable response', () => {
     expect(mockTimetable.trips).toHaveLength(28);
+  });
+  
+  it('should parse departures response with pagination', () => {
+    expect(mockDepartures.trainDepartures.items.length).toBeGreaterThan(0);
+    expect(mockDepartures.trainDepartures.page).toBe(1);
+    expect(mockDepartures.trainDepartures.totalItemCount).toBeGreaterThanOrEqual(mockDepartures.trainDepartures.pageSize);
+  });
+  
+  it('should have valid train departure structure', () => {
+    const train = mockDepartures.trainDepartures.items[0];
+    expect(train.lineCode).toBeDefined();
+    expect(train.service).toBeDefined();
+    expect(train.platform).toBeDefined();
+    expect(train.scheduledTime).toBeDefined();
+    expect(train.lineColour).toMatch(/^#[0-9a-f]{6}$/i);
+    expect(train.allDepartureStops.departureDetailsList.length).toBeGreaterThan(0);
+  });
+  
+  it('should have valid stop details in itinerary', () => {
+    const train = mockDepartures.trainDepartures.items[0];
+    const stops = train.allDepartureStops.departureDetailsList;
+    
+    stops.forEach(stop => {
+      expect(stop.stopCode).toBeDefined();
+      expect(stop.stopName).toBeDefined();
+      expect(stop.departureTime).toBeDefined();
+      expect(stop.isMajorStop).toBeDefined();
+    });
   });
   
   it('should parse fare calculator response', () => {
