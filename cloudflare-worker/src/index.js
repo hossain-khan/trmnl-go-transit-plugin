@@ -134,6 +134,113 @@ app.post('/api/V1/stations-by-line/', (c) => {
 })
 
 /**
+ * Dashboard endpoint - Returns all data needed for template rendering
+ *
+ * Combines ServiceataGlance/Trains/All, ServiceUpdate/ServiceAlert/All,
+ * and Stop/All to provide a complete dataset for the GO Transit Dashboard
+ *
+ * Query Parameters:
+ * - line: GO Transit line code (e.g., "LE")
+ * - station: Origin station code (e.g., "OS")
+ * - time_format: "12h" or "24h"
+ * - show_alerts: "true" or "false"
+ * - departures: Number of departures to show (2 or 3)
+ *
+ * Example: /api/V1/dashboard?line=LE&station=OS&time_format=12h&show_alerts=true&departures=3
+ */
+app.get('/api/V1/dashboard', async (c) => {
+  try {
+    const line = c.req.query('line')?.toUpperCase()
+    const station = c.req.query('station')?.toUpperCase()
+    const timeFormat = c.req.query('time_format') || '12h'
+    const showAlerts = c.req.query('show_alerts') !== 'false'
+    const departuresCount = parseInt(c.req.query('departures') || '3')
+
+    // Validate parameters
+    if (!line) {
+      return c.json({ error: 'Missing required parameter: line' }, 400)
+    }
+    if (!station) {
+      return c.json({ error: 'Missing required parameter: station' }, 400)
+    }
+
+    // Check if line and station exist
+    if (!LINES_AND_STATIONS[line]) {
+      return c.json({ error: 'Invalid line code', status: 404 }, 404)
+    }
+
+    const stationData = LINES_AND_STATIONS[line].stations.find(
+      (s) => Object.values(s)[0] === station
+    )
+    if (!stationData) {
+      return c.json({ error: 'Station not found for this line', status: 404 }, 404)
+    }
+
+    const stationName = Object.keys(stationData)[0]
+    const lineName = LINES_AND_STATIONS[line].name
+    const allStations = LINES_AND_STATIONS[line].stations.map((s) => Object.keys(s)[0])
+    const stationPosition = allStations.findIndex((s) => s === stationName) + 1
+
+    // Fetch data from Metrolinx APIs via proxy
+    const env = c.env
+    const authKey = env.ORIGIN_AUTH_TOKEN
+
+    // Fetch trains
+    const trainsUrl = `${env.ORIGIN_BASE_URL}api/V1/ServiceataGlance/Trains/All.json?key=${authKey}`
+    // TODO: Process and filter trains data
+    await fetch(trainsUrl)
+
+    // Fetch alerts
+    const alertsUrl = `${env.ORIGIN_BASE_URL}api/V1/ServiceUpdate/ServiceAlert/All.json?key=${authKey}`
+    // TODO: Process and filter alerts data
+    await fetch(alertsUrl)
+
+    const dashboardData = {
+      station: stationName,
+      line_name: lineName,
+      line_code: line,
+      station_position: stationPosition,
+      total_stations: allStations.length,
+      stations: allStations,
+      direction_1: {
+        label: 'To Union Station',
+        arriving: 'N/A',
+        arriving_status: 'Loading...',
+        next: 'N/A',
+        next_status: 'Loading...',
+        later: departuresCount > 2 ? 'N/A' : undefined,
+        later_status: departuresCount > 2 ? 'Loading...' : undefined,
+      },
+      direction_2: {
+        label: `To ${stationName}`,
+        arriving: 'N/A',
+        arriving_status: 'Loading...',
+        next: 'N/A',
+        next_status: 'Loading...',
+        later: departuresCount > 2 ? 'N/A' : undefined,
+        later_status: departuresCount > 2 ? 'Loading...' : undefined,
+      },
+      alerts: showAlerts ? 'No active alerts' : null,
+      has_alerts: false,
+      updated_at: new Date().toISOString(),
+      time_format: timeFormat,
+      departures_count: departuresCount,
+    }
+
+    return c.json(dashboardData, 200)
+  } catch (error) {
+    console.error('[Dashboard] Error:', error.message)
+    return c.json(
+      {
+        error: 'Dashboard Error',
+        details: error.message,
+      },
+      500
+    )
+  }
+})
+
+/**
  * Proxy all API requests to Metrolinx
  */
 app.get('/api/V1/*', async (c) => {

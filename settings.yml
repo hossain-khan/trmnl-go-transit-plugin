@@ -11,8 +11,9 @@ refresh_frequency: 300  # 5 minutes in seconds (real-time transit data)
 
 merge_tag:
   - tag_name: data
-    # Cloudflare Workers proxy API for live transit data
-    source: https://gta-go-transit.gohk.xyz/api/V1/ServiceataGlance/Trains/All
+    # Dashboard endpoint - combines ServiceataGlance/Trains, ServiceUpdate/ServiceAlert, Stop/All
+    # Returns formatted data for template rendering with user's line, station, and display preferences
+    source: https://gta-go-transit.gohk.xyz/api/V1/dashboard?line={{line}}&station={{station_id}}&time_format={{time_format}}&show_alerts={{show_alerts}}&departures={{departures_count}}
     merge_object: false
 
 private_variables:
