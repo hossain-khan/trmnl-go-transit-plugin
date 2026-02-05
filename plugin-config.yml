@@ -45,7 +45,7 @@
   exclude_csrf_token: true
   depends_on: line
   optional: true
-  help_text: Select a line first to see available stations.
+  help_text: Select a line to see available stations.
 
 # =============================================================================
 # DISPLAY OPTIONS
