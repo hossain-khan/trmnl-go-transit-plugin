@@ -37,6 +37,23 @@ app.get('/health', (c) => {
 })
 
 /**
+ * Get all GO Transit lines
+ * Used for xhrSelect in plugin configuration
+ * 
+ * Handles both GET and POST requests
+ * Returns: [{ "Lakeshore East": "LE" }, { "Stouffville": "ST" }, ...]
+ */
+const linesHandler = (c) => {
+  const lines = Object.entries(LINES_AND_STATIONS).map(([code, data]) => ({
+    [data.name]: code,
+  }))
+  return c.json(lines, 200)
+}
+
+app.get('/api/V1/lines', linesHandler)
+app.post('/api/V1/lines', linesHandler)
+
+/**
  * Get stations for a specific GO Transit line
  * Used for xhrSelect dependent dropdown in plugin configuration
  *
