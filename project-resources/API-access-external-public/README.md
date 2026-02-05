@@ -3,7 +3,7 @@
 **Status**: ✅ Discovered & Documented (Not Authenticated)  
 **Access Level**: Public (No API Key Required)  
 **Last Updated**: February 5, 2026
-**Endpoints Documented**: 3 (Timetable, Fare Calculator, Service Updates)
+**Endpoints Documented**: 4 (Timetable, Fare Calculator, Service Updates General, Service Updates All)
 
 ---
 
@@ -15,7 +15,8 @@ Multiple endpoints have been discovered and reverse-engineered by observing netw
 
 1. **Timetable Endpoint** (`/schedules/en/timetable/all`) - Journey planning and schedule lookup
 2. **Fare Calculator Endpoint** (`/farecalculator/all-concessions-fare`) - Fare quotes and concession info
-3. **Service Updates Endpoint** (`/serviceupdate/en/general`) - System-wide service alerts and updates
+3. **Service Updates General Endpoint** (`/serviceupdate/en/general`) - System-wide service alerts only
+4. **Service Updates All Endpoint** (`/serviceupdate/en/all`) - All service updates (general, lines, stations)
 
 ---
 
@@ -31,7 +32,8 @@ https://api.metrolinx.com/external/go/serviceupdate/     # Service updates & ale
 ### Endpoints
 - **Timetable**: `/schedules/en/timetable/all` - Get all journeys between two stops
 - **Fare Calculator**: `/farecalculator/all-concessions-fare` - Get fares and discounts for a trip
-- **Service Updates**: `/serviceupdate/en/general` - Get system-wide service alerts and announcements
+- **Service Updates General**: `/serviceupdate/en/general` - Get system-wide general service alerts only
+- **Service Updates All**: `/serviceupdate/en/all` - Get all service updates (general + lines + stations)
 
 ### Available Languages
 - English: `/en/`
@@ -477,6 +479,154 @@ Date: Thu, 05 Feb 2026 09:23:00 GMT
 
 ---
 
+## Service Updates All Endpoint
+
+**Path**: `/external/go/serviceupdate/en/all`
+
+**Purpose**: All service updates across GO Transit system (general alerts, line-specific issues, station-specific issues)
+
+### Request Format
+```
+GET https://api.metrolinx.com/external/go/serviceupdate/en/all
+```
+
+### cURL Example
+```bash
+curl 'https://api.metrolinx.com/external/go/serviceupdate/en/all' \
+  -H 'Accept-Language: en-US,en;q=0.9' \
+  -H 'Connection: keep-alive' \
+  -H 'DNT: 1' \
+  -H 'Origin: https://www.gotransit.com' \
+  -H 'Referer: https://www.gotransit.com/' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: cross-site' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \
+  -H 'accept: application/json' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="8", "Chromium";v="144", "Google Chrome";v="144"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"'
+```
+
+### Response Structure
+
+**HTTP Headers**:
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Encoding: gzip
+Cache-Control: public, max-age=3600
+Date: Thu, 05 Feb 2026 09:30:00 GMT
+```
+
+**Response Body** (abbreviated, after decompression):
+```json
+{
+  "General": {
+    "Notifications": { "Notification": [...] },
+    "TotalUpdates": 1
+  },
+  "Lines": {
+    "TotalUpdates": 23,
+    "Line": [
+      {
+        "RouteName": "Lakeshore East",
+        "RouteNumber": "LE",
+        "Status": "2 Updates",
+        "Notifications": { "Notification": [...] },
+        "LineColour": "#0066cc"
+      }
+    ]
+  },
+  "Stations": {
+    "TotalUpdates": 14,
+    "Station": [
+      {
+        "StationName": "Union Station",
+        "StationCode": "UN",
+        "Status": "1 Updates",
+        "Notifications": { "Notification": [...] },
+        "TotalUpdates": 1
+      }
+    ]
+  },
+  "TrainAnnouncements": {
+    "Notification": [],
+    "TotalUpdates": 0
+  },
+  "BusAnnouncements": {
+    "Notification": [],
+    "TotalUpdates": 0
+  }
+}
+```
+
+### Key Structure
+
+| Section | Description | Usage |
+|---------|-------------|-------|
+| `General` | System-wide general announcements | Display in alert banner or homepage |
+| `Lines` | Line/route-specific updates (trains, buses) | Show when user plans route or views line details |
+| `Stations` | Station-specific alerts (elevators, access changes) | Display at station details page or arrival board |
+| `TrainAnnouncements` | Real-time train-specific announcements | Platform information, delays for specific trains |
+| `BusAnnouncements` | Real-time bus-specific announcements | Bus route delays, detours, cancellations |
+
+### Line-Level Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `RouteName` | String | Full route name (e.g., "Lakeshore East") |
+| `RouteNumber` | String | Route code (e.g., "LE", "94") |
+| `Status` | String | Summary (e.g., "2 Updates") |
+| `LineColour` | String | Hex color code for route (e.g., "#0066cc") |
+| `Notifications.Notification` | Array | Array of notification objects |
+| `TotalUpdates` | Integer | Count of updates for this line |
+
+### Station-Level Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `StationName` | String | Full station name (e.g., "Union Station") |
+| `StationCode` | String | Station code (e.g., "UN", "AG") |
+| `Status` | String | Summary (e.g., "1 Updates") |
+| `Notifications.Notification` | Array | Array of notification objects |
+| `TotalUpdates` | Integer | Count of updates for this station |
+
+### Notification Fields (Same for All Sections)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `SubCategory` | String | Alert type: GDOTHER, TDELAY, TMODIFY, BCANCEL, SADIS, SGIOTHR |
+| `Code` | String/null | Route code or station code if applicable |
+| `Name` | String/null | Route name or station name if applicable |
+| `MessageSubject` | String | Quick title |
+| `MessageBody` | String (HTML) | Full message (HTML) |
+| `PostedDateTime` | String | MM/DD/YYYY HH:MM:SS format |
+| `Status` | String | INIT (initial), UPD (updated), ARCHIVED |
+| `ServiceMode` | String | "General", "GO Train", "GO Bus", "Station" |
+| `TripNumbers` | Array/null | Specific trip numbers affected (rarely populated) |
+
+### Response Characteristics
+- **Content-Encoding**: gzip (always compressed)
+- **Cache-Control**: `public, max-age=3600` (1-hour cache)
+- **Size**: ~10-50 KB uncompressed (much larger than /general)
+- **Records**: Aggregated counts across all categories
+- **Message Format**: HTML (includes embedded styles and links)
+- **Use for**: Comprehensive alert dashboard, transit admin panels, alerts API
+
+### Differences from /general Endpoint
+
+| Aspect | `/general` | `/all` |
+|--------|-----------|--------|
+| **Scope** | System-wide only | General + Lines + Stations |
+| **Size** | ~2-10 KB | ~10-50 KB |
+| **Update Categories** | 1 section | 5 sections |
+| **Notifications Count** | 0-N general alerts | Aggregated across all types |
+| **Best For** | Simple alert banner | Comprehensive dashboards |
+| **Use Cases** | Quick status, homepage banner | Admin panel, detailed maps |
+
+---
+
 ## Use Cases
 
 ### ✅ Suitable For: Timetable Endpoint
@@ -494,13 +644,23 @@ Date: Thu, 05 Feb 2026 09:23:00 GMT
 - **Fare Lookup**: Quick fare quotes for specific routes
 - **PRESTO Card Benefits**: Show PRESTO discount vs. cash fares
 
-### ✅ Suitable For: Service Updates Endpoint
+### ✅ Suitable For: Service Updates General Endpoint (`/general`)
 - **Alert Banner**: Display critical system announcements
 - **Service Status**: Show if there are active service disruptions
 - **Station Maintenance**: Inform users of planned maintenance
 - **Schedule Changes**: Notify of temporary schedule modifications
 - **System-Wide Notices**: Important announcements affecting all routes
 - **Email/SMS Alerts**: Content for notification systems
+
+### ✅ Suitable For: Service Updates All Endpoint (`/all`)
+- **Comprehensive Dashboard**: Show all system updates in one view
+- **Transit Admin Panel**: Monitor system-wide alerts and line-specific issues
+- **Interactive Maps**: Display location-based alerts (lines + stations)
+- **Detailed Status Pages**: Show updates organized by type (general, lines, stations)
+- **Real-time Operations**: Unified view for dispatch and customer service teams
+- **Complete Data Source**: Full status for integration with third-party transit apps
+- **Route Planning**: Show line-specific issues when users plan trips
+- **Station Pages**: Display station-specific accessibility alerts
 
 ### ❌ NOT Suitable For
 - **Real-Time Arrival Board**: No delay or current status information (use Open Data API)

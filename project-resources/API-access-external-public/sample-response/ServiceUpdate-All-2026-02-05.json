@@ -1,0 +1,229 @@
+{
+  "General": {
+    "Notifications": {
+      "Notification": [
+        {
+          "SubCategory": "GDOTHER",
+          "Code": null,
+          "Name": null,
+          "MessageSubject": "Important GO Transit service information",
+          "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span>We are running on a special schedule today to support ongoing service recovery near Union Station.</span></div></div>",
+          "PostedDateTime": "02/05/2026 02:39:58",
+          "Rank": null,
+          "Status": "INIT",
+          "ServiceMode": "General",
+          "TripNumbers": null
+        }
+      ]
+    },
+    "TotalUpdates": 1
+  },
+  "Lines": {
+    "TotalUpdates": 23,
+    "Line": [
+      {
+        "RouteName": "Lakeshore East",
+        "RouteNumber": "LE",
+        "Status": "2 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "TDELAY",
+              "Code": "LE",
+              "Name": "Lakeshore East",
+              "MessageSubject": "Train delays possible today",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span>As a result of ongoing recovery activities near Union Station, delays are possible on the Lakeshore East line today. We thank you for your patience.</span></div></div>",
+              "PostedDateTime": "02/05/2026 04:00:37",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "GO Train",
+              "TripNumbers": null
+            },
+            {
+              "SubCategory": "TMODIFY",
+              "Code": "LE",
+              "Name": "Lakeshore East",
+              "MessageSubject": "Modified service schedule today",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span>Special schedule in effect today to support service recovery. Please check our schedule page for trip information.</span></div></div>",
+              "PostedDateTime": "02/05/2026 04:00:37",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "GO Train",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "LineColour": "#0066cc"
+      },
+      {
+        "RouteName": "Pickering / Square One",
+        "RouteNumber": "94",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "BCANCEL",
+              "Code": "94",
+              "Name": "Pickering / Square One",
+              "MessageSubject": "Bus cancellations expected today",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span>GO bus customers: As a result of operational adjustments today, some GO bus trips may be cancelled. Please visit the Plan Your Trip page for information on your trip options before travelling.</span></div></div>",
+              "PostedDateTime": "02/05/2026 04:00:37",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "GO Bus",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "LineColour": "#a21884"
+      },
+      {
+        "RouteName": "Oshawa / Finch Express",
+        "RouteNumber": "96",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "BCANCEL",
+              "Code": "96",
+              "Name": "Oshawa / Finch Express",
+              "MessageSubject": "Bus cancellations expected today",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span>GO bus customers: As a result of operational adjustments today, some GO bus trips may be cancelled. Please visit the Plan Your Trip page for information on your trip options before travelling.</span></div></div>",
+              "PostedDateTime": "02/05/2026 04:00:37",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "GO Bus",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "LineColour": "#ff0d00"
+      }
+    ]
+  },
+  "Stations": {
+    "TotalUpdates": 14,
+    "Station": [
+      {
+        "StationName": "Agincourt GO",
+        "StationCode": "AG",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SADIS",
+              "Code": "AG",
+              "Name": "Agincourt GO",
+              "MessageSubject": "Elevator out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span>The elevators leading from the station building to the south tunnel are out of service. Customers can access both platforms through the north tunnel using elevator access.</span></div></div>",
+              "PostedDateTime": "01/01/2026 23:29:54",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      },
+      {
+        "StationName": "Bronte GO",
+        "StationCode": "BO",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SADIS",
+              "Code": "BO",
+              "Name": "Bronte GO",
+              "MessageSubject": "Elevator out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span>The elevator connecting the west tunnel to platforms 1 and 2 is out of service. Alternative travel options: Use Oakville GO or Appleby GO as accessible alternatives.</span></div></div>",
+              "PostedDateTime": "02/03/2026 15:01:18",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      },
+      {
+        "StationName": "Union Station",
+        "StationCode": "UN",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SADIS",
+              "Code": "UN",
+              "Name": "Union Station",
+              "MessageSubject": "The elevator in Scotiabank Galleria is out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span>We have been advised that the elevator located in the Scotiabank Galleria is temporarily out of service. Navigate using the pedestrian path via Bay Street as directed in the update.</span></div></div>",
+              "PostedDateTime": "01/18/2026 23:11:22",
+              "Rank": null,
+              "Status": "UPD",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      },
+      {
+        "StationName": "West Harbour GO",
+        "StationCode": "WR",
+        "Status": "3 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SGIOTHR",
+              "Code": "WR",
+              "Name": "West Harbour GO",
+              "MessageSubject": "Street level access after station hours",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span>Access to the waiting area and restrooms is open Monday – Friday, 5:20 a.m. to 12:40 p.m.</span></div></div>",
+              "PostedDateTime": "12/23/2025 06:48:10",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            },
+            {
+              "SubCategory": "SADIS",
+              "Code": "WR",
+              "Name": "West Harbour GO",
+              "MessageSubject": "Elevator out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span>The elevator connecting the station building pedestrian bridge on the east side leading to platform 2 is out of service.</span></div></div>",
+              "PostedDateTime": "02/03/2026 08:43:58",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            },
+            {
+              "SubCategory": "SADIS",
+              "Code": "WR",
+              "Name": "West Harbour GO",
+              "MessageSubject": "Elevator out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span>The west pedestrian bridge elevator connecting Bay Street leading to platform 1 is out of service.</span></div></div>",
+              "PostedDateTime": "02/05/2026 08:29:53",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 3
+      }
+    ]
+  },
+  "TrainAnnouncements": {
+    "Notification": [],
+    "TotalUpdates": 0
+  },
+  "BusAnnouncements": {
+    "Notification": [],
+    "TotalUpdates": 0
+  }
+}

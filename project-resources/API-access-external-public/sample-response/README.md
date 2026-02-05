@@ -143,6 +143,78 @@ GET /external/go/serviceupdate/en/general
 
 ---
 
+### ServiceUpdate-All-2026-02-05.json
+**Request**: 
+```
+GET /external/go/serviceupdate/en/all
+```
+
+**Details**:
+- **Date**: February 5, 2026
+- **Time**: 09:30 AM ET
+- **Topic**: All service updates (general + lines + stations)
+- **File Size**: ~18 KB (uncompressed, heavily abbreviated in sample)
+- **Response Time**: Captured at 2026-02-05 09:00 UTC
+- **Total Updates**: 38 across system
+  - General: 1 alert
+  - Lines: 23 updates (across various routes)
+  - Stations: 14 updates (elevator outages, accessibility issues)
+  - Train Announcements: 0
+  - Bus Announcements: 0
+
+**Sample Structure**:
+```json
+{
+  "General": {
+    "Notifications": { "Notification": [{ ... }] },
+    "TotalUpdates": 1
+  },
+  "Lines": {
+    "TotalUpdates": 23,
+    "Line": [
+      {
+        "RouteName": "Lakeshore East",
+        "RouteNumber": "LE",
+        "Status": "2 Updates",
+        "Notifications": { "Notification": [...] },
+        "LineColour": "#0066cc"
+      }
+    ]
+  },
+  "Stations": {
+    "TotalUpdates": 14,
+    "Station": [
+      {
+        "StationName": "Union Station",
+        "StationCode": "UN",
+        "Status": "1 Updates",
+        "Notifications": { "Notification": [...] }
+      }
+    ]
+  },
+  "TrainAnnouncements": { "Notification": [], "TotalUpdates": 0 },
+  "BusAnnouncements": { "Notification": [], "TotalUpdates": 0 }
+}
+```
+
+**Real-World Alerts Included**:
+- **General**: Union Station service recovery schedule
+- **Lines**: Lakeshore East delays/schedule changes, bus route cancellations
+- **Stations**: 
+  - Elevator outages (Agincourt, Bronte, Kingston, Kennedy, Langstaff, Milliken, Rouge Hill, West Harbour)
+  - Station accessibility changes (Exhibition, Finch Bus Terminal)
+  - Access restrictions (West Harbour limited hours)
+
+**Use Cases**:
+- Testing comprehensive dashboard display
+- Building status visualization tools
+- Admin panel development
+- Interactive map/line status displays
+- Detailed status aggregation for multiple data sources
+- Integration with transit apps showing all alerts
+
+---
+
 ## How to Use These Samples
 
 ### 1. Direct File Usage - Timetable
@@ -172,26 +244,55 @@ fareData.stations[0].fares.forEach(fare => {
 });
 ```
 
-### 3. Direct File Usage - Service Updates
+### 3. Direct File Usage - Service Updates (General)
 ```javascript
-// Load service updates sample
+// Load service updates general sample
 const updateData = JSON.parse(
   fs.readFileSync('ServiceUpdate-General-2026-02-05.json', 'utf8')
 );
 
-console.log(`${updateData.TotalUpdates} active notifications`);
+console.log(`${updateData.TotalUpdates} active general notifications`);
 updateData.Notifications.Notification.forEach(notif => {
   console.log(`[${notif.Status}] ${notif.MessageSubject}`);
   console.log(`Posted: ${notif.PostedDateTime}`);
 });
 ```
 
-### 4. Testing API Response Handling
+### 4. Direct File Usage - Service Updates (All)
+```javascript
+// Load service updates all sample (comprehensive)
+const allUpdates = JSON.parse(
+  fs.readFileSync('ServiceUpdate-All-2026-02-05.json', 'utf8')
+);
+
+console.log(`General: ${allUpdates.General.TotalUpdates}`);
+console.log(`Lines: ${allUpdates.Lines.TotalUpdates}`);
+console.log(`Stations: ${allUpdates.Stations.TotalUpdates}`);
+
+// Iterate through line-specific updates
+allUpdates.Lines.Line.forEach(line => {
+  console.log(`\n${line.RouteName} (${line.RouteNumber}): ${line.Status}`);
+  line.Notifications.Notification.forEach(notif => {
+    console.log(`  - ${notif.MessageSubject}`);
+  });
+});
+
+// Iterate through station-specific updates
+allUpdates.Stations.Station.forEach(station => {
+  console.log(`\n${station.StationName} (${station.StationCode}): ${station.Status}`);
+  station.Notifications.Notification.forEach(notif => {
+    console.log(`  - ${notif.MessageSubject}`);
+  });
+});
+```
+
+### 5. Testing API Response Handling
 ```javascript
 // Mock all API responses in tests
 const mockTimetable = require('./Timetable-OS-UN-2026-02-05.json');
 const mockFares = require('./FareCalculator-OS-UN-2026-02-05.json');
-const mockUpdates = require('./ServiceUpdate-General-2026-02-05.json');
+const mockUpdateGeneral = require('./ServiceUpdate-General-2026-02-05.json');
+const mockUpdateAll = require('./ServiceUpdate-All-2026-02-05.json');
 
 describe('GO Transit API Integration', () => {
   it('should parse timetable response', () => {
@@ -204,11 +305,29 @@ describe('GO Transit API Integration', () => {
     expect(fares[0].fareType).toBe('Full');
   });
   
-  it('should parse service updates response', () => {
-    expect(mockUpdates.Notifications.Notification.length).toBeGreaterThan(0);
-    const alert = mockUpdates.Notifications.Notification[0];
+  it('should parse service updates general response', () => {
+    expect(mockUpdateGeneral.Notifications.Notification.length).toBeGreaterThan(0);
+    const alert = mockUpdateGeneral.Notifications.Notification[0];
     expect(alert.MessageSubject).toBeDefined();
     expect(alert.ServiceMode).toBe('General');
+  });
+  
+  it('should parse service updates all response', () => {
+    // Check aggregated structure
+    expect(mockUpdateAll.General.TotalUpdates).toBeGreaterThanOrEqual(0);
+    expect(mockUpdateAll.Lines.TotalUpdates).toBeGreaterThan(0);
+    expect(mockUpdateAll.Stations.TotalUpdates).toBeGreaterThan(0);
+    
+    // Check line-specific data
+    const line = mockUpdateAll.Lines.Line[0];
+    expect(line.RouteName).toBeDefined();
+    expect(line.RouteNumber).toBeDefined();
+    expect(line.LineColour).toMatch(/^#[0-9a-f]{6}$/i);
+    
+    // Check station-specific data
+    const station = mockUpdateAll.Stations.Station[0];
+    expect(station.StationName).toBeDefined();
+    expect(station.StationCode).toBeDefined();
   });
   
   it('should match timetable with fares for same journey', () => {
@@ -219,9 +338,9 @@ describe('GO Transit API Integration', () => {
 });
 ```
 
-### 5. UI Component Development
+### 6. UI Component Development
 ```html
-<!-- Load and display all sample data together -->
+<!-- Load and display all sample data (basic approach) -->
 <script>
   Promise.all([
     fetch('Timetable-OS-UN-2026-02-05.json').then(r => r.json()),
@@ -236,6 +355,39 @@ describe('GO Transit API Integration', () => {
     displayJourneyOptionsWithFares(
       timetableData.trips, 
       fareData.stations[0].fares
+    );
+  });
+</script>
+
+<!-- Advanced: Load all endpoints including comprehensive updates -->
+<script>
+  Promise.all([
+    fetch('Timetable-OS-UN-2026-02-05.json').then(r => r.json()),
+    fetch('FareCalculator-OS-UN-2026-02-05.json').then(r => r.json()),
+    fetch('ServiceUpdate-All-2026-02-05.json').then(r => r.json())
+  ]).then(([timetableData, fareData, allUpdates]) => {
+    // Display comprehensive alerts dashboard
+    if (allUpdates.General.TotalUpdates > 0) {
+      displayGeneralAlerts(allUpdates.General.Notifications.Notification);
+    }
+    
+    // Display line-specific alerts on route selection
+    const lineAlerts = {};
+    allUpdates.Lines.Line.forEach(line => {
+      lineAlerts[line.RouteNumber] = line.Notifications.Notification;
+    });
+    
+    // Display station-specific alerts on station pages
+    const stationAlerts = {};
+    allUpdates.Stations.Station.forEach(station => {
+      stationAlerts[station.StationCode] = station.Notifications.Notification;
+    });
+    
+    // Show journey options with fares
+    displayJourneyOptionsWithFares(
+      timetableData.trips, 
+      fareData.stations[0].fares,
+      { lineAlerts, stationAlerts }
     );
   });
 </script>
@@ -407,25 +559,38 @@ All samples conform to this schema:
 |--------|----------|---------|------|----------|
 | Timetable-OS-UN-2026-02-05.json | `/schedules/en/timetable/all` | 28 trips | ~73 KB | Journey planning, schedule display |
 | FareCalculator-OS-UN-2026-02-05.json | `/farecalculator/all-concessions-fare` | 5 fares | ~2.5 KB | Fare quotes, eligibility display |
-| ServiceUpdate-General-2026-02-05.json | `/serviceupdate/en/general` | 1 alert | ~3.6 KB | System alerts, service announcements |
+| ServiceUpdate-General-2026-02-05.json | `/serviceupdate/en/general` | 1 alert | ~3.6 KB | General system alerts only |
+| ServiceUpdate-All-2026-02-05.json | `/serviceupdate/en/all` | 38 alerts | ~18+ KB | Comprehensive dashboard (general + lines + stations) |
 
 **Combined Usage Matrix**:
 ```
-Timetable Sample                  Fare Calculator Sample        Service Updates Sample
-├─ 28 journeys (OS→UN)           ├─ 5 fare types                ├─ 1 general alert
-│  ├─ Departure times             │  ├─ Full ($8.50)             │  ├─ Message Subject
-│  ├─ Arrival times               │  ├─ Student ($6.38)          │  ├─ Message Body (HTML)
-│  ├─ Duration info               │  ├─ Senior ($4.25)           │  ├─ Posted DateTime
-│  └─ Stop-by-stop itinerary     │  ├─ Child ($4.25)            │  └─ Service Mode
-│                                │  └─ Presto ($8.00)            │
-└─ Use together to show:
-   "⚠️ [Alert] | Depart 6:38 AM, Arrive 7:45 AM, From $4.25-$8.50"
+Timetable Sample          Fare Calculator Sample    Service Updates (General)      Service Updates (All)
+├─ 28 journeys (OS→UN)   ├─ 5 fare types            ├─ 1 general alert             ├─ General: 1 alert
+│  ├─ Times               │  ├─ Full ($8.50)        │  ├─ System announcements     │  ├─ Message Subject
+│  ├─ Durations           │  ├─ Student ($6.38)     │  └─ Service-wide status      │  ├─ Posted DateTime
+│  └─ Itineraries        │  ├─ Senior ($4.25)       │                              │
+│                         │  ├─ Child ($4.25)       ├─ Lines: 23 updates
+│                         │  └─ Presto ($8.00)      │  ├─ Lakeshore East delays
+│                         │                         │  ├─ Bus route cancellations
+│                         │                         │  └─ Per-line color codes
+│                         │                         │
+│                         │                         ├─ Stations: 14 updates
+│                         │                         │  ├─ Elevator outages
+│                         │                         │  ├─ Accessibility issues
+│                         │                         │  └─ Access restrictions
+
+Lightweight              Simple Pricing           Quick Status Banner            Rich Dashboard
+└─ Use together to create complete trip planning experience:
+   "⚠️ Union Station elevator out | Lakeshore East: 2 updates | Depart 6:38 AM, $4.25-$8.50"
 ```
 
 **Single vs Combined Usage**:
 - **Timetable alone**: Basic journey planning
 - **Timetable + Fares**: Full booking workflow (when, what route, cost)
-- **All three combined**: Complete trip planning experience (alerts → options → costs)
+- **Timetable + Fares + General Updates**: Trip planning with system alerts
+- **Timetable + Fares + All Updates**: Complete experience with line & station-specific alerts
 
-**Last Updated**: February 5, 2026  
+**Choosing Between General vs All Updates**:
+- **Use `/general`**: Simple apps, alert banners, quick status pages (1-3 KB payload)
+- **Use `/all`**: Comprehensive dashboards, admin panels, detailed status maps (15-50 KB payload)
 **Sample Sources**: Live API calls from https://api.metrolinx.com/external/go/
