@@ -134,6 +134,26 @@ app.post('/api/V1/stations-by-line/', (c) => {
 })
 
 /**
+ * Format time string based on user preference
+ */
+const formatTime = (dateString, format) => {
+  const date = new Date(dateString)
+  if (format === '24h') {
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    return `${hours}:${minutes}`
+  } else {
+    // 12h format
+    let hours = date.getHours()
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    const ampm = hours >= 12 ? 'PM' : 'AM'
+    hours = hours % 12
+    hours = hours ? hours : 12
+    return `${hours}:${minutes} ${ampm}`
+  }
+}
+
+/**
  * Dashboard endpoint - Returns all data needed for template rendering
  *
  * Combines ServiceataGlance/Trains/All, ServiceUpdate/ServiceAlert/All,
@@ -185,15 +205,78 @@ app.get('/api/V1/dashboard', async (c) => {
     const env = c.env
     const authKey = env.ORIGIN_AUTH_TOKEN
 
-    // Fetch trains
-    const trainsUrl = `${env.ORIGIN_BASE_URL}api/V1/ServiceataGlance/Trains/All.json?key=${authKey}`
-    // TODO: Process and filter trains data
-    await fetch(trainsUrl)
+    // Fetch stop/next service to get predictions for this station on this line
+    const nextServiceUrl = `${env.ORIGIN_BASE_URL}api/V1/Stop/NextService/${station}.json?key=${authKey}`
+    const nextServiceResponse = await fetch(nextServiceUrl)
+    const nextServiceData = await nextServiceResponse.json()
 
     // Fetch alerts
     const alertsUrl = `${env.ORIGIN_BASE_URL}api/V1/ServiceUpdate/ServiceAlert/All.json?key=${authKey}`
-    // TODO: Process and filter alerts data
-    await fetch(alertsUrl)
+    const alertsResponse = await fetch(alertsUrl)
+    const alertsData = await alertsResponse.json()
+
+    // Filter next service data for this line
+    const lineServices =
+      nextServiceData?.NextService?.Lines?.filter((service) => service.LineCode === line) || []
+
+    // Separate by direction (to Union vs from Union)
+    const toUnion = lineServices.filter((s) => s.DirectionCode.includes('UN'))
+    const fromUnion = lineServices.filter((s) => !s.DirectionCode.includes('UN'))
+
+    // Sort by trip order
+    toUnion.sort((a, b) => a.TripOrder - b.TripOrder)
+    fromUnion.sort((a, b) => a.TripOrder - b.TripOrder)
+
+    // Extract arriving/next/later times
+    const extractTimes = (services, count) => {
+      const times = {
+        arriving: 'No service',
+        arriving_status: 'On Time',
+        next: 'No service',
+        next_status: 'On Time',
+      }
+
+      if (count > 2) {
+        times.later = 'No service'
+        times.later_status = 'On Time'
+      }
+
+      if (services.length > 0) {
+        times.arriving = formatTime(services[0].ComputedDepartureTime, timeFormat)
+        times.arriving_status = services[0].DepartureStatus === 'D' ? 'Delayed' : 'On Time'
+      }
+
+      if (services.length > 1) {
+        times.next = formatTime(services[1].ComputedDepartureTime, timeFormat)
+        times.next_status = services[1].DepartureStatus === 'D' ? 'Delayed' : 'On Time'
+      }
+
+      if (count > 2 && services.length > 2) {
+        times.later = formatTime(services[2].ComputedDepartureTime, timeFormat)
+        times.later_status = services[2].DepartureStatus === 'D' ? 'Delayed' : 'On Time'
+      }
+
+      return times
+    }
+
+    // Extract alerts for this line
+    let alertText = ''
+    let hasAlerts = false
+    if (showAlerts && alertsData?.ServiceAlerts?.Alert) {
+      const alerts = Array.isArray(alertsData.ServiceAlerts.Alert)
+        ? alertsData.ServiceAlerts.Alert
+        : [alertsData.ServiceAlerts.Alert]
+
+      const lineAlerts = alerts.filter((a) => a.LineCode === line)
+      if (lineAlerts.length > 0) {
+        alertText =
+          lineAlerts
+            .map((a) => a.AlertMessage)
+            .join(' | ')
+            .substring(0, 200) + (lineAlerts.length > 1 ? '...' : '')
+        hasAlerts = true
+      }
+    }
 
     const dashboardData = {
       station: stationName,
@@ -204,24 +287,14 @@ app.get('/api/V1/dashboard', async (c) => {
       stations: allStations,
       direction_1: {
         label: 'To Union Station',
-        arriving: 'N/A',
-        arriving_status: 'Loading...',
-        next: 'N/A',
-        next_status: 'Loading...',
-        later: departuresCount > 2 ? 'N/A' : undefined,
-        later_status: departuresCount > 2 ? 'Loading...' : undefined,
+        ...extractTimes(toUnion, departuresCount),
       },
       direction_2: {
         label: `To ${stationName}`,
-        arriving: 'N/A',
-        arriving_status: 'Loading...',
-        next: 'N/A',
-        next_status: 'Loading...',
-        later: departuresCount > 2 ? 'N/A' : undefined,
-        later_status: departuresCount > 2 ? 'Loading...' : undefined,
+        ...extractTimes(fromUnion, departuresCount),
       },
-      alerts: showAlerts ? 'No active alerts' : null,
-      has_alerts: false,
+      alerts: alertText || 'No active alerts',
+      has_alerts: hasAlerts,
       updated_at: new Date().toISOString(),
       time_format: timeFormat,
       departures_count: departuresCount,
