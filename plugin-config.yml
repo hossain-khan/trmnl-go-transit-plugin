@@ -22,11 +22,17 @@
 # STATION SELECTION
 # =============================================================================
 - keyname: line
-  field_type: xhrSelect
+  field_type: select
   name: GO Transit Line
   description: Select your preferred GO Transit line.
-  endpoint: https://gta-go-transit.gohk.xyz/api/V1/lines
-  http_verb: POST
+  options:
+    - "Lakeshore East: LE"
+    - "Lakeshore West: LW"
+    - "Milton: MI"
+    - "Kitchener: KI"
+    - "Barrie: BR"
+    - "Richmond Hill: RH"
+    - "Stouffville: ST"
   default: LE
   help_text: This determines which stations are available in the next field.
 
