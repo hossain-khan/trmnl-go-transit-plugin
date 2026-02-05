@@ -71,7 +71,7 @@ The `templates/preview/` directory contains static versions of all layouts with 
 The plugin uses a **Cloudflare Worker** as a real-time proxy:
 
 ```
-TRMNL Device → settings.yml (proxy URL) → Cloudflare Worker → Metrolinx API → Template Rendering
+TRMNL Device → settings.yml (proxy URL: https://gta-go-transit.gohk.xyz) → Cloudflare Worker → Metrolinx API → Template Rendering
 ```
 
 - **No static data files**: All transit data is fetched live from the Metrolinx Open Data API
@@ -763,7 +763,7 @@ When preparing a plugin for submission to the TRMNL public directory, follow the
 ## Workflow
 
 1. **TRMNL Device Request**: Device requests data from settings.yml URL
-2. **Proxy API Call**: Request goes to Cloudflare Worker at `https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/*`
+2. **Proxy API Call**: Request goes to Cloudflare Worker at `https://gta-go-transit.gohk.xyz/api/V1/*`
 3. **Cache Check**: Worker checks Cloudflare Cache API
 4. **Origin Fetch**: If not cached, fetches from Metrolinx Open Data API with auth token
 5. **Response Caching**: Stores response with appropriate TTLs (60s/300s/30s)
@@ -823,10 +823,10 @@ If any check fails, fix locally and re-run before pushing to avoid CI failures.
 4. **Test from production URL**:
    ```bash
    # Health check
-   curl https://trmnl-go-transit-proxy.hk-c91.workers.dev/health
+   curl https://gta-go-transit.gohk.xyz/health
    
    # Real API test
-   curl "https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=OS"
+   curl "https://gta-go-transit.gohk.xyz/api/V1/ServiceataGlance/Trains/All?station_id=OS"
    ```
 
 **Why Not Local Dev Server?**
