@@ -23,13 +23,15 @@ Multiple endpoints have been discovered and reverse-engineered by observing netw
 
 ### Base URLs
 ```
-https://api.metrolinx.com/external/go/schedules/        # Timetable & journey planning
-https://api.metrolinx.com/external/go/farecalculator/   # Fare calculation & concessions
+https://api.metrolinx.com/external/go/schedules/         # Timetable & journey planning
+https://api.metrolinx.com/external/go/farecalculator/    # Fare calculation & concessions
+https://api.metrolinx.com/external/go/serviceupdate/     # Service updates & alerts
 ```
 
 ### Endpoints
 - **Timetable**: `/schedules/en/timetable/all` - Get all journeys between two stops
 - **Fare Calculator**: `/farecalculator/all-concessions-fare` - Get fares and discounts for a trip
+- **Service Updates**: `/serviceupdate/en/general` - Get system-wide service alerts and announcements
 
 ### Available Languages
 - English: `/en/`
