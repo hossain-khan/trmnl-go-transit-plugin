@@ -1,0 +1,2661 @@
+{
+  "serviceCode": "09",
+  "serviceName": "Lakeshore East",
+  "date": "2026-02-05T00:00:00-05:00",
+  "departureDisplay": "Durham College Oshawa GO",
+  "departureStopId": "OS",
+  "arrivalDisplay": "Union Station GO",
+  "arrivalStopId": "UN",
+  "trips": [
+    {
+      "departureTimeDisplay": "04:00",
+      "arrivalTimeDisplay": "05:00",
+      "transfers": 0,
+      "durationMinutes": 60,
+      "duration": "01:00:00",
+      "orderTime": "2026-02-05T04:00:00",
+      "transitType": 0,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "90B",
+          "tripNumber": "90001",
+          "transitType": 0,
+          "transitTypeName": "BUS",
+          "fromStopCode": "OS",
+          "fromStopTime": "04:00",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "02300",
+          "toStopTime": "05:00",
+          "toStopDisplay": "Union Station Bus Terminal",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "90B - Union Station Bus Terminal",
+          "blockNumber": null,
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "04:00",
+              "transitType": 0
+            },
+            {
+              "name": "Victoria St @ Thickson Ridge Power Cntr",
+              "code": "02572",
+              "time": "04:02",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "04:08",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "04:18",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "04:26",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station Bus Terminal",
+              "code": "02300",
+              "time": "05:00",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "05:03",
+      "arrivalTimeDisplay": "06:10",
+      "transfers": 0,
+      "durationMinutes": 67,
+      "duration": "01:07:00",
+      "orderTime": "2026-02-05T05:03:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9005",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "05:03",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "06:10",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "21A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "05:03",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "05:08",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "05:16",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "05:21",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "05:29",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "05:37",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "05:42",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "05:47",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "05:53",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "06:10",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "05:33",
+      "arrivalTimeDisplay": "06:40",
+      "transfers": 0,
+      "durationMinutes": 67,
+      "duration": "01:07:00",
+      "orderTime": "2026-02-05T05:33:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9205",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "05:33",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "06:40",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "22A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "05:33",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "05:38",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "05:46",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "05:51",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "05:59",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "06:07",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "06:12",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "06:17",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "06:23",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "06:40",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "06:08",
+      "arrivalTimeDisplay": "07:15",
+      "transfers": 0,
+      "durationMinutes": 67,
+      "duration": "01:07:00",
+      "orderTime": "2026-02-05T06:08:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9007",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "06:08",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "07:15",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "23A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "06:08",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "06:13",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "06:21",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "06:26",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "06:34",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "06:42",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "06:47",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "06:52",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "06:58",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "07:15",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "06:38",
+      "arrivalTimeDisplay": "07:45",
+      "transfers": 0,
+      "durationMinutes": 67,
+      "duration": "01:07:00",
+      "orderTime": "2026-02-05T06:38:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9207",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "06:38",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "07:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "25A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "06:38",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "06:43",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "06:51",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "06:56",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "07:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "07:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "07:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "07:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "07:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "07:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "07:08",
+      "arrivalTimeDisplay": "08:15",
+      "transfers": 0,
+      "durationMinutes": 67,
+      "duration": "01:07:00",
+      "orderTime": "2026-02-05T07:08:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9009",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "07:08",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "08:15",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "27A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "07:08",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "07:13",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "07:21",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "07:26",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "07:34",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "07:42",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "07:47",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "07:52",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "07:58",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "08:15",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "07:23",
+      "arrivalTimeDisplay": "08:30",
+      "transfers": 0,
+      "durationMinutes": 67,
+      "duration": "01:07:00",
+      "orderTime": "2026-02-05T07:23:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9109",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "07:23",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "08:30",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "03A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "07:23",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "07:28",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "07:36",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "07:41",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "07:49",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "07:57",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "08:02",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "08:07",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "08:13",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "08:30",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "07:38",
+      "arrivalTimeDisplay": "08:45",
+      "transfers": 0,
+      "durationMinutes": 67,
+      "duration": "01:07:00",
+      "orderTime": "2026-02-05T07:38:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9209",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "07:38",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "08:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "28A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "07:38",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "07:43",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "07:51",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "07:56",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "08:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "08:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "08:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "08:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "08:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "08:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "07:53",
+      "arrivalTimeDisplay": "09:00",
+      "transfers": 0,
+      "durationMinutes": 67,
+      "duration": "01:07:00",
+      "orderTime": "2026-02-05T07:53:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9309",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "07:53",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "09:00",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "02A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "07:53",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "07:58",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "08:06",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "08:11",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "08:19",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "08:27",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "08:32",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "08:37",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "08:43",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "09:00",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "08:09",
+      "arrivalTimeDisplay": "09:15",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T08:09:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9011",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "08:09",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "09:15",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "29A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "08:09",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "08:14",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "08:22",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "08:27",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "08:34",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "08:42",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "08:47",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "08:52",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "08:58",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "09:15",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "08:39",
+      "arrivalTimeDisplay": "09:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T08:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9211",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "08:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "09:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "05A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "08:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "08:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "08:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "08:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "09:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "09:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "09:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "09:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "09:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "09:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "09:39",
+      "arrivalTimeDisplay": "10:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T09:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9213",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "09:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "10:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "14A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "09:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "09:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "09:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "09:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "10:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "10:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "10:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "10:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "10:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "10:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "10:39",
+      "arrivalTimeDisplay": "11:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T10:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9215",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "10:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "11:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "21A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "10:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "10:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "10:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "10:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "11:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "11:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "11:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "11:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "11:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "11:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "11:39",
+      "arrivalTimeDisplay": "12:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T11:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9217",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "11:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "12:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "30P",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "11:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "11:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "11:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "11:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "12:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "12:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "12:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "12:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "12:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "12:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "12:39",
+      "arrivalTimeDisplay": "13:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T12:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9219",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "12:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "13:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "25A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "12:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "12:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "12:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "12:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "13:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "13:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "13:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "13:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "13:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "13:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "13:39",
+      "arrivalTimeDisplay": "14:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T13:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9221",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "13:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "14:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "28A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "13:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "13:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "13:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "13:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "14:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "14:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "14:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "14:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "14:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "14:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "14:39",
+      "arrivalTimeDisplay": "15:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T14:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9223",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "14:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "15:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "16A",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "14:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "14:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "14:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "14:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "15:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "15:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "15:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "15:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "15:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "15:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "15:39",
+      "arrivalTimeDisplay": "16:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T15:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9225",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "15:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "16:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "50P",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "15:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "15:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "15:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "15:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "16:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "16:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "16:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "16:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "16:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "16:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "16:09",
+      "arrivalTimeDisplay": "17:15",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T16:09:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9027",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "16:09",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "17:15",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "18P",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "16:09",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "16:14",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "16:22",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "16:27",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "16:34",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "16:42",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "16:47",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "16:52",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "16:58",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "17:15",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "16:39",
+      "arrivalTimeDisplay": "17:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T16:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9227",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "16:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "17:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "15P",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "16:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "16:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "16:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "16:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "17:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "17:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "17:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "17:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "17:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "17:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "17:09",
+      "arrivalTimeDisplay": "18:15",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T17:09:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9029",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "17:09",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "18:15",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "30P",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "17:09",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "17:14",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "17:22",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "17:27",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "17:34",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "17:42",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "17:47",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "17:52",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "17:58",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "18:15",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "17:39",
+      "arrivalTimeDisplay": "18:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T17:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9229",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "17:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "18:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "67P",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "17:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "17:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "17:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "17:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "18:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "18:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "18:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "18:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "18:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "18:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "18:39",
+      "arrivalTimeDisplay": "19:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T18:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9231",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "18:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "19:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "29P",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "18:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "18:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "18:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "18:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "19:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "19:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "19:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "19:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "19:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "19:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "19:39",
+      "arrivalTimeDisplay": "20:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T19:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9233",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "19:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "20:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "23P",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "19:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "19:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "19:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "19:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "20:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "20:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "20:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "20:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "20:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "20:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "20:39",
+      "arrivalTimeDisplay": "21:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T20:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9235",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "20:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "21:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "01P",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "20:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "20:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "20:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "20:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "21:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "21:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "21:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "21:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "21:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "21:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "21:39",
+      "arrivalTimeDisplay": "22:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T21:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9237",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "21:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "22:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "17P",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "21:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "21:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "21:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "21:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "22:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "22:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "22:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "22:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "22:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "22:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "22:39",
+      "arrivalTimeDisplay": "23:45",
+      "transfers": 0,
+      "durationMinutes": 66,
+      "duration": "01:06:00",
+      "orderTime": "2026-02-05T22:39:00",
+      "transitType": 1,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "LE",
+          "tripNumber": "9239",
+          "transitType": 1,
+          "transitTypeName": "RAIL",
+          "fromStopCode": "OS",
+          "fromStopTime": "22:39",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "UN",
+          "toStopTime": "23:45",
+          "toStopDisplay": "Union Station",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "LE - Union Station",
+          "blockNumber": "16P",
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "22:39",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "22:44",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "22:52",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "22:57",
+              "transitType": 0
+            },
+            {
+              "name": "Rouge Hill GO",
+              "code": "RO",
+              "time": "23:04",
+              "transitType": 0
+            },
+            {
+              "name": "Guildwood GO",
+              "code": "GU",
+              "time": "23:12",
+              "transitType": 0
+            },
+            {
+              "name": "Eglinton GO",
+              "code": "EG",
+              "time": "23:17",
+              "transitType": 0
+            },
+            {
+              "name": "Scarborough GO",
+              "code": "SC",
+              "time": "23:22",
+              "transitType": 0
+            },
+            {
+              "name": "Danforth GO",
+              "code": "DA",
+              "time": "23:28",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station",
+              "code": "UN",
+              "time": "23:45",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "departureTimeDisplay": "23:40",
+      "arrivalTimeDisplay": "00:40",
+      "transfers": 0,
+      "durationMinutes": 60,
+      "duration": "01:00:00",
+      "orderTime": "2026-02-05T23:40:00",
+      "transitType": 0,
+      "serviceCode": "09",
+      "serviceName": "Lakeshore East",
+      "lines": [
+        {
+          "lineDisplay": "90B",
+          "tripNumber": "90901",
+          "transitType": 0,
+          "transitTypeName": "BUS",
+          "fromStopCode": "OS",
+          "fromStopTime": "23:40",
+          "fromStopDisplay": "Durham College Oshawa GO",
+          "fromNotesImages": [],
+          "toStopCode": "02300",
+          "toStopTime": "00:40",
+          "toStopDisplay": "Union Station Bus Terminal",
+          "toNotesImages": [],
+          "transferStopCode": null,
+          "transferDisplay": null,
+          "headSign": "90B - Union Station Bus Terminal",
+          "blockNumber": null,
+          "isExpress": false,
+          "serviceLineName": "Lakeshore East",
+          "isTransfer": false,
+          "stops": [
+            {
+              "name": "Durham College Oshawa GO",
+              "code": "OS",
+              "time": "23:40",
+              "transitType": 0
+            },
+            {
+              "name": "Victoria St @ Thickson Ridge Power Cntr",
+              "code": "02572",
+              "time": "23:42",
+              "transitType": 0
+            },
+            {
+              "name": "Whitby GO",
+              "code": "WH",
+              "time": "23:48",
+              "transitType": 0
+            },
+            {
+              "name": "Ajax GO",
+              "code": "AJ",
+              "time": "23:58",
+              "transitType": 0
+            },
+            {
+              "name": "Pickering GO",
+              "code": "PIN",
+              "time": "00:06",
+              "transitType": 0
+            },
+            {
+              "name": "Union Station Bus Terminal",
+              "code": "02300",
+              "time": "00:40",
+              "transitType": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "type": "Express",
+      "english": "Express",
+      "french": "Express",
+      "image": "LegendElements.ExpressImage"
+    }
+  ],
+  "departureNotesImages": [],
+  "arrivalNotesImages": []
+}

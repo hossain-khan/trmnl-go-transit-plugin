@@ -65,6 +65,45 @@ Complete stop and station information for all GO Transit locations.
 
 **Usage:** Station lookup and metadata for the plugin's configuration and scheduling.
 
+### PublicSchedule-Timetable-OS-UN.json
+**Endpoint:** `/schedules/en/timetable/all` (Public Schedule API)
+**Base URL:** `https://api.metrolinx.com/external/go/schedules/`
+
+**Note:** This is a separate public API (not part of the main Metrolinx Open Data API). It provides scheduled timetables between two stops for a specific date.
+
+**Query Parameters:**
+- `fromStop`: Origin station code (e.g., "OS")
+- `toStop`: Destination station code (e.g., "UN")
+- `date`: Date in ISO 8601 format (e.g., "2026-02-05")
+- Language: Configured in URL path `/en/` or `/fr/`
+
+**Key Fields:**
+- `serviceCode`/`serviceName`: Line information (e.g., "09" = Lakeshore East)
+- `departureDisplay`: Origin station name
+- `arrivalDisplay`: Destination station name
+- `trips`: Array of all journeys for the day
+- `departureTimeDisplay`/`arrivalTimeDisplay`: Scheduled times (HH:MM format)
+- `transitions`: Number of transfers (0 = direct)
+- `durationMinutes`: Trip duration in minutes
+- `lines`: Array of vehicle segments (bus, train) that make up each trip
+- `stops`: Complete stop-by-stop itinerary
+
+**Authentication:** None required - publicly accessible endpoint
+
+**Response Format:** JSON (gzip compressed)
+
+**Usage:** 
+- Journey planning and trip requests
+- Finding connections/transfers between two stations
+- Complete itinerary information
+- NOT suitable for real-time departure displays (use `/Stop/NextService/` instead)
+
+**Important Distinction:**
+- **Real-Time (Open Data API)**: `/api/V1/Stop/NextService/{StopCode}` - Shows next departures with delays
+- **Scheduled (Public API)**: `/schedules/en/timetable/all` - Shows all trips for a specific date (no real-time data)
+
+See [API_COMPARISON.md](../../../docs/API_COMPARISON.md) for detailed comparison.
+
 ## Integration Notes
 
 1. **API Base URL:** `https://api.openmetrolinx.com/OpenDataAPI/`
@@ -80,6 +119,18 @@ Use these sample responses to:
 - Create mock data for unit tests
 - Validate the plugin's handling of edge cases (delays, alerts, etc.)
 
+## API Comparison
+
+For manual side-by-side comparison of the two approaches:
+- **See**: [API_RESPONSE_COMPARISON_GUIDE.md](API_RESPONSE_COMPARISON_GUIDE.md)
+
+This guide provides:
+- Real-time proxy API structure (station-centric departures)
+- Scheduled public API structure (journey-centric trips)
+- Side-by-side examples and trade-offs
+- File size comparisons
+- Manual comparison checklist
+
 ## Real API Access
 
 To get a real API key for testing:
@@ -90,4 +141,6 @@ To get a real API key for testing:
 
 ---
 
-**Last Updated:** January 24, 2026
+**Last Updated:** February 5, 2026
+- Added `PublicSchedule-Timetable-OS-UN.json` sample response from GO Transit Public Schedule API
+- See [API_COMPARISON.md](../../../docs/API_COMPARISON.md) for detailed API comparison
