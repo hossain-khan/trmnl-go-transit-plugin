@@ -40,8 +40,9 @@
   field_type: xhrSelect
   name: GO Station
   description: Select your preferred station on this line.
-  endpoint: https://gta-go-transit.gohk.xyz/api/V1/stations-by-line/##{{line}}
+  endpoint: https://gta-go-transit.gohk.xyz/api/V1/stations-by-line/{{line}}
   depends_on: line
+  optional: true
   help_text: Select a line first to see available stations.
 
 # =============================================================================
