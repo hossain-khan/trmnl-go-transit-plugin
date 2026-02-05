@@ -12,7 +12,7 @@
 - ✅ Cloudflare Worker as proxy layer
 - ✅ Edge cache integration via `caches.default`
 - ✅ Origin fetch with configuration
-- Status: **COMPLETE** - Deployed to https://trmnl-go-transit-proxy.hk-c91.workers.dev
+- Status: **COMPLETE** - Deployed to https://gta-go-transit.gohk.xyz
 
 #### 2. Request Handling (Section 4.1)
 - ✅ HTTP GET requests accepted
@@ -169,7 +169,7 @@ None - MVP is stable and working in production
 ## Production Readiness
 
 ### ✅ Ready for Production
-- Deployed and running: https://trmnl-go-transit-proxy.hk-c91.workers.dev
+- Deployed and running: https://gta-go-transit.gohk.xyz
 - All critical features working
 - CI/CD pipeline passing
 - Monitoring via observability headers

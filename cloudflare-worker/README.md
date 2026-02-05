@@ -131,8 +131,8 @@ The `wrangler.toml` file contains:
 
 ```bash
 # Test after deployment
-curl -i "https://trmnl-go-transit-proxy.hk-c91.workers.dev/health"
-curl -i "https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=OS"
+curl -i "https://gta-go-transit.gohk.xyz/health"
+curl -i "https://gta-go-transit.gohk.xyz/api/V1/ServiceataGlance/Trains/All?station_id=OS"
 ```
 
 **Pre-deployment checks:**
@@ -194,13 +194,13 @@ The Worker proxies requests to the Metrolinx API. The worker automatically adds 
 
 ```bash
 # Service at a glance (train departures)
-curl "https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=OS"
+curl "https://gta-go-transit.gohk.xyz/api/V1/ServiceataGlance/Trains/All?station_id=OS"
 
 # Service alerts
-curl "https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceUpdate/ServiceAlert/All"
+curl "https://gta-go-transit.gohk.xyz/api/V1/ServiceUpdate/ServiceAlert/All"
 
 # Health check
-curl "https://trmnl-go-transit-proxy.hk-c91.workers.dev/health"
+curl "https://gta-go-transit.gohk.xyz/health"
 ```
 
 **Note**: The API key is automatically added by the Worker from the `ORIGIN_AUTH_TOKEN` environment variable. Client requests do not need to include the key.

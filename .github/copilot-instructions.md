@@ -13,10 +13,13 @@ trmnl-go-transit-plugin/
 ├── .github/                      # GitHub configuration
 │   ├── copilot-instructions.md   # This file
 │   └── workflows/
-│       ├── pages.yml             # GitHub Pages deployment
-│       └── update-data.yml       # Scheduled data updates
-├── api/                          # API endpoints
-│   └── data.json                 # Current transit data (served via GitHub Pages)
+│       └── pages.yml             # GitHub Pages deployment
+├── cloudflare-worker/            # Cloudflare Worker proxy API (LIVE)
+│   ├── src/
+│   │   └── index.js              # Worker implementation with Hono
+│   ├── wrangler.toml             # Cloudflare configuration
+│   ├── package.json
+│   └── README.md
 ├── project-resources/            # Reference materials
 │   ├── assets/                   # Design assets
 │   │   ├── demo/                 # Demo screenshots
@@ -26,20 +29,19 @@ trmnl-go-transit-plugin/
 │   │   ├── PRD.md                # Product requirements
 │   │   └── NEW_RECIPE_GUIDE.md   # Guide for creating recipes
 │   ├── GO-GTFS/                  # GO Transit GTFS data
-│   └── API-access/               # API documentation
-├── scripts/                      # Build scripts
-│   └── update-go-transit.js      # Data update script
+│   ├── API-access/               # API documentation & sample responses
+│   │   └── sample-response/      # Real API response samples (for development)
+│   └── demo-TRMNL-sound-transit-link-light-rail-dashboard-main/  # Reference implementation
 ├── templates/                    # Liquid templates for layouts
 │   ├── full.liquid               # Full-screen layout
 │   ├── half_horizontal.liquid    # Half-size horizontal layout
 │   ├── half_vertical.liquid      # Half-size vertical layout
 │   ├── quadrant.liquid           # Quarter-size layout
-│   └── preview/                  # Static preview templates (no API dependency)
+│   └── preview/                  # Static preview templates (for design testing)
 │       ├── full.liquid           # Preview with hardcoded sample data
 │       ├── half_horizontal.liquid
 │       ├── half_vertical.liquid
 │       └── quadrant.liquid
-├── data.json                     # Transit data for templates
 ├── index.html                    # Preview/testing page
 ├── plugin-config.yml             # Custom form fields for user configuration
 ├── settings.yml                  # Plugin settings configuration
@@ -48,22 +50,34 @@ trmnl-go-transit-plugin/
 
 ## Key Files
 
-- **templates/*.liquid**: Four layout templates that adapt to different display sizes and orientations
-- **templates/preview/*.liquid**: Static preview templates with hardcoded sample data (Lakeshore East - Oshawa GO)
-- **data.json**: Contains current transit data (station, departures, alerts)
-- **scripts/update-go-transit.js**: Node.js script that fetches real-time data from Metrolinx API
-- **api/data.json**: Public API endpoint served via GitHub Pages
-- **settings.yml**: TRMNL plugin configuration
+- **cloudflare-worker/src/index.js**: Hono-based proxy worker that fetches real-time data from Metrolinx API with caching and observability headers
+- **templates/*.liquid**: Four layout templates that adapt to different display sizes and orientations  
+- **templates/preview/*.liquid**: Static preview templates with hardcoded sample data for design testing
+- **project-resources/API-access/sample-response/**: Real API response samples captured from Metrolinx Open Data API (for development reference)
+- **settings.yml**: TRMNL plugin configuration with live proxy API endpoint
 
 ### Preview Templates
 
-The `templates/preview/` directory contains static versions of all layouts with hardcoded sample data from the Lakeshore East line (Oshawa GO station). These previews:
+The `templates/preview/` directory contains static versions of all layouts with hardcoded sample data. These previews:
 
 - **Enable layout testing** without API dependency
 - **Showcase design patterns** with realistic sample data
 - **Include edge cases** like delayed status and service alerts
 
 > **IMPORTANT**: Preview templates must always mirror the structure of their parent templates in `templates/`. When modifying any template, update both the main template AND its corresponding preview to keep them in sync. The `templates/*.liquid` files are the **source of truth** - preview templates should reflect any structural changes made to them.
+
+### Live Data Architecture
+
+The plugin uses a **Cloudflare Worker** as a real-time proxy:
+
+```
+TRMNL Device → settings.yml (proxy URL: https://gta-go-transit.gohk.xyz) → Cloudflare Worker → Metrolinx API → Template Rendering
+```
+
+- **No static data files**: All transit data is fetched live from the Metrolinx Open Data API
+- **Edge caching**: Intelligent caching at Cloudflare edge (60s browser, 300s edge, 30s SWR)
+- **Real-time updates**: TRMNL device gets current departures and alerts automatically
+- **Reference samples**: `project-resources/API-access/sample-response/` contains real API responses for development
 
 ## TRMNL Framework v2
 
@@ -615,24 +629,7 @@ Critical scenarios to test (cover edge cases):
 - **Long alerts**: Tests `data-clamp` truncation
 - **No alerts**: Tests conditional rendering when `has_alerts` is false
 - **Multiple time formats**: "9:34 PM", "10:04 AM", "12:00 PM" - tests alignment
-
-### Testing Override
-
-Modify `data.json` to test specific scenarios:
-
-```json
-{
-  "station": "Union Station",
-  "direction_1": {
-    "arriving": "10:34 PM",
-    "arriving_status": "Delayed",
-    "next": "11:04 PM",
-    "next_status": "On Time"
-  },
-  "alerts": "Very long alert text to test truncation behavior...",
-  "has_alerts": true
-}
-```
+- **Live API data**: Use sample responses in `project-resources/API-access/sample-response/` to test template rendering
 
 ### Device Testing
 
@@ -765,12 +762,26 @@ When preparing a plugin for submission to the TRMNL public directory, follow the
 
 ## Workflow
 
-1. **Scheduled Update**: GitHub Action runs `scripts/update-go-transit.js` every 5-15 minutes
-2. **API Fetch**: Script fetches real-time data from Metrolinx Open Data API
-3. **Data Transform**: API response transformed to plugin JSON format
-4. **Template Rendering**: TRMNL renders appropriate layout template
-5. **Responsive Adaptation**: Framework applies device-specific styles
-6. **Display**: Transit info appears on TRMNL device with optimized layout
+1. **TRMNL Device Request**: Device requests data from settings.yml URL
+2. **Proxy API Call**: Request goes to Cloudflare Worker at `https://gta-go-transit.gohk.xyz/api/V1/*`
+3. **Cache Check**: Worker checks Cloudflare Cache API
+4. **Origin Fetch**: If not cached, fetches from Metrolinx Open Data API with auth token
+5. **Response Caching**: Stores response with appropriate TTLs (60s/300s/30s)
+6. **Data Transform**: Template adapts API response to display format
+7. **Template Rendering**: TRMNL renders appropriate layout template (full, half_horizontal, half_vertical, quadrant)
+8. **Responsive Adaptation**: Framework applies device-specific styles
+9. **Display**: Transit info appears on TRMNL device with optimized layout
+
+### Proxy API Endpoints
+
+| Endpoint | Status | Purpose |
+|----------|--------|---------|
+| `GET /health` | ✅ Working | Health check with status and version |
+| `GET /api/V1/ServiceataGlance/Trains/All` | ✅ Working | Real-time train departures |
+| `GET /api/V1/ServiceataGlance/Buses/All` | ✅ Working | Real-time bus departures |
+| `GET /api/V1/ServiceUpdate/ServiceAlert/All` | ✅ Working | Service alerts and delays |
+| `GET /api/V1/Stop/All` | ✅ Working | All GO Transit stops/stations (5520 locations) |
+| `GET /api/V1/Stop/NextService/{StopCode}` | ✅ Working | Station-specific predictions |
 
 ### API Endpoints Used
 
@@ -812,10 +823,10 @@ If any check fails, fix locally and re-run before pushing to avoid CI failures.
 4. **Test from production URL**:
    ```bash
    # Health check
-   curl https://trmnl-go-transit-proxy.hk-c91.workers.dev/health
+   curl https://gta-go-transit.gohk.xyz/health
    
    # Real API test
-   curl "https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceataGlance/Trains/All?station_id=OS"
+   curl "https://gta-go-transit.gohk.xyz/api/V1/ServiceataGlance/Trains/All?station_id=OS"
    ```
 
 **Why Not Local Dev Server?**

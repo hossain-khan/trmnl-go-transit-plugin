@@ -72,12 +72,8 @@ trmnl-go-transit-plugin/
 ├── .github/
 │   ├── workflows/
 │   │   ├── ci.yml               # Cloudflare Worker CI/CD
-│   │   ├── pages.yml            # GitHub Pages deployment
-│   │   └── update-data.yml      # Scheduled data updates
 │   └── copilot-instructions.md
-├── api/
-│   └── data.json                # Public API endpoint (served via GitHub Pages)
-├── cloudflare-worker/           # Cloudflare Worker proxy for Metrolinx API
+├── cloudflare-worker/           # Cloudflare Worker proxy for Metrolinx API (LIVE)
 │   ├── src/
 │   │   └── index.js             # Worker implementation with Hono
 │   ├── wrangler.toml            # Cloudflare configuration
@@ -107,7 +103,6 @@ trmnl-go-transit-plugin/
 │       ├── half_horizontal.liquid
 │       ├── half_vertical.liquid
 │       └── quadrant.liquid
-├── data.json                    # Current transit data
 ├── index.html                   # Local preview page
 ├── plugin-config.yml            # User-facing configuration fields
 ├── settings.yml                 # TRMNL plugin settings
@@ -118,16 +113,20 @@ trmnl-go-transit-plugin/
 
 ## Architecture
 
-This plugin uses a **Cloudflare Worker** as a proxy between TRMNL and the Metrolinx API:
+This plugin uses a **Cloudflare Worker** as a live proxy between TRMNL and the Metrolinx Open Data API:
 
 ```
-TRMNL Device → GitHub Pages (data.json) → Cloudflare Worker → Metrolinx API
+TRMNL Device → Cloudflare Worker (Proxy) → Metrolinx API
 ```
+
+No static data files. All transit information is fetched in real-time.
 
 **Benefits:**
 
-- **Caching**: Reduces API calls and improves response times
-- **Reliability**: Handles timeouts and errors gracefully
+- **Live Data**: Real-time departure/arrival times from Metrolinx
+- **Caching**: Intelligent edge caching (60s browser, 300s edge, 30s stale-while-revalidate)
+- **Reliability**: Handles timeouts, errors, and retries gracefully
+- **Observability**: Metrics headers (X-Cache, X-Proxy-Version, X-Proxy-Time-Ms)
 - **Security**: API key stored securely in Cloudflare, not exposed to clients
 - **CORS**: Enables web-based testing and development
 - **Monitoring**: Request logging and cache hit/miss tracking
