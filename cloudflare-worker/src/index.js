@@ -62,7 +62,34 @@ app.post('/api/V1/lines', linesHandler)
  * Returns: [{ "Union Station": "UN" }, { "Exhibition GO": "EX" }, ...]
  */
 const stationsHandler = (c) => {
-  const lineCode = c.req.param('line_code').toUpperCase()
+  // Get line code from URL parameter (for GET requests)
+  let lineCode = c.req.param('line_code')
+  
+  // If not in URL, try to get from POST body (xhrSelect sends it as sibling setting)
+  if (!lineCode && c.req.method === 'POST') {
+    // For POST requests, check the request body for the line value
+    // This is a fallback in case URL interpolation doesn't work
+    try {
+      // The body might contain settings_custom_fields_values_line
+      // For now, we'll just use the URL param approach
+    } catch (e) {
+      // Ignore parse errors
+    }
+  }
+
+  // Normalize and validate
+  if (!lineCode || lineCode === 'undefined') {
+    return c.json(
+      {
+        error: 'Line code is required',
+        message: 'Please select a line first',
+        available_lines: Object.keys(LINES_AND_STATIONS),
+      },
+      400
+    )
+  }
+
+  lineCode = lineCode.toUpperCase()
 
   // Check if line exists
   if (!LINES_AND_STATIONS[lineCode]) {
@@ -82,6 +109,29 @@ const stationsHandler = (c) => {
 
 app.get('/api/V1/stations-by-line/:line_code', stationsHandler)
 app.post('/api/V1/stations-by-line/:line_code', stationsHandler)
+
+// Catch-all for empty line code (e.g., when ##{{line}} is not yet interpolated)
+app.get('/api/V1/stations-by-line/', (c) => {
+  return c.json(
+    {
+      error: 'Line code is required',
+      message: 'Please select a line first',
+      available_lines: Object.keys(LINES_AND_STATIONS),
+    },
+    400
+  )
+})
+
+app.post('/api/V1/stations-by-line/', (c) => {
+  return c.json(
+    {
+      error: 'Line code is required',
+      message: 'Please select a line first',
+      available_lines: Object.keys(LINES_AND_STATIONS),
+    },
+    400
+  )
+})
 
 /**
  * Proxy all API requests to Metrolinx
