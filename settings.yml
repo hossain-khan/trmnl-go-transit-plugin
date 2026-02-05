@@ -11,8 +11,8 @@ refresh_frequency: 300  # 5 minutes in seconds (real-time transit data)
 
 merge_tag:
   - tag_name: data
-    # GitHub Pages URL for data endpoint
-    source: https://hossain-khan.github.io/trmnl-go-transit-plugin/api/data.json
+    # Cloudflare Workers proxy API for live transit data
+    source: https://trmnl-go-transit-proxy.hk-c91.workers.dev/api/V1/ServiceataGlance/Trains/All
     merge_object: false
 
 private_variables:
