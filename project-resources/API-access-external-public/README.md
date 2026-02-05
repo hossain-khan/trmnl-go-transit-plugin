@@ -3,7 +3,7 @@
 **Status**: ✅ Discovered & Documented (Not Authenticated)  
 **Access Level**: Public (No API Key Required)  
 **Last Updated**: February 5, 2026
-**Endpoints Documented**: 2 (Timetable, Fare Calculator)
+**Endpoints Documented**: 3 (Timetable, Fare Calculator, Service Updates)
 
 ---
 
@@ -15,6 +15,7 @@ Multiple endpoints have been discovered and reverse-engineered by observing netw
 
 1. **Timetable Endpoint** (`/schedules/en/timetable/all`) - Journey planning and schedule lookup
 2. **Fare Calculator Endpoint** (`/farecalculator/all-concessions-fare`) - Fare quotes and concession info
+3. **Service Updates Endpoint** (`/serviceupdate/en/general`) - System-wide service alerts and updates
 
 ---
 
@@ -383,6 +384,97 @@ Date: Thu, 05 Feb 2026 09:00:00 GMT
 
 ---
 
+## Service Updates Endpoint
+
+**Path**: `/external/go/serviceupdate/en/general`
+
+**Purpose**: System-wide GO Transit service alerts, notifications, and operational updates (not line-specific)
+
+### Request Format
+```
+GET https://api.metrolinx.com/external/go/serviceupdate/en/general
+```
+
+### cURL Example
+```bash
+curl 'https://api.metrolinx.com/external/go/serviceupdate/en/general' \
+  -H 'Accept-Language: en-US,en;q=0.9' \
+  -H 'Connection: keep-alive' \
+  -H 'DNT: 1' \
+  -H 'Origin: https://www.gotransit.com' \
+  -H 'Referer: https://www.gotransit.com/' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: cross-site' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \
+  -H 'accept: application/json' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="8", "Chromium";v="144", "Google Chrome";v="144"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"'
+```
+
+### Response Structure
+
+**HTTP Headers**:
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Encoding: gzip
+Cache-Control: public, max-age=3600
+Date: Thu, 05 Feb 2026 09:23:00 GMT
+```
+
+**Response Body** (abbreviated, after decompression):
+```json
+{
+  "LastUpdated": "2026-02-05T09:23:02.8027565-05:00",
+  "TotalUpdates": 1,
+  "Notifications": {
+    "Notification": [
+      {
+        "SubCategory": "GDOTHER",
+        "Code": null,
+        "Name": null,
+        "MessageSubject": "Important GO Transit service information",
+        "MessageBody": "<style>...</style><div>We are running on a special schedule today to support ongoing service recovery near Union Station...</div>",
+        "PostedDateTime": "02/05/2026 02:39:58",
+        "Rank": null,
+        "Status": "INIT",
+        "ServiceMode": "General",
+        "TripNumbers": null
+      }
+    ]
+  }
+}
+```
+
+### Key Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `LastUpdated` | String (ISO8601) | When the notification was last updated |
+| `TotalUpdates` | Integer | Number of notifications in response |
+| `MessageSubject` | String | Quick title for the notification |
+| `MessageBody` | String (HTML) | Full message content (HTML formatted) |
+| `PostedDateTime` | String (MM/DD/YYYY HH:MM:SS) | When notification was posted |
+| `SubCategory` | String | Category type (e.g., GDOTHER for general announcements) |
+| `Status` | String | Notification status (INIT, ACTIVE, ARCHIVED) |
+| `ServiceMode` | String | Scope: "General", "LineSpecific", or "StationSpecific" |
+
+### Response Characteristics
+- **Content-Encoding**: gzip (always compressed)
+- **Cache-Control**: `public, max-age=3600` (1-hour cache)
+- **Size**: ~2-10 KB uncompressed depending on message length
+- **Records**: 0-N notifications (array can be empty if no alerts)
+- **Message Format**: HTML (includes embedded styles and links)
+
+### Response HTTP Status
+- `200 OK` - Request successful, notifications returned (may be empty)
+- `400 Bad Request` - Invalid parameters
+- `500 Server Error` - Service temporarily unavailable
+
+---
+
 ## Use Cases
 
 ### ✅ Suitable For: Timetable Endpoint
@@ -399,6 +491,14 @@ Date: Thu, 05 Feb 2026 09:00:00 GMT
 - **Concession Eligibility**: List available discount types
 - **Fare Lookup**: Quick fare quotes for specific routes
 - **PRESTO Card Benefits**: Show PRESTO discount vs. cash fares
+
+### ✅ Suitable For: Service Updates Endpoint
+- **Alert Banner**: Display critical system announcements
+- **Service Status**: Show if there are active service disruptions
+- **Station Maintenance**: Inform users of planned maintenance
+- **Schedule Changes**: Notify of temporary schedule modifications
+- **System-Wide Notices**: Important announcements affecting all routes
+- **Email/SMS Alerts**: Content for notification systems
 
 ### ❌ NOT Suitable For
 - **Real-Time Arrival Board**: No delay or current status information (use Open Data API)

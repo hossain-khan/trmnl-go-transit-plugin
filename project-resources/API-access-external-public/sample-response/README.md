@@ -1,6 +1,6 @@
 # Sample Responses - External Public API
 
-This directory contains actual API responses from the GO Transit External Public API (`https://api.metrolinx.com/external/go/schedules/`).
+This directory contains actual API responses from the GO Transit External Public API (`https://api.metrolinx.com/external/go/`).
 
 ## Files
 
@@ -100,6 +100,49 @@ GET /external/go/farecalculator/all-concessions-fare?stations[0].fromStopCode=OS
 
 ---
 
+### ServiceUpdate-General-2026-02-05.json
+**Request**: 
+```
+GET /external/go/serviceupdate/en/general
+```
+
+**Details**:
+- **Date**: February 5, 2026
+- **Time**: 09:23 AM ET
+- **Topic**: General system-wide notifications
+- **File Size**: ~3.6 KB
+- **Response Time**: Captured at 2026-02-05 09:00 UTC
+- **Notification Count**: 1 active alert
+
+**Sample Alert**:
+```json
+{
+  "SubCategory": "GDOTHER",
+  "MessageSubject": "Important GO Transit service information",
+  "MessageBody": "<style>...</style><div>We are running on a special schedule today to support ongoing service recovery near Union Station...</div>",
+  "PostedDateTime": "02/05/2026 02:39:58",
+  "Status": "INIT",
+  "ServiceMode": "General"
+}
+```
+
+**Key Fields**:
+- **SubCategory**: Type of update (GDOTHER = General/Other)
+- **MessageSubject**: Short title for alert
+- **MessageBody**: Full HTML-formatted message with styling
+- **PostedDateTime**: When the alert was posted
+- **Status**: INIT (Initial/Active)
+- **ServiceMode**: "General" (system-wide, not line-specific)
+
+**Use Cases**:
+- Testing alert banner display
+- Validating HTML message rendering
+- Building notification systems
+- Alert aggregation and styling
+- System-wide notification distribution
+
+---
+
 ## How to Use These Samples
 
 ### 1. Direct File Usage - Timetable
@@ -129,13 +172,28 @@ fareData.stations[0].fares.forEach(fare => {
 });
 ```
 
-### 3. Testing API Response Handling
+### 3. Direct File Usage - Service Updates
 ```javascript
-// Mock both API responses in tests
+// Load service updates sample
+const updateData = JSON.parse(
+  fs.readFileSync('ServiceUpdate-General-2026-02-05.json', 'utf8')
+);
+
+console.log(`${updateData.TotalUpdates} active notifications`);
+updateData.Notifications.Notification.forEach(notif => {
+  console.log(`[${notif.Status}] ${notif.MessageSubject}`);
+  console.log(`Posted: ${notif.PostedDateTime}`);
+});
+```
+
+### 4. Testing API Response Handling
+```javascript
+// Mock all API responses in tests
 const mockTimetable = require('./Timetable-OS-UN-2026-02-05.json');
 const mockFares = require('./FareCalculator-OS-UN-2026-02-05.json');
+const mockUpdates = require('./ServiceUpdate-General-2026-02-05.json');
 
-describe('Journey Planner with Fares', () => {
+describe('GO Transit API Integration', () => {
   it('should parse timetable response', () => {
     expect(mockTimetable.trips).toHaveLength(28);
   });
@@ -146,13 +204,14 @@ describe('Journey Planner with Fares', () => {
     expect(fares[0].fareType).toBe('Full');
   });
   
+  it('should parse service updates response', () => {
+    expect(mockUpdates.Notifications.Notification.length).toBeGreaterThan(0);
+    const alert = mockUpdates.Notifications.Notification[0];
+    expect(alert.MessageSubject).toBeDefined();
+    expect(alert.ServiceMode).toBe('General');
+  });
+  
   it('should match timetable with fares for same journey', () => {
-    // Get first trip from timetable
-    const firstTrip = mockTimetable.trips[0];
-    
-    // Get fares for same journey
-    const fares = mockFares.stations[0].fares;
-    
     // Verify both describe same journey (OS to UN)
     expect(mockFares.stations[0].fromStopCode).toBe('OS');
     expect(mockFares.stations[0].toStopCode).toBe('UN');
@@ -160,25 +219,72 @@ describe('Journey Planner with Fares', () => {
 });
 ```
 
-### 4. UI Component Development
+### 5. UI Component Development
 ```html
-<!-- Load and display both sample data -->
+<!-- Load and display all sample data together -->
 <script>
   Promise.all([
     fetch('Timetable-OS-UN-2026-02-05.json').then(r => r.json()),
-    fetch('FareCalculator-OS-UN-2026-02-05.json').then(r => r.json())
-  ]).then(([timetableData, fareData]) => {
-    displayJourneyOptionsWithFares(timetableData.trips, fareData.stations[0].fares);
+    fetch('FareCalculator-OS-UN-2026-02-05.json').then(r => r.json()),
+    fetch('ServiceUpdate-General-2026-02-05.json').then(r => r.json())
+  ]).then(([timetableData, fareData, updateData]) => {
+    // Display alerts first if present
+    if (updateData.TotalUpdates > 0) {
+      displayAlerts(updateData.Notifications.Notification);
+    }
+    // Then show journey options with fares
+    displayJourneyOptionsWithFares(
+      timetableData.trips, 
+      fareData.stations[0].fares
+    );
   });
 </script>
 ```
 
 ---
 
-## Combined Usage - Journey + Fare Display
+## Combined Usage - Journey + Fares + Alerts
 
 ```javascript
-// Common pattern: Show journey options with applicable fares
+// Complete pattern: Show alerts, journey options, and applicable fares
+const timetableData = require('./Timetable-OS-UN-2026-02-05.json');
+const fareData = require('./FareCalculator-OS-UN-2026-02-05.json');
+const updateData = require('./ServiceUpdate-General-2026-02-05.json');
+
+// Display active alerts
+if (updateData.TotalUpdates > 0) {
+  console.log('⚠️ Active Service Alerts:');
+  updateData.Notifications.Notification.forEach(notif => {
+    console.log(`  ${notif.MessageSubject}`);
+    console.log(`  Posted: ${notif.PostedDateTime}`);
+  });
+  console.log('');
+}
+
+// Show journey options with fares
+const journeyWithFares = {
+  journey: timetableData.trips[0],
+  availableFares: fareData.stations[0].fares,
+  fromStation: fareData.stations[0].fromStopName,
+  toStation: fareData.stations[0].toStopName
+};
+
+// Example output for complete UI
+console.log(`Journey: ${journeyWithFares.fromStation} → ${journeyWithFares.toStation}`);
+console.log(`Departs: ${journeyWithFares.journey.departureTimeDisplay}`);
+console.log(`Arrives: ${journeyWithFares.journey.arrivalTimeDisplay}`);
+console.log('Fare Options:');
+journeyWithFares.availableFares.forEach(fare => {
+  console.log(`  - ${fare.name}: $${fare.price}`);
+});
+```
+
+---
+
+## Combined Usage - Journey + Fare Display (Timetable + Fares Only)
+
+```javascript
+// Simpler pattern: Show journey options with applicable fares (without alerts)
 const timetableData = require('./Timetable-OS-UN-2026-02-05.json');
 const fareData = require('./FareCalculator-OS-UN-2026-02-05.json');
 
@@ -297,28 +403,29 @@ All samples conform to this schema:
 
 ## File Comparison
 
-| Sample | Endpoint | Rows | Size | Use Case |
-|--------|----------|------|------|----------|
+| Sample | Endpoint | Records | Size | Use Case |
+|--------|----------|---------|------|----------|
 | Timetable-OS-UN-2026-02-05.json | `/schedules/en/timetable/all` | 28 trips | ~73 KB | Journey planning, schedule display |
 | FareCalculator-OS-UN-2026-02-05.json | `/farecalculator/all-concessions-fare` | 5 fares | ~2.5 KB | Fare quotes, eligibility display |
+| ServiceUpdate-General-2026-02-05.json | `/serviceupdate/en/general` | 1 alert | ~3.6 KB | System alerts, service announcements |
 
 **Combined Usage Matrix**:
 ```
-Timetable Sample                      Fare Calculator Sample
-├─ 28 journeys (OS→UN)               ├─ 5 fare types
-│  ├─ Departure times                │  ├─ Full ($8.50)
-│  ├─ Arrival times                  │  ├─ Student ($6.38)
-│  ├─ Duration info                  │  ├─ Senior ($4.25)
-│  └─ Stop-by-stop itinerary        │  ├─ Child ($4.25)
-│                                    │  └─ Presto ($8.00)
-│
+Timetable Sample                  Fare Calculator Sample        Service Updates Sample
+├─ 28 journeys (OS→UN)           ├─ 5 fare types                ├─ 1 general alert
+│  ├─ Departure times             │  ├─ Full ($8.50)             │  ├─ Message Subject
+│  ├─ Arrival times               │  ├─ Student ($6.38)          │  ├─ Message Body (HTML)
+│  ├─ Duration info               │  ├─ Senior ($4.25)           │  ├─ Posted DateTime
+│  └─ Stop-by-stop itinerary     │  ├─ Child ($4.25)            │  └─ Service Mode
+│                                │  └─ Presto ($8.00)            │
 └─ Use together to show:
-   "Depart 6:38 AM, Arrive 7:45 AM, From $4.25-$8.50"
+   "⚠️ [Alert] | Depart 6:38 AM, Arrive 7:45 AM, From $4.25-$8.50"
 ```
 
-See parent directory's [README.md](../README.md) for API endpoint documentation and `../../docs/API_COMPARISON.md` for comparison with other API types.
-
----
+**Single vs Combined Usage**:
+- **Timetable alone**: Basic journey planning
+- **Timetable + Fares**: Full booking workflow (when, what route, cost)
+- **All three combined**: Complete trip planning experience (alerts → options → costs)
 
 **Last Updated**: February 5, 2026  
 **Sample Sources**: Live API calls from https://api.metrolinx.com/external/go/

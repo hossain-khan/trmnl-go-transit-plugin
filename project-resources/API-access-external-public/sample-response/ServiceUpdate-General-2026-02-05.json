@@ -1,0 +1,20 @@
+{
+  "LastUpdated": "2026-02-05T09:23:02.8027565-05:00",
+  "TotalUpdates": 1,
+  "Notifications": {
+    "Notification": [
+      {
+        "SubCategory": "GDOTHER",
+        "Code": null,
+        "Name": null,
+        "MessageSubject": "Important GO Transit service information",
+        "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><span data-teams=\"true\"><p>We are running on a special schedule today to support ongoing service recovery near Union Station.</p><p><br _moz_dirty=\"\"></p><p><a aria-label=\"Link Please visit &#8220;See Schedules&#8221; to view modified trip times and to plan ahead.\" id=\"menuraoc\" href=\"https://www.gotransit.com/en/trip-planning/seeschedules\" rel=\"noreferrer noopener\" target=\"_blank\" class=\"fui-Link ___1q1shib f2hkw1w f3rmtva f1ewtqcl fyind8e f1k6fduh f1w7gpdv fk6fouc fjoy568 figsok6 f1s184ao f1mk8lai fnbmjn9 f1o700av f13mvf36 f1cmlufx f9n3di6 f1ids18y f1tx3yz7 f1deo86v f1eh06m1 f1iescvh fhgqx19 f1olyrje f1p93eir f1nev41a f1h8hb77 f1lqvz6u f10aw75t fsle3fq f17ae5zn\" title=\"https://www.gotransit.com/en/trip-planning/seeschedules\">Please visit &#8220;See Schedules&#8221; to view modified trip times and to plan ahead.</a> While we work to provide you with consistent service, we recommend allowing yourself extra time to get to where you are going..</p><p><br _moz_dirty=\"\"></p><p>To help us manage the flow of customers and to make your trip commute smoother, please listen to announcements at your station. Platform information will be posted as soon as it becomes available. Please check departure boards before heading to your platform.</p><p><br _moz_dirty=\"\"></p><p>Staff are on-site at Union Station to assist. Please follow their directions and listen for all announcements.&nbsp;</p><p><br _moz_dirty=\"\"></p><p>Thank you for your understanding as we work to get you where you need to go. We know it's been a challenging commute and we appreciate your continued patience as our teams work to safely return service to normal.</p><p><br _moz_dirty=\"\"></p><p>Stay in the know! Sign up for customized On the GO Email Alerts. You will receive detailed updates for GO train and/or GO Bus service delays, cancellations, new schedules, service improvements, construction and other important news that may affect your trip. <a aria-label=\"Link To sign up, click here.\" id=\"menuraoe\" href=\"https://www.gotransit.com/en/trip-planning/go-service-updates/sign-up-alerts\" rel=\"noreferrer noopener\" target=\"_blank\" class=\"fui-Link ___1q1shib f2hkw1w f3rmtva f1ewtqcl fyind8e f1k6fduh f1w7gpdv fk6fouc fjoy568 figsok6 f1s184ao f1mk8lai fnbmjn9 f1o700av f13mvf36 f1cmlufx f9n3di6 f1ids18y f1tx3yz7 f1deo86v f1eh06m1 f1iescvh fhgqx19 f1olyrje f1p93eir f1nev41a f1h8hb77 f1lqvz6u f10aw75t fsle3fq f17ae5zn\" title=\"https://www.gotransit.com/en/trip-planning/go-service-updates/sign-up-alerts\">To sign up, click here.</a></p></span></div></div>",
+        "PostedDateTime": "02/05/2026 02:39:58",
+        "Rank": null,
+        "Status": "INIT",
+        "ServiceMode": "General",
+        "TripNumbers": null
+      }
+    ]
+  }
+}
