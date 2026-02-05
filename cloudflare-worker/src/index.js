@@ -210,6 +210,13 @@ app.get('/api/V1/dashboard', async (c) => {
     const nextServiceResponse = await fetch(nextServiceUrl)
     const nextServiceData = await nextServiceResponse.json()
 
+    // Check for API errors
+    if (nextServiceData?.Metadata?.ErrorCode !== '200') {
+      console.warn(
+        `[Dashboard] Stop/NextService API returned error: ${nextServiceData?.Metadata?.ErrorCode}`
+      )
+    }
+
     // Fetch alerts
     const alertsUrl = `${env.ORIGIN_BASE_URL}api/V1/ServiceUpdate/ServiceAlert/All.json?key=${authKey}`
     const alertsResponse = await fetch(alertsUrl)
@@ -219,9 +226,9 @@ app.get('/api/V1/dashboard', async (c) => {
     const lineServices =
       nextServiceData?.NextService?.Lines?.filter((service) => service.LineCode === line) || []
 
-    // Separate by direction (to Union vs from Union)
-    const toUnion = lineServices.filter((s) => s.DirectionCode.includes('UN'))
-    const fromUnion = lineServices.filter((s) => !s.DirectionCode.includes('UN'))
+    // Separate by direction - check DirectionName for Union reference
+    const toUnion = lineServices.filter((s) => s.DirectionName.toLowerCase().includes('union'))
+    const fromUnion = lineServices.filter((s) => !s.DirectionName.toLowerCase().includes('union'))
 
     // Sort by trip order
     toUnion.sort((a, b) => a.TripOrder - b.TripOrder)
