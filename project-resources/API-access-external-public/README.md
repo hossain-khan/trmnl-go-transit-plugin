@@ -3,27 +3,36 @@
 **Status**: ✅ Discovered & Documented (Not Authenticated)  
 **Access Level**: Public (No API Key Required)  
 **Last Updated**: February 5, 2026
+**Endpoints Documented**: 2 (Timetable, Fare Calculator)
 
 ---
 
 ## Overview
 
-This is the **public-facing GO Transit schedule API** served by Metrolinx through their external API gateway. Unlike the Metrolinx Open Data API (which requires authentication), this API is completely public and undocumented.
+This is the **public-facing GO Transit API** served by Metrolinx through their external API gateway. Unlike the Metrolinx Open Data API (which requires authentication), these APIs are completely public and undocumented.
 
-This API was reverse-engineered by observing network requests from the official GO Transit website (www.gotransit.com) when users search for schedules and journeys.
+Multiple endpoints have been discovered and reverse-engineered by observing network requests from the official GO Transit website (www.gotransit.com):
+
+1. **Timetable Endpoint** (`/schedules/en/timetable/all`) - Journey planning and schedule lookup
+2. **Fare Calculator Endpoint** (`/farecalculator/all-concessions-fare`) - Fare quotes and concession info
 
 ---
 
 ## API Details
 
-### Base URL
+### Base URLs
 ```
-https://api.metrolinx.com/external/go/schedules/
+https://api.metrolinx.com/external/go/schedules/        # Timetable & journey planning
+https://api.metrolinx.com/external/go/farecalculator/   # Fare calculation & concessions
 ```
 
+### Endpoints
+- **Timetable**: `/schedules/en/timetable/all` - Get all journeys between two stops
+- **Fare Calculator**: `/farecalculator/all-concessions-fare` - Get fares and discounts for a trip
+
 ### Available Languages
-- English: `/en/timetable/all`
-- French: `/fr/timetable/all`
+- English: `/en/`
+- French: `/fr/` (not yet tested)
 
 ### Authentication
 **None required** - This is a public, unauthenticated API
@@ -237,9 +246,146 @@ Content-Length: ~16 KB (compressed)
 
 ---
 
+## Endpoint: GET /farecalculator/all-concessions-fare
+
+### Purpose
+Calculate GO Transit fare and available concessions for one or more trips. Returns different fare types (full price, student, senior, etc.) for the specified route and departure time.
+
+### Query Parameters
+
+| Parameter | Type | Required | Example | Description |
+|-----------|------|----------|---------|-------------|
+| `stations[0].fromStopCode` | String | Yes | `OS` | Origin station code |
+| `stations[0].toStopCode` | String | Yes | `UN` | Destination station code |
+| `stations[0].tripStartTime` | String | Yes | `05/02/2026 06:38:00` | Trip start date and time (MM/DD/YYYY HH:MM:SS) |
+| `newFare` | Boolean | No | `true` | Use new fare structure (default: true) |
+
+**Note**: Multiple trips can be queried by incrementing the array index (e.g., `stations[1].fromStopCode`, `stations[1].toStopCode`, etc.)
+
+### Complete URL Example
+```
+https://api.metrolinx.com/external/go/farecalculator/all-concessions-fare?stations[0].fromStopCode=OS&stations[0].toStopCode=UN&stations[0].tripStartTime=05/02/2026%2006:38:00&newFare=true
+```
+
+### cURL Example
+```bash
+curl 'https://api.metrolinx.com/external/go/farecalculator/all-concessions-fare?stations\[0\].fromStopCode=OS&stations\[0\].toStopCode=UN&stations\[0\].tripStartTime=05/02/2026%2006:38:00&newFare=true' \
+  -H 'Accept-Language: en-US,en;q=0.9' \
+  -H 'Connection: keep-alive' \
+  -H 'DNT: 1' \
+  -H 'Origin: https://www.gotransit.com' \
+  -H 'Referer: https://www.gotransit.com/' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: cross-site' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \
+  -H 'accept: application/json' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="8", "Chromium";v="144", "Google Chrome";v="144"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"'
+```
+
+**Notes on Parameters**:
+- URL encoding: Square brackets `[]` must be escaped as `%5B%5D` in URLs or `\[\]` in bash
+- Date/Time format: MM/DD/YYYY HH:MM:SS (US format, 24-hour time)
+- Times reference trip start departure time to determine applicable fares
+- Headers are from real browser request to www.gotransit.com (February 5, 2026)
+
+### Response Structure
+
+**HTTP Headers**:
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Encoding: gzip
+Cache-Control: public, max-age=3600
+Date: Thu, 05 Feb 2026 09:00:00 GMT
+```
+
+**Response Body** (abbreviated, after decompression):
+```json
+{
+  "stations": [
+    {
+      "fromStopCode": "OS",
+      "toStopCode": "UN",
+      "tripStartTime": "2026-02-05T06:38:00",
+      "fares": [
+        {
+          "fareType": "Full",
+          "fareTypeCode": 1,
+          "name": "Single Trip - Full Fare",
+          "description": "Standard single trip fare",
+          "price": 8.50,
+          "currency": "CAD",
+          "discountPercentage": 0
+        },
+        {
+          "fareType": "Student",
+          "fareTypeCode": 2,
+          "name": "Single Trip - Student",
+          "description": "Valid with school ID",
+          "price": 6.38,
+          "currency": "CAD",
+          "discountPercentage": 25
+        },
+        {
+          "fareType": "Senior",
+          "fareTypeCode": 3,
+          "name": "Single Trip - Senior",
+          "description": "Age 65+",
+          "price": 4.25,
+          "currency": "CAD",
+          "discountPercentage": 50
+        },
+        {
+          "fareType": "Child",
+          "fareTypeCode": 4,
+          "name": "Single Trip - Child",
+          "description": "Ages 2-12",
+          "price": 4.25,
+          "currency": "CAD",
+          "discountPercentage": 50
+        },
+        {
+          "fareType": "Presto",
+          "fareTypeCode": 5,
+          "name": "Stored Value Card",
+          "description": "PRESTO card balance",
+          "price": 8.00,
+          "currency": "CAD",
+          "discountPercentage": 5.9
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Fare Types Returned
+- **Full**: Regular full price fare
+- **Student**: Reduced fare for students (typically 25% discount)
+- **Senior**: Reduced fare for seniors 65+ (typically 50% discount)
+- **Child**: Reduced fare for children 2-12 (typically 50% discount)
+- **Presto**: Discounted fare when using PRESTO card (typical 5-10% discount)
+- **Other**: Additional fare types as they become available
+
+### Response HTTP Status
+- `200 OK` - Request successful, fares calculated
+- `400 Bad Request` - Missing or invalid parameters
+- `404 Not Found` - Invalid station codes or no service available
+
+### Response Characteristics
+- **Content-Encoding**: gzip (always compressed)
+- **Cache-Control**: `public, max-age=3600` (1-hour cache, fares may change)
+- **Size**: ~3-5 KB uncompressed per trip
+- **Records**: One fare set per trip requested
+
+---
+
 ## Use Cases
 
-### ✅ Suitable For
+### ✅ Suitable For: Timetable Endpoint
 - **Journey Planner**: "Show me all ways to get from A to B"
 - **Trip Planning**: Users exploring travel options with departure/arrival times
 - **Schedule Lookup**: Checking what times service is available
@@ -247,12 +393,20 @@ Content-Length: ~16 KB (compressed)
 - **Duration Analysis**: Comparing travel times between options
 - **Transfer Information**: Finding connections and multi-leg journeys
 
+### ✅ Suitable For: Fare Calculator Endpoint
+- **Fare Display**: Show all applicable fares for a journey
+- **Fare Comparison**: Compare full price vs. student/senior discounts
+- **Concession Eligibility**: List available discount types
+- **Fare Lookup**: Quick fare quotes for specific routes
+- **PRESTO Card Benefits**: Show PRESTO discount vs. cash fares
+
 ### ❌ NOT Suitable For
-- **Real-Time Arrival Board**: No delay or current status information
+- **Real-Time Arrival Board**: No delay or current status information (use Open Data API)
 - **Vehicle Location**: No GPS data included
 - **Platform/Gate Info**: Not provided in response
 - **Current Predictions**: No real-time delay tracking
 - **Service Disruptions**: Doesn't reflect cancelled or modified trips
+- **Historical Fares**: Only current fares available
 
 ---
 

@@ -1,0 +1,68 @@
+{
+  "stations": [
+    {
+      "fromStopCode": "OS",
+      "fromStopName": "Oshawa GO",
+      "toStopCode": "UN",
+      "toStopName": "Union Station",
+      "tripStartTime": "2026-02-05T06:38:00",
+      "fares": [
+        {
+          "fareType": "Full",
+          "fareTypeCode": 1,
+          "name": "Single Trip - Full Fare",
+          "description": "Standard single trip fare",
+          "price": 8.50,
+          "currency": "CAD",
+          "discountPercentage": 0,
+          "validFrom": "2026-02-01T00:00:00",
+          "validUntil": "2026-12-31T23:59:59"
+        },
+        {
+          "fareType": "Student",
+          "fareTypeCode": 2,
+          "name": "Single Trip - Student",
+          "description": "Valid with school ID",
+          "price": 6.38,
+          "currency": "CAD",
+          "discountPercentage": 25,
+          "validFrom": "2026-02-01T00:00:00",
+          "validUntil": "2026-12-31T23:59:59"
+        },
+        {
+          "fareType": "Senior",
+          "fareTypeCode": 3,
+          "name": "Single Trip - Senior",
+          "description": "Age 65+",
+          "price": 4.25,
+          "currency": "CAD",
+          "discountPercentage": 50,
+          "validFrom": "2026-02-01T00:00:00",
+          "validUntil": "2026-12-31T23:59:59"
+        },
+        {
+          "fareType": "Child",
+          "fareTypeCode": 4,
+          "name": "Single Trip - Child",
+          "description": "Ages 2-12",
+          "price": 4.25,
+          "currency": "CAD",
+          "discountPercentage": 50,
+          "validFrom": "2026-02-01T00:00:00",
+          "validUntil": "2026-12-31T23:59:59"
+        },
+        {
+          "fareType": "Presto",
+          "fareTypeCode": 5,
+          "name": "Stored Value Card",
+          "description": "PRESTO card balance",
+          "price": 8.00,
+          "currency": "CAD",
+          "discountPercentage": 5.9,
+          "validFrom": "2026-02-01T00:00:00",
+          "validUntil": "2026-12-31T23:59:59"
+        }
+      ]
+    }
+  ]
+}

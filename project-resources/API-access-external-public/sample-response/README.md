@@ -53,55 +53,157 @@ GET /schedules/en/timetable/all?fromStop=OS&toStop=UN&date=2026-02-05
 
 ---
 
+### FareCalculator-OS-UN-2026-02-05.json
+**Request**: 
+```
+GET /external/go/farecalculator/all-concessions-fare?stations[0].fromStopCode=OS&stations[0].toStopCode=UN&stations[0].tripStartTime=02/05/2026 06:38:00&newFare=true
+```
+
+**Details**:
+- **Origin**: Oshawa GO (OS)
+- **Destination**: Union Station (UN)
+- **Date**: February 5, 2026
+- **Time**: 06:38 AM
+- **Fare Types**: 5 categories (Full, Student, Senior, Child, Presto)
+- **File Size**: ~2.5 KB
+- **Response Time**: Captured at 2026-02-05 09:00 UTC
+- **Currency**: CAD (Canadian Dollars)
+
+**Fare Breakdown**:
+- **Full Fare**: $8.50 (no discount)
+- **Student**: $6.38 (25% discount with valid school ID)
+- **Senior**: $4.25 (50% discount for age 65+)
+- **Child**: $4.25 (50% discount for ages 2-12)
+- **Presto**: $8.00 (5.9% discount when using PRESTO card)
+
+**Sample Fare Entry**:
+```json
+{
+  "fareType": "Student",
+  "fareTypeCode": 2,
+  "name": "Single Trip - Student",
+  "description": "Valid with school ID",
+  "price": 6.38,
+  "currency": "CAD",
+  "discountPercentage": 25,
+  "validFrom": "2026-02-01T00:00:00",
+  "validUntil": "2026-12-31T23:59:59"
+}
+```
+
+**Use Cases**:
+- Testing fare display components
+- Validating discount calculations
+- Building fare comparison UIs
+- Calculating user-specific fares based on eligibility
+- Developing offline fare quote tools
+
+---
+
 ## How to Use These Samples
 
-### 1. Direct File Usage
+### 1. Direct File Usage - Timetable
 ```javascript
 // Load in Node.js
 const fs = require('fs');
-const zlib = require('zlib');
 
-const filePath = 'Timetable-OS-UN-2026-02-05.json';
-const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+const timetableData = JSON.parse(
+  fs.readFileSync('Timetable-OS-UN-2026-02-05.json', 'utf8')
+);
 
-console.log(`${data.trips.length} trips found`);
-data.trips.forEach(trip => {
+console.log(`${timetableData.trips.length} trips found`);
+timetableData.trips.slice(0, 3).forEach(trip => {
   console.log(`${trip.departureTimeDisplay} → ${trip.arrivalTimeDisplay}`);
 });
 ```
 
-### 2. Testing API Response Handling
+### 2. Direct File Usage - Fare Calculator
 ```javascript
-// Mock API response in tests
-const mockResponse = require('./Timetable-OS-UN-2026-02-05.json');
+// Load fare calculator sample
+const fareData = JSON.parse(
+  fs.readFileSync('FareCalculator-OS-UN-2026-02-05.json', 'utf8')
+);
 
-// Use in test suite
-describe('Journey Planner', () => {
+fareData.stations[0].fares.forEach(fare => {
+  console.log(`${fare.fareType}: $${fare.price} CAD (${fare.discountPercentage}% off)`);
+});
+```
+
+### 3. Testing API Response Handling
+```javascript
+// Mock both API responses in tests
+const mockTimetable = require('./Timetable-OS-UN-2026-02-05.json');
+const mockFares = require('./FareCalculator-OS-UN-2026-02-05.json');
+
+describe('Journey Planner with Fares', () => {
   it('should parse timetable response', () => {
-    const trips = mockResponse.trips;
-    expect(trips).toHaveLength(28);
-    expect(trips[0]).toHaveProperty('departureTimeDisplay');
+    expect(mockTimetable.trips).toHaveLength(28);
+  });
+  
+  it('should parse fare calculator response', () => {
+    const fares = mockFares.stations[0].fares;
+    expect(fares).toHaveLength(5);
+    expect(fares[0].fareType).toBe('Full');
+  });
+  
+  it('should match timetable with fares for same journey', () => {
+    // Get first trip from timetable
+    const firstTrip = mockTimetable.trips[0];
+    
+    // Get fares for same journey
+    const fares = mockFares.stations[0].fares;
+    
+    // Verify both describe same journey (OS to UN)
+    expect(mockFares.stations[0].fromStopCode).toBe('OS');
+    expect(mockFares.stations[0].toStopCode).toBe('UN');
   });
 });
 ```
 
-### 3. UI Component Development
+### 4. UI Component Development
 ```html
-<!-- Load and display sample data -->
+<!-- Load and display both sample data -->
 <script>
-  fetch('Timetable-OS-UN-2026-02-05.json')
-    .then(r => r.json())
-    .then(data => {
-      displayJourneyOptions(data.trips);
-    });
+  Promise.all([
+    fetch('Timetable-OS-UN-2026-02-05.json').then(r => r.json()),
+    fetch('FareCalculator-OS-UN-2026-02-05.json').then(r => r.json())
+  ]).then(([timetableData, fareData]) => {
+    displayJourneyOptionsWithFares(timetableData.trips, fareData.stations[0].fares);
+  });
 </script>
+```
+
+---
+
+## Combined Usage - Journey + Fare Display
+
+```javascript
+// Common pattern: Show journey options with applicable fares
+const timetableData = require('./Timetable-OS-UN-2026-02-05.json');
+const fareData = require('./FareCalculator-OS-UN-2026-02-05.json');
+
+const journeyWithFares = {
+  journey: timetableData.trips[0],
+  availableFares: fareData.stations[0].fares,
+  fromStation: fareData.stations[0].fromStopName,
+  toStation: fareData.stations[0].toStopName
+};
+
+// Example output for UI
+console.log(`Journey: ${journeyWithFares.fromStation} → ${journeyWithFares.toStation}`);
+console.log(`Departs: ${journeyWithFares.journey.departureTimeDisplay}`);
+console.log(`Arrives: ${journeyWithFares.journey.arrivalTimeDisplay}`);
+console.log('Fare Options:');
+journeyWithFares.availableFares.forEach(fare => {
+  console.log(`  - ${fare.name}: $${fare.price}`);
+});
 ```
 
 ---
 
 ## Data Analysis
 
-### Trip Distribution
+### Timetable Trip Distribution
 
 | Time Range | Count | Modes |
 |-----------|-------|-------|
@@ -110,20 +212,37 @@ describe('Journey Planner', () => {
 | 12:00-18:00 | 10 | Bus, Rail |
 | 18:00-24:00 | 8 | Bus, Rail |
 
-### Transit Types
+### Timetable Transit Types
 
 | Type | Count | Times |
 |------|-------|-------|
 | Bus (90B) | 4 | 04:00, 05:30, 23:40, other |
 | Rail (LE) | 24 | 05:03 onwards, every 30 min |
 
-### Duration Statistics
+### Timetable Duration Statistics
 
 | Metric | Bus | Rail |
 |--------|-----|------|
 | Min Duration | 60 min | 66 min |
 | Max Duration | 75 min | 67 min |
 | Avg Duration | 65 min | 66.5 min |
+
+### Fare Calculator Analysis
+
+| Fare Type | Price | Discount | Use Case |
+|-----------|-------|----------|----------|
+| Full | $8.50 | 0% | All riders without eligibility |
+| Student | $6.38 | 25% | Valid school ID required |
+| Senior | $4.25 | 50% | Age 65+ with proof of age |
+| Child | $4.25 | 50% | Ages 2-12 |
+| Presto | $8.00 | 5.9% | PRESTO card stored value |
+
+**Key Observations**:
+- Senior and Child fares are identical ($4.25)
+- Student discount (25%) is balanced between Full (0%) and Senior/Child (50%)
+- Presto RFID charge is minimal discount (5.9%) but encourages use
+- Effective maximum savings: 50% for eligible seniors/children
+- Sample trip (Feb 5 6:38 AM): $4.25-$8.50 depending on eligibility
 
 ---
 
@@ -178,10 +297,28 @@ All samples conform to this schema:
 
 ## File Comparison
 
-See parent directory's [README.md](../README.md) for comparisons with other API samples and `../../docs/API_COMPARISON.md` for comprehensive analysis.
+| Sample | Endpoint | Rows | Size | Use Case |
+|--------|----------|------|------|----------|
+| Timetable-OS-UN-2026-02-05.json | `/schedules/en/timetable/all` | 28 trips | ~73 KB | Journey planning, schedule display |
+| FareCalculator-OS-UN-2026-02-05.json | `/farecalculator/all-concessions-fare` | 5 fares | ~2.5 KB | Fare quotes, eligibility display |
+
+**Combined Usage Matrix**:
+```
+Timetable Sample                      Fare Calculator Sample
+├─ 28 journeys (OS→UN)               ├─ 5 fare types
+│  ├─ Departure times                │  ├─ Full ($8.50)
+│  ├─ Arrival times                  │  ├─ Student ($6.38)
+│  ├─ Duration info                  │  ├─ Senior ($4.25)
+│  └─ Stop-by-stop itinerary        │  ├─ Child ($4.25)
+│                                    │  └─ Presto ($8.00)
+│
+└─ Use together to show:
+   "Depart 6:38 AM, Arrive 7:45 AM, From $4.25-$8.50"
+```
+
+See parent directory's [README.md](../README.md) for API endpoint documentation and `../../docs/API_COMPARISON.md` for comparison with other API types.
 
 ---
 
 **Last Updated**: February 5, 2026  
-**Sample Sources**: Live API calls from https://api.metrolinx.com/external/go/schedules/
-
+**Sample Sources**: Live API calls from https://api.metrolinx.com/external/go/
