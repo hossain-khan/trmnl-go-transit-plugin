@@ -4,6 +4,37 @@ This directory contains sample responses from the Metrolinx Open Data API endpoi
 
 ## Files
 
+### Stop-NextService-*.json ⭐ PRIMARY ENDPOINT
+**Endpoint:** `/api/V1/Stop/NextService/{StopCode}`
+
+Station-specific real-time departure predictions for all lines serving the station.
+
+**Example Files:**
+- `Stop-NextService-OS.json` - Oshawa GO predictions
+- `Stop-NextService-UN.json` - Union Station predictions
+
+**Key Fields:**
+- `LineCode`: Rail line code (e.g., "LE" for Lakeshore East)
+- `LineName`: Human-readable line name (e.g., "Lakeshore East")
+- `DirectionName`: Direction and destination (e.g., "LE - Union Station")
+- `ScheduledDepartureTime`: Original scheduled time
+- `ComputedDepartureTime`: Real-time predicted departure
+- `DepartureStatus`: Status code
+  - "E" = Early
+  - "O" = On Time
+  - "D" = Delayed
+- `TripOrder`: Sequence number for sorting (1 = next, 2 = after that, etc.)
+- `TripNumber`: Unique trip identifier
+- `ScheduledPlatform`/`ActualPlatform`: Platform information
+
+**Why This is Primary:**
+- ✅ Station-specific (not system-wide)
+- ✅ Returns all lines serving the station
+- ✅ Already filtered and organized
+- ✅ More efficient than ServiceataGlance/Trains/All
+
+**Usage:** Display next 3 departures for each direction on station dashboard.
+
 ### ServiceAtAGlance-Buses.json
 **Endpoint:** `/api/V1/ServiceataGlance/Buses/All`
 
@@ -34,7 +65,7 @@ Real-time information for all in-service trains.
 
 **Note:** `ServiceAtAGlance-Trains.json` will be added when train service is available (currently captured as buses sample).
 
-**Usage:** Real-time train tracking and departure prediction.
+**Usage:** System-wide fleet tracking and operations monitoring. **Not recommended for station-specific dashboards** - use `Stop/NextService/{StopCode}` instead for better efficiency.
 
 ### ServiceAlerts-All.json
 **Endpoint:** `/api/V1/ServiceUpdate/ServiceAlert/All`

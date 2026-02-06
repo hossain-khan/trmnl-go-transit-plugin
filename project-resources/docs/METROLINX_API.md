@@ -37,9 +37,9 @@ Include your API key as a query parameter:
 
 ## API Endpoints
 
-### Service At A Glance ⭐
+### Service At A Glance
 
-*Primary endpoint for the GO Transit Dashboard plugin*
+*For system-wide fleet tracking (not recommended for station-specific dashboards)*
 
 Returns information on in-service bus and train trips.
 
@@ -54,11 +54,20 @@ Returns information on in-service bus and train trips.
 GET https://api.openmetrolinx.com/OpenDataAPI/api/V1/ServiceataGlance/Trains/All?key={ACCESS_KEY}
 ```
 
+**Use Cases:**
+- System-wide fleet monitoring
+- Real-time vehicle tracking across all lines
+- Operations dashboards showing all active trips
+
+**⚠️ Not Recommended For:**
+- Station-specific departure boards → Use `Stop/NextService/{StopCode}` instead
+- Line-specific displays → Requires client-side filtering of ~100+ trips
+
 ---
 
 ### Service Update ⭐
 
-*Used for alerts and Union Station departures*
+*Essential for alerts and Union Station departures*
 
 Returns information on alert messages, train/bus departures from Union, and service guarantees.
 
@@ -80,15 +89,17 @@ GET https://api.openmetrolinx.com/OpenDataAPI/api/V1/ServiceUpdate/ServiceAlert/
 
 ---
 
-### Stop
+### Stop ⭐
+
+*Best endpoint for station-specific departure predictions*
 
 Returns information on stops including predictions and destinations.
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `api/V1/Stop/All` | Returns all stops |
+| GET | `api/V1/Stop/All` | Returns all stops (5,520 locations) |
 | GET | `api/V1/Stop/Details/{StopCode}` | Stop details by code |
-| GET | `api/V1/Stop/NextService/{StopCode}` | Predictions for all lines at a stop |
+| GET | `api/V1/Stop/NextService/{StopCode}` ⭐ | **Predictions for all lines at a stop** |
 | GET | `api/V1/Stop/Destinations/{StopCode}/{FromTime}/{ToTime}` | Destinations from a stop |
 
 **Parameters:**
@@ -99,6 +110,32 @@ Returns information on stops including predictions and destinations.
 ```
 GET https://api.openmetrolinx.com/OpenDataAPI/api/V1/Stop/NextService/OS?key={ACCESS_KEY}
 ```
+
+**Response Structure (NextService):**
+```json
+{
+  "NextService": {
+    "Lines": [
+      {
+        "LineCode": "LE",
+        "LineName": "Lakeshore East",
+        "DirectionName": "LE - Union Station",
+        "ScheduledDepartureTime": "2026-01-24 18:09:00",
+        "ComputedDepartureTime": "2026-01-24 18:09:00",
+        "DepartureStatus": "E",  // E=Early, O=On Time, D=Delayed
+        "TripOrder": 1,
+        "TripNumber": "9031"
+      }
+    ]
+  }
+}
+```
+
+**Why Use NextService for Station Dashboards:**
+- ✅ Station-specific (not system-wide like ServiceataGlance)
+- ✅ Already filtered and organized by line
+- ✅ Smaller payload, faster response
+- ✅ Includes all lines serving the station
 
 ---
 
@@ -222,10 +259,33 @@ Returns fare information between stations.
 
 ## Usage in This Plugin
 
-The GO Transit Dashboard plugin primarily uses:
+The GO Transit Dashboard plugin uses:
 
-1. **`ServiceataGlance/Trains/All`** - Real-time train departure times
+### Primary Endpoints (Essential)
+
+1. **`Stop/NextService/{StopCode}`** ⭐ **PRIMARY** - Station-specific real-time predictions
+   - Returns predictions for all lines serving a specific station
+   - More efficient than `ServiceataGlance/Trains/All` (station-filtered, not system-wide)
+   - Includes departure times, delays, platforms, and trip order
+   - Example: `api/V1/Stop/NextService/OS` for Oshawa GO
+
 2. **`ServiceUpdate/ServiceAlert/All`** - Service alerts and delays
-3. **`Stop/All`** - Station information and codes
+   - Filter by `LineCode` to show relevant alerts only
+   - Shows disruptions affecting the user's selected line
 
-See [scripts/update-go-transit.js](../../scripts/update-go-transit.js) for implementation details.
+3. **`Stop/All`** - Station information and codes (reference data)
+   - Used for configuration dropdowns
+   - Can be cached long-term (static data)
+   - Currently hardcoded in worker's `stations.js`
+
+### Why Not ServiceataGlance?
+
+The plugin **does NOT use** `ServiceataGlance/Trains/All` despite it being commonly referenced in transit APIs because:
+- ❌ Returns ALL trains system-wide (~100+ active trips)
+- ❌ Requires client-side filtering by station
+- ❌ Larger payload and more processing
+- ✅ `Stop/NextService/{StopCode}` is more efficient and station-specific
+
+### Implementation
+
+See [cloudflare-worker/src/index.js](../../cloudflare-worker/src/index.js) for the dashboard endpoint implementation that aggregates these APIs.
