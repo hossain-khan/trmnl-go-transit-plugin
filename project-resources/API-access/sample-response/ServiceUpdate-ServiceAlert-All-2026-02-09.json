@@ -1,0 +1,334 @@
+{
+  "Metadata": {
+    "TimeStamp": "2026-02-09 20:10:25",
+    "ErrorCode": "200",
+    "ErrorMessage": "OK"
+  },
+  "Messages": {
+    "Message": [
+      {
+        "Code": "M0000442934",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-01 23:40:49",
+        "SubjectEnglish": "Elevator out of service",
+        "SubjectFrench": "Ascenseur hors service",
+        "BodyEnglish": "The elevator connecting the main lobby to platforms 1 and 2 is out of service. The station remains accessible through the ramp in the bus terminal. Visit the Hamilton GO Centre page to find helpful information on departures, a station map and a listing of all the services we have available. Visit out Accessibility page to see how we are committed to making our services easy for everyone to use.",
+        "BodyFrench": "L’ascenseur reliant le hall principal aux quais 1 et 2 est hors service. La gare reste accessible par la rampe de la station d’autobus. Visitez la page du centre GO de Hamilton pour trouver des informations utiles sur les départs, un plan de la gare et une liste de tous les services disponibles. Visitez notre page sur l’accessibilité pour voir comment nous nous engageons à rendre nos services faciles à utiliser pour tous.",
+        "Category": "Amenity",
+        "SubCategory": "Elevator-Escalator Disruption",
+        "Lines": [
+          {
+            "Code": "LW"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "HA"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000464334",
+        "ParentCode": "M0000464278",
+        "Status": "UPD",
+        "PostedDateTime": "2025-03-09 11:44:10",
+        "SubjectEnglish": "Elevator out of service",
+        "SubjectFrench": "Ascenseur hors service",
+        "BodyEnglish": "The elevator connecting the station building to the south tunnel is out of service. The station remains accessible from the north tunnel elevator. Visit the Agincourt GO Station page to find helpful information on departures, a station map and a listing of all the services we have available. For Accessibility support during elevator outages, contact us here for assistance.",
+        "BodyFrench": "L’ascenseur reliant le bâtiment de la gare au tunnel sud est hors service. La gare reste accessible depuis l’ascenseur du tunnel nord. Visitez la page de la gare GO d’Agincourt pour trouver des informations utiles, notamment sur les départs, un plan de la gare et tous les services que nous proposons. Pour obtenir de l’aide en matière d’accessibilité pendant les pannes d’ascenseur, communiquez avec nous ici pour obtenir de l’assistance.",
+        "Category": "Amenity",
+        "SubCategory": "Elevator-Escalator Disruption",
+        "Lines": [
+          {
+            "Code": "ST"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "AG"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000470993",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-01 23:46:18",
+        "SubjectEnglish": "Elevator out of service",
+        "SubjectFrench": "Ascenseur hors service",
+        "BodyEnglish": "The elevator connecting the GO platform and the TTC tunnel is out of service. Customers who need this elevator to access the TTC system are advised to use the TTC station elevator on Transway Crescent, adjacent to the south parking lot. Visit the Kennedy GO Station page to find helpful information on departures, a station map and a listing of all the services we have available. Dignity Transportation shuttle service will be available, upon request, for transportation between the west and east side of the station. Requests must be made 48 hours in advance by calling 416-398-2222 and dial “0”. Please follow the signs to find the shuttle locations. Visit our Accessibility page to see how we are committed to making our services easy for everyone to use.",
+        "BodyFrench": ".masteroverridePublic_Fr {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_Fr p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_Fr div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_Fr span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_Fr li {font-family: \"Arial\" !important;font-size:10.5pt !important;}L'ascenseur reliant le quai GO et le tunnel TTC est hors service. Les clients qui ont besoin de cet ascenseur pour accéder au système TTC sont priés d'utiliser l'ascenseur de la station TTC sur le Transway Crescent, adjacent au parc de stationnement sud. Visitez la page Gare GO de Kennedy pour obtenir des renseignements utiles sur les départs, une carte de la gare et une liste de tous les services disponibles.Le service de navette de Dignity Transportation sera disponible, sur demande, pour le transport entre l’ouest et l’est de la gare. Les demandes doivent être faites 48 heures à l’avance en appelant le 416-398-2222 et composez le « 0 ». Veuillez suivre les panneaux pour trouver l’emplacement des navettes. Consultez notre page sur l'accessibilité pour découvrir comment nous nous engageons à rendre nos services faciles à utiliser pour tous.",
+        "Category": "Amenity",
+        "SubCategory": "Elevator-Escalator Disruption",
+        "Lines": [
+          {
+            "Code": "ST"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "KE"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000480679",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-01 23:29:54",
+        "SubjectEnglish": "Elevator out of service",
+        "SubjectFrench": "Ascenseur hors service",
+        "BodyEnglish": "The elevators leading from the station building to the south tunnel are out of service. Customers can access both platforms through the north tunnel using elevator access. Visit the Agincourt GO Station page to find helpful information on departures, a station map and a listing of all the services we have available. For Accessibility support during elevator outages, contact us here for assistance.",
+        "BodyFrench": "Les ascenseurs menant du bâtiment de la gare au tunnel sud sont hors service. Les clients peuvent accéder aux deux quais par le tunnel nord en utilisant l’accès aux ascenseurs. Visitez la page de la gare GO d’Agincourt pour trouver des informations utiles sur les départs, un plan de la gare et une liste de tous les services que nous avons disponibles. Pour le support sur l’accessibilité pendant les pannes d’ascenseur, contactez-nous ici pour obtenir de l’aide.",
+        "Category": "Amenity",
+        "SubCategory": "Elevator-Escalator Disruption",
+        "Lines": [
+          {
+            "Code": "ST"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "AG"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000487176",
+        "ParentCode": "M0000487112",
+        "Status": "UPD",
+        "PostedDateTime": "2025-10-22 18:11:41",
+        "SubjectEnglish": "Update: Temporary bus stops re-located in Holland Landing",
+        "SubjectFrench": "Mise à jour : Arrêts d’autobus temporaires relocalisés à Holland Landing",
+        "BodyEnglish": "Buses will not stop along Toll Road/Yonge Street between Mount Albert Road and Doane Road due to long term construction. To better serve the community, temporary stops have been relocated to:-Holland Landing Road @ Oriole Drive-Holland Landing Road @ Bradford StreetThis project is estimated to be completed spring of 2026.",
+        "BodyFrench": "Les autobus ne s’arrêteront pas le long de Toll Road/Yonge Street entre Mount Albert Road et Doane Road en raison de travaux de construction à long terme. Pour mieux servir la communauté, des arrêts temporaires ont été déplacés vers :-Holland Landing Road @ Oriole Drive-Holland Landing Road @ Bradford StreetCe projet devrait être achevé au printemps 2026.",
+        "Category": "Service Disruption",
+        "SubCategory": "Temporary Bus Stop Location",
+        "Lines": [
+          {
+            "Code": "68"
+          }
+        ],
+        "Stops": [],
+        "Trips": []
+      },
+      {
+        "Code": "M0000495185",
+        "ParentCode": "M0000489456",
+        "Status": "UPD",
+        "PostedDateTime": "2026-01-24 09:07:04",
+        "SubjectEnglish": "Elevator out of service",
+        "SubjectFrench": "Ascenseur hors service",
+        "BodyEnglish": "The elevator connecting the north tunnel to platform 1 is out of service. The station remains accessible from the south end. Visit the Milliken GO Station page to find helpful information on departures, a station map and a listing of all the services we have available. For Accessibility support during elevator outages, contact us here for assistance.",
+        "BodyFrench": "L’ascenseur reliant le tunnel nord au quai 1 est hors service. La gare reste accessible à partir du côté sud. Visitez la page de la gare GO de Milliken pour obtenir des informations utiles sur les départs, un plan de la gare et une liste de tous les services disponibles. Consultez notre page sur l’accessibilité pour découvrir comment nous nous engageons à rendre nos services faciles à utiliser pour tous.",
+        "Category": "Amenity",
+        "SubCategory": "Elevator-Escalator Disruption",
+        "Lines": [
+          {
+            "Code": "ST"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "MK"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000496547",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-01-13 23:53:23",
+        "SubjectEnglish": "Bus route modified – Route 92",
+        "SubjectFrench": "Trajet d’autobus modifié – Trajet 92",
+        "BodyEnglish": "Eastbound GO buses will not stop at Kingston Road at Harwood Avenue as a result of construction work. Please board at the temporary stop located on the south side of Kingston Road, west of Harwood Avenue. Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. Sign up for On The GO alerts here.",
+        "BodyFrench": "Les autobus GO en direction est ne s’arrêteront pas à Kingston Road à l’avenue Harwood en raison de travaux de construction. Veuillez monter à bord à l’arrêt temporaire situé du côté sud de Kingston Road, à l’ouest de l’avenue Harwood. Abonnez-vous aux alertes On the GO et recevez des alertes personnalisées en temps réel pour les changements d’horaire, les mises à jour de construction et plus encore. Inscrivez-vous aux alertes On the GO ici.",
+        "Category": "Service Disruption",
+        "SubCategory": "Modified Trip - Bus Detour",
+        "Lines": [
+          {
+            "Code": "92"
+          }
+        ],
+        "Stops": [],
+        "Trips": []
+      },
+      {
+        "Code": "M0000499413",
+        "ParentCode": "M0000495057",
+        "Status": "UPD",
+        "PostedDateTime": "2026-01-29 11:21:14",
+        "SubjectEnglish": "Temporary stop relocation – Route 52, 56, 70, 71",
+        "SubjectFrench": "Arrêt temporaire – trajet 52, 56, 70, 71",
+        "BodyEnglish": "The eastbound stop at YMCA Boulevard west of Kennedy Road has been move to the Unionville GO bus loop due to long term construction. Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. Sign up for On The GO alerts here.",
+        "BodyFrench": "L’arrêt en direction est au boulevard YMCA, à l’ouest de la route Kennedy, a été déplacé vers la boucle d’autobus de la gare GO d’Unionville en raison de travaux de construction à long terme. Abonnez-vous aux alertes On the GO et recevez des alertes personnalisées en temps réel pour les changements d’horaire, les mises à jour de construction et plus encore. Inscrivez-vous aux alertes On the GO ici.",
+        "Category": "Service Disruption",
+        "SubCategory": "Temporary Bus Stop Location",
+        "Lines": [
+          {
+            "Code": "52"
+          },
+          {
+            "Code": "56"
+          },
+          {
+            "Code": "70"
+          },
+          {
+            "Code": "71"
+          }
+        ],
+        "Stops": [],
+        "Trips": []
+      },
+      {
+        "Code": "M0000500366",
+        "ParentCode": "M0000500365",
+        "Status": "UPD",
+        "PostedDateTime": "2026-02-03 21:46:50",
+        "SubjectEnglish": "Elevator out of service",
+        "SubjectFrench": "Ascenseur hors service",
+        "BodyEnglish": "The elevator connecting the Finch Bus Terminal to the TTC tunnel is out of service. Passengers who need this elevator can access TTC using the step free path via the Kiss and Ride entrance. Visit the Finch GO Station page to find helpful information on departures, a station map and a listing of all the services we have available. For Accessibility support during elevator outages, contact us here for assistance.",
+        "BodyFrench": "L’ascenseur reliant la station d’autobus de Finch au tunnel de la TTC est hors service. Les passagers qui ont besoin de cet ascenseur peuvent accéder à la TTC en utilisant le chemin gratuit via l’entrée du parc-o-bus. Visitez la page de la gare GO de Finch pour trouver des informations utiles sur les départs, un plan de la gare et une liste de tous les services que nous avons disponibles. Pour le support sur l’accessibilité pendant les pannes d’ascenseur, contactez-nous ici pour obtenir de l’aide.",
+        "Category": "Amenity",
+        "SubCategory": "Elevator-Escalator Disruption",
+        "Lines": [
+          {
+            "Code": "19"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "00013"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000500637",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-02-05 14:06:15",
+        "SubjectEnglish": "Temporary stop relocation – Route 88",
+        "SubjectFrench": "Arrêt temporaire – trajet 88",
+        "BodyEnglish": "The southbound stop on Bowmanville Avenue at Waverly Road is out of service due to long term construction. The northbound stop has moved to the south side of Waverly Road.Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. Sign up for On The GO alerts here.",
+        "BodyFrench": "L’arrêt en direction sud sur l’avenue Bowmanville à la route Waverly est hors service en raison de travaux de construction à long terme. L’arrêt en direction nord a été déplacé du côté sud de la route Waverly. Abonnez-vous aux alertes On the GO et recevez des alertes personnalisées en temps réel pour les changements d’horaire, les mises à jour de construction et plus encore. Inscrivez-vous aux alertes On the GO ici.",
+        "Category": "Service Disruption",
+        "SubCategory": "Temporary Bus Stop Location",
+        "Lines": [
+          {
+            "Code": "88"
+          }
+        ],
+        "Stops": [],
+        "Trips": []
+      },
+      {
+        "Code": "M0000500959",
+        "ParentCode": "M0000497954",
+        "Status": "UPD",
+        "PostedDateTime": "2026-02-06 21:15:14",
+        "SubjectEnglish": "Elevator out of service",
+        "SubjectFrench": "",
+        "BodyEnglish": "The elevator connecting the tunnel to platform 2 is out of service. Platform 2 is currently inaccessible for customers needing a step-free path. While this platform typically serves eastbound trains, platform changes may also impact westbound trains. Alternative Travel Option: For eastbound travel to or from Rouge Hill GO, please use Pickering GO as an accessible alternative. Visit the Rouge Hill GO Station page to find helpful information on departures, a station map and a listing of all the services we have available. For Accessibility support during elevator outages, contact us here for assistance.",
+        "BodyFrench": "L’ascenseur reliant le tunnel au quai 2 est hors service. Le quai 2 est actuellement inaccessible pour les clients ayant besoin d’un chemin sans escaliers. Bien que cette plateforme serve généralement les trains en direction est, des changements de plateforme peuvent également affecter les trains en direction ouest. Autre option de déplacement : Pour voyager en direction est à destination ou en provenance de la gare GO de Rouge Hill, veuillez utiliser la gare GO de Pickering comme solution de rechange accessible. Visitez la page de la gare GO de Rouge Hill pour trouver des informations utiles, notamment sur les départs, un plan de la gare et tous les services que nous proposons. Pour obtenir de l’aide en matière d’accessibilité pendant les pannes d’ascenseur, communiquez avec nous ici pour obtenir de l’assistance.",
+        "Category": "Amenity",
+        "SubCategory": "Elevator-Escalator Disruption",
+        "Lines": [
+          {
+            "Code": "LE"
+          }
+        ],
+        "Stops": [
+          {
+            "Name": null,
+            "Code": "RO"
+          }
+        ],
+        "Trips": []
+      },
+      {
+        "Code": "M0000501142",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-02-09 10:49:08",
+        "SubjectEnglish": "Bus route modified – Route 94",
+        "SubjectFrench": "Trajet d’autobus modifié – Trajet 94",
+        "BodyEnglish": "Due to ongoing construction and lane closures on Yonge Street, buses will be detouring in this area. Effective Monday, February 9, until Saturday, February 14, buses will not serve the following stops. - Yonge Street and Elmhurst Ave - Yonge Street and Sheppard Ave - Yonge Street and Poyntz Ave Temporary boarding stops during this time are:- Beecroft Road and Elmhurst Ave (Northwest corner)- Beecroft Road and Sheppard Ave (Northwest corner)- Poyntz Ave and Yonge Street Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. Sign up for On The GO alerts here.",
+        "BodyFrench": "En raison de la construction en cours et des fermetures de voies sur la rue Yonge, les autobus feront un détour dans cette zone. À compter du lundi 9 février jusqu’au samedi 14 février, les autobus ne desserviront pas les arrêts suivants?: - Rue Yonge et avenue Elmhurst - Rue Yonge et avenue Sheppard - Rue Yonge et avenue Poyntz Les arrêts temporaires pendant cette période sont?: - Route Beecroft et avenue Elmhurst (coin nord-ouest) - Route Beecroft et avenue Sheppard (coin nord-ouest) - Avenue Poyntz et rue Yonge Abonnez-vous aux alertes On the GO et recevez des alertes personnalisées en temps réel pour les changements d’horaire, les mises à jour de construction et plus encore. Inscrivez-vous aux alertes On The GO ici.",
+        "Category": "Service Disruption",
+        "SubCategory": "Modified Trip - Bus Detour",
+        "Lines": [
+          {
+            "Code": "94"
+          }
+        ],
+        "Stops": [],
+        "Trips": []
+      },
+      {
+        "Code": "M0000501143",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-02-09 10:46:37",
+        "SubjectEnglish": "Bus route modified – Routes 19, 27, 67 and 96",
+        "SubjectFrench": "Trajet d’autobus modifié – Trajets 19, 27, 67 et 96",
+        "BodyEnglish": "Due to ongoing construction and lane closures on Yonge Street, southbound buses will be detouring in this area. Effective Monday, February 9, until Saturday, February 14, southbound buses will not serve the following stops. - Yonge Street and Elmhurst Ave - Yonge Street and Sheppard Ave - Yonge Street and Poyntz Ave Temporary southbound boarding stops during this time are: - Beecroft Road and Elmhurst Ave (Northwest corner)- Beecroft Road and Sheppard Ave (Northwest corner)- Poyntz Ave and Yonge Street Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. Sign up for On The GO alerts here.",
+        "BodyFrench": "En raison de la construction en cours et des fermetures de voies sur la rue Yonge, les autobus en direction sud feront un détour dans cette zone. À compter du lundi 9 février jusqu’au samedi 14 février, les autobus en direction sud ne desserviront pas les arrêts suivants?: - Rue Yonge et avenue Elmhurst - Rue Yonge et avenue Sheppard - Rue Yonge et avenue Poyntz Les arrêts temporaires pour embarquement en direction sud pendant cette période sont?: - Route Beecroft et avenue Elmhurst (coin nord-ouest) - Route Beecroft et avenue Sheppard (coin nord-ouest) - Avenue Poyntz et rue Yonge Abonnez-vous aux alertes On the GO et recevez des alertes personnalisées en temps réel pour les changements d’horaire, les mises à jour de construction et plus encore. Inscrivez-vous aux alertes On The GO ici.",
+        "Category": "Service Disruption",
+        "SubCategory": "Modified Trip - Bus Detour",
+        "Lines": [
+          {
+            "Code": "19"
+          },
+          {
+            "Code": "27"
+          },
+          {
+            "Code": "67"
+          },
+          {
+            "Code": "96"
+          }
+        ],
+        "Stops": [],
+        "Trips": []
+      },
+      {
+        "Code": "M0000501191",
+        "ParentCode": null,
+        "Status": "INIT",
+        "PostedDateTime": "2026-02-09 13:51:54",
+        "SubjectEnglish": "Bus trip modified – Hamilton GO Centre 11:55 - Pickering GO 15:25",
+        "SubjectFrench": "Trajet d’autobus modifié – centre GO de Hamilton 11:55 - gare GO de Pickering 15:25",
+        "BodyEnglish": "The Hamilton GO Centre 11:55 - Pickering GO 15:25 bus will end at Square One GO Terminal due to a collision. Customers east of this stop can take the next bus scheduled to depart Square One Bus Terminal at 13:41.",
+        "BodyFrench": "L’autobus du centre GO de Hamilton (11 h 55) vers la gare GO de Pickering (15 h 25) se terminera à la station d’autobus GO de Square One en raison d’une collision. Les clients à l’est de cet arrêt peuvent prendre le prochain autobus dont le départ de la station d’autobus de Square One est prévu à 13 h 41.",
+        "Category": "Service Disruption",
+        "SubCategory": "Modified Trip - Bus Detour",
+        "Lines": [
+          {
+            "Code": "41"
+          }
+        ],
+        "Stops": [],
+        "Trips": [
+          {
+            "TripNumber": "41370"
+          }
+        ]
+      }
+    ]
+  }
+}

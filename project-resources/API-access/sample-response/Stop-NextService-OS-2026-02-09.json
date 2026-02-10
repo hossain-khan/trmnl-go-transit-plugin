@@ -1,0 +1,68 @@
+{
+  "Metadata": {
+    "TimeStamp": "2026-02-09 20:10:21",
+    "ErrorCode": "200",
+    "ErrorMessage": "OK"
+  },
+  "NextService": {
+    "Lines": [
+      {
+        "StopCode": "OS",
+        "LineCode": "LE",
+        "LineName": "Lakeshore East",
+        "ServiceType": "T",
+        "DirectionCode": "LE   ",
+        "DirectionName": "LE - Union Station",
+        "ScheduledDepartureTime": "2026-02-09 20:09:00",
+        "ComputedDepartureTime": "2026-02-09 20:09:10",
+        "DepartureStatus": "E",
+        "ScheduledPlatform": "2",
+        "ActualPlatform": "",
+        "TripOrder": 1,
+        "TripNumber": "9035",
+        "UpdateTime": "2026-02-09 20:09:11",
+        "Status": "S",
+        "Latitude": 43.8706140,
+        "Longitude": -78.8853640
+      },
+      {
+        "StopCode": "OS",
+        "LineCode": "LE",
+        "LineName": "Lakeshore East",
+        "ServiceType": "T",
+        "DirectionCode": "LE",
+        "DirectionName": "LE - Union Station",
+        "ScheduledDepartureTime": "2026-02-09 21:09:00",
+        "ComputedDepartureTime": "2026-02-09 21:09:00",
+        "DepartureStatus": "E",
+        "ScheduledPlatform": "2",
+        "ActualPlatform": "",
+        "TripOrder": 3,
+        "TripNumber": "9037",
+        "UpdateTime": "2026-02-09 19:39:12",
+        "Status": "S",
+        "Latitude": -1.0000000,
+        "Longitude": -1.0000000
+      },
+      {
+        "StopCode": "OS",
+        "LineCode": "LE",
+        "LineName": "Lakeshore East",
+        "ServiceType": "T",
+        "DirectionCode": "LE",
+        "DirectionName": "LE - Union Station",
+        "ScheduledDepartureTime": "2026-02-09 20:39:00",
+        "ComputedDepartureTime": "2026-02-09 20:39:00",
+        "DepartureStatus": "E",
+        "ScheduledPlatform": "1",
+        "ActualPlatform": "",
+        "TripOrder": 2,
+        "TripNumber": "9235",
+        "UpdateTime": "2026-02-09 19:09:03",
+        "Status": "S",
+        "Latitude": -1.0000000,
+        "Longitude": -1.0000000
+      }
+    ]
+  }
+}
