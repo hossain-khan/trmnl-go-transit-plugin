@@ -214,6 +214,14 @@ app.get('/api/V1/dashboard', async (c) => {
     const nextServiceResponse = await fetch(nextServiceUrl)
     const nextServiceData = await nextServiceResponse.json()
 
+    // Also fetch from Union Station if not querying Union (to get return direction)
+    let returnDirectionData = null
+    if (station !== 'UN') {
+      const unionServiceUrl = `${env.ORIGIN_BASE_URL}api/V1/Stop/NextService/UN.json?key=${authKey}`
+      const unionServiceResponse = await fetch(unionServiceUrl)
+      returnDirectionData = await unionServiceResponse.json()
+    }
+
     // Check for API errors
     if (nextServiceData?.Metadata?.ErrorCode !== '200') {
       console.warn(
@@ -230,13 +238,21 @@ app.get('/api/V1/dashboard', async (c) => {
     const lineServices =
       nextServiceData?.NextService?.Lines?.filter((service) => service.LineCode === line) || []
 
-    // Separate by direction - check DirectionName for Union reference
-    const toUnion = lineServices.filter((s) => s.DirectionName.toLowerCase().includes('union'))
-    const fromUnion = lineServices.filter((s) => !s.DirectionName.toLowerCase().includes('union'))
+    // Get return direction services (from Union back to this station)
+    let returnServices = []
+    if (returnDirectionData) {
+      returnServices =
+        returnDirectionData?.NextService?.Lines?.filter(
+          (service) =>
+            service.LineCode === line &&
+            service.DestinationName &&
+            service.DestinationName.toUpperCase().includes(stationName.toUpperCase())
+        ) || []
+    }
 
     // Sort by trip order
-    toUnion.sort((a, b) => a.TripOrder - b.TripOrder)
-    fromUnion.sort((a, b) => a.TripOrder - b.TripOrder)
+    lineServices.sort((a, b) => a.TripOrder - b.TripOrder)
+    returnServices.sort((a, b) => a.TripOrder - b.TripOrder)
 
     // Extract arriving/next/later times
     const extractTimes = (services, count) => {
@@ -298,11 +314,11 @@ app.get('/api/V1/dashboard', async (c) => {
       stations: allStations,
       direction_1: {
         label: 'To Union Station',
-        ...extractTimes(toUnion, departuresCount),
+        ...extractTimes(lineServices, departuresCount),
       },
       direction_2: {
         label: `To ${stationName}`,
-        ...extractTimes(fromUnion, departuresCount),
+        ...extractTimes(returnServices, departuresCount),
       },
       alerts: alertText || 'No active alerts',
       has_alerts: hasAlerts,
