@@ -332,10 +332,14 @@ app.get('/api/V1/dashboard', async (c) => {
       total_stations: allStations.length,
       stations: allStations,
       direction_1: {
+        origin: stationName,
+        destination: 'Union Station',
         label: 'To Union Station',
         ...extractTimes(lineServices, departuresCount),
       },
       direction_2: {
+        origin: 'Union Station',
+        destination: stationName,
         label: `To ${stationName}`,
         ...extractTimes(returnServices, departuresCount),
       },
