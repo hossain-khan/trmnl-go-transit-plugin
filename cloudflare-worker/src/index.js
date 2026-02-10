@@ -135,17 +135,21 @@ app.post('/api/V1/stations-by-line/', (c) => {
 
 /**
  * Format time string based on user preference
+ * Hardcoded to Eastern Time (Toronto, Canada)
  */
 const formatTime = (dateString, format) => {
   const date = new Date(dateString)
+  // Convert to Eastern Time (America/Toronto)
+  const etTime = new Date(date.toLocaleString('en-US', { timeZone: 'America/Toronto' }))
+
   if (format === '24h') {
-    const hours = String(date.getHours()).padStart(2, '0')
-    const minutes = String(date.getMinutes()).padStart(2, '0')
+    const hours = String(etTime.getHours()).padStart(2, '0')
+    const minutes = String(etTime.getMinutes()).padStart(2, '0')
     return `${hours}:${minutes}`
   } else {
     // 12h format
-    let hours = date.getHours()
-    const minutes = String(date.getMinutes()).padStart(2, '0')
+    let hours = etTime.getHours()
+    const minutes = String(etTime.getMinutes()).padStart(2, '0')
     const ampm = hours >= 12 ? 'PM' : 'AM'
     hours = hours % 12
     hours = hours ? hours : 12
@@ -302,7 +306,7 @@ app.get('/api/V1/dashboard', async (c) => {
       },
       alerts: alertText || 'No active alerts',
       has_alerts: hasAlerts,
-      updated_at: new Date().toISOString(),
+      updated_at: new Date().toLocaleString('en-US', { timeZone: 'America/Toronto' }),
       time_format: timeFormat,
       departures_count: departuresCount,
     }
