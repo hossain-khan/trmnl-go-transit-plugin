@@ -138,22 +138,27 @@ app.post('/api/V1/stations-by-line/', (c) => {
  * Hardcoded to Eastern Time (Toronto, Canada)
  */
 const formatTime = (dateString, format) => {
-  const date = new Date(dateString)
-  // Convert to Eastern Time (America/Toronto)
-  const etTime = new Date(date.toLocaleString('en-US', { timeZone: 'America/Toronto' }))
+  // Parse the date string - API returns YYYY-MM-DD HH:MM:SS format
+  // Assume this is already in Eastern Time
+  const parts = dateString.match(/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/)
+  if (!parts) {
+    return 'Invalid time'
+  }
+
+  const [, year, month, day, hours, minutes] = parts.map(Number)
+  const date = new Date(year, month - 1, day, hours, minutes)
 
   if (format === '24h') {
-    const hours = String(etTime.getHours()).padStart(2, '0')
-    const minutes = String(etTime.getMinutes()).padStart(2, '0')
-    return `${hours}:${minutes}`
+    const h = String(date.getHours()).padStart(2, '0')
+    const m = String(date.getMinutes()).padStart(2, '0')
+    return `${h}:${m}`
   } else {
     // 12h format
-    let hours = etTime.getHours()
-    const minutes = String(etTime.getMinutes()).padStart(2, '0')
-    const ampm = hours >= 12 ? 'PM' : 'AM'
-    hours = hours % 12
-    hours = hours ? hours : 12
-    return `${hours}:${minutes} ${ampm}`
+    let h = date.getHours()
+    const m = String(date.getMinutes()).padStart(2, '0')
+    const ampm = h >= 12 ? 'PM' : 'AM'
+    h = h % 12 || 12
+    return `${h}:${m} ${ampm}`
   }
 }
 
@@ -210,14 +215,14 @@ app.get('/api/V1/dashboard', async (c) => {
     const authKey = env.ORIGIN_AUTH_TOKEN
 
     // Fetch stop/next service to get predictions for this station on this line
-    const nextServiceUrl = `${env.ORIGIN_BASE_URL}api/V1/Stop/NextService/${station}.json?key=${authKey}`
+    const nextServiceUrl = `${env.ORIGIN_BASE_URL}api/V1/Stop/NextService/${station}?key=${authKey}`
     const nextServiceResponse = await fetch(nextServiceUrl)
     const nextServiceData = await nextServiceResponse.json()
 
     // Also fetch from Union Station if not querying Union (to get return direction)
     let returnDirectionData = null
     if (station !== 'UN') {
-      const unionServiceUrl = `${env.ORIGIN_BASE_URL}api/V1/Stop/NextService/UN.json?key=${authKey}`
+      const unionServiceUrl = `${env.ORIGIN_BASE_URL}api/V1/Stop/NextService/UN?key=${authKey}`
       const unionServiceResponse = await fetch(unionServiceUrl)
       returnDirectionData = await unionServiceResponse.json()
     }
@@ -230,7 +235,7 @@ app.get('/api/V1/dashboard', async (c) => {
     }
 
     // Fetch alerts
-    const alertsUrl = `${env.ORIGIN_BASE_URL}api/V1/ServiceUpdate/ServiceAlert/All.json?key=${authKey}`
+    const alertsUrl = `${env.ORIGIN_BASE_URL}api/V1/ServiceUpdate/ServiceAlert/All?key=${authKey}`
     const alertsResponse = await fetch(alertsUrl)
     const alertsData = await alertsResponse.json()
 
@@ -245,8 +250,8 @@ app.get('/api/V1/dashboard', async (c) => {
         returnDirectionData?.NextService?.Lines?.filter(
           (service) =>
             service.LineCode === line &&
-            service.DestinationName &&
-            service.DestinationName.toUpperCase().includes(stationName.toUpperCase())
+            service.DirectionName &&
+            service.DirectionName.toUpperCase().includes(stationName.toUpperCase())
         ) || []
     }
 
