@@ -245,14 +245,28 @@ app.get('/api/V1/dashboard', async (c) => {
 
     // Get return direction services (from Union back to this station)
     let returnServices = []
-    if (returnDirectionData) {
-      returnServices =
-        returnDirectionData?.NextService?.Lines?.filter(
+    if (returnDirectionData && station !== 'UN') {
+      const unionServices =
+        returnDirectionData?.NextService?.Lines?.filter((service) => service.LineCode === line) ||
+        []
+
+      // Check if origin station has bidirectional service (has both forward and Union-bound services)
+      const hasUnionBoundServices = lineServices.some((s) =>
+        s.DirectionName?.toUpperCase().includes('UNION')
+      )
+
+      if (hasUnionBoundServices) {
+        // Mid-line station with bidirectional service
+        // Return direction = all services from Union (they pass through this station going forward)
+        returnServices = unionServices
+      } else {
+        // End-of-line station - filter by station name in direction
+        returnServices = unionServices.filter(
           (service) =>
-            service.LineCode === line &&
             service.DirectionName &&
             service.DirectionName.toUpperCase().includes(stationName.toUpperCase())
-        ) || []
+        )
+      }
     }
 
     // Sort by trip order
