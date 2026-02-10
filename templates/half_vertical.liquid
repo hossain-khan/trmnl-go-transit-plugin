@@ -1,8 +1,14 @@
 {% comment %}
-  GO Transit Dashboard - Half Vertical Layout PREVIEW
-  Static preview template with sample data (no API dependency)
+  GO Transit Dashboard - Half Vertical Layout
+  Adapted from Sound Transit Link Light Rail Dashboard
   
-  Sample Data: Lakeshore East Line - Oshawa GO Station
+  Use Case: Half-size vertical display (abundant vertical space, limited horizontal)
+  
+  Features:
+  - Two columns showing both directions
+  - Full arriving/next/later times for each direction
+  - Alerts section with truncation
+  - Station name in title bar
 {% endcomment %}
 
 <style type="text/css">
@@ -22,11 +28,11 @@
     <!-- Two-direction time table -->
     <div class="columns time-table mb--3">
       
-      <!-- Direction 1: To Union Station -->
+      <!-- Direction 1 -->
       <div class="column gap--small">
         <div class="mb--1">
-          <span class="title title--small" style="display: block;">Union Station</span>
-          <span class="description">To Union Station</span>
+          <span class="title title--small" style="display: block;">{{ direction_1.label | split: "To " | last }}</span>
+          <span class="description">{{ direction_1.label }}</span>
         </div>
         
         <!-- Arriving -->
@@ -35,9 +41,12 @@
           <div class="content">
             <span class="label label--small label--inverted mb--1">arriving</span>
             <span>
-              <span class="value value--small">9:34</span>
-              <span class="value value--xxsmall">PM</span>
+              <span class="value value--small">{{ direction_1.arriving | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_1.arriving | split: " " | last }}</span>
             </span>
+            {% if direction_1.arriving_status != "On Time" %}
+              <span class="label label--small label--outline text--gray-35">{{ direction_1.arriving_status }}</span>
+            {% endif %}
           </div>
         </div>
         
@@ -47,8 +56,8 @@
           <div class="content text--gray-35">
             <span class="label label--small label--outline mb--1">next</span>
             <span>
-              <span class="value value--small">9:44</span>
-              <span class="value value--xxsmall">PM</span>
+              <span class="value value--small">{{ direction_1.next | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_1.next | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -59,18 +68,18 @@
           <div class="content text--gray-50">
             <span class="label label--small mb--1">later</span>
             <span>
-              <span class="value value--small">10:14</span>
-              <span class="value value--xxsmall">PM</span>
+              <span class="value value--small">{{ direction_1.later | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_1.later | split: " " | last }}</span>
             </span>
           </div>
         </div>
       </div>
       
-      <!-- Direction 2: To Oshawa -->
+      <!-- Direction 2 -->
       <div class="column gap--small">
         <div class="mb--1">
-          <span class="title title--small" style="display: block;">Oshawa</span>
-          <span class="description">To Oshawa</span>
+          <span class="title title--small" style="display: block;">{{ direction_2.label | split: "To " | last }}</span>
+          <span class="description">{{ direction_2.label }}</span>
         </div>
         
         <!-- Arriving -->
@@ -79,9 +88,12 @@
           <div class="content">
             <span class="label label--small label--inverted mb--1">arriving</span>
             <span>
-              <span class="value value--small">9:42</span>
-              <span class="value value--xxsmall">PM</span>
+              <span class="value value--small">{{ direction_2.arriving | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_2.arriving | split: " " | last }}</span>
             </span>
+            {% if direction_2.arriving_status != "On Time" %}
+              <span class="label label--small label--outline text--gray-35">{{ direction_2.arriving_status }}</span>
+            {% endif %}
           </div>
         </div>
         
@@ -91,8 +103,8 @@
           <div class="content text--gray-35">
             <span class="label label--small label--outline mb--1">next</span>
             <span>
-              <span class="value value--small">10:12</span>
-              <span class="value value--xxsmall">PM</span>
+              <span class="value value--small">{{ direction_2.next | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_2.next | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -103,8 +115,8 @@
           <div class="content text--gray-50">
             <span class="label label--small mb--1">later</span>
             <span>
-              <span class="value value--small">10:42</span>
-              <span class="value value--xxsmall">PM</span>
+              <span class="value value--small">{{ direction_2.later | split: " " | first }}</span>
+              <span class="value value--xxsmall">{{ direction_2.later | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -113,22 +125,24 @@
     </div>
     
     <!-- Alerts Section -->
-    <div class="mb--2">
-      <span class="label label--small label--underline">Alerts</span>
-    </div>
-    <div class="alerts-section">
-      <div class="item">
-        <div class="meta"></div>
-        <div class="content">
-          <span class="description" data-clamp="2">Starting Dec 22, maintenance on Lakeshore East line between Oshawa and Whitby. Expect delays of 10-15 minutes.</span>
-          <span class="label label--small label--underline">active: 01/18/26 9:30 PM</span>
+    {% if has_alerts %}
+      <div class="mb--2">
+        <span class="label label--small label--underline">Alerts</span>
+      </div>
+      <div class="alerts-section">
+        <div class="item">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="description" data-clamp="2">{{ alerts }}</span>
+            <span class="label label--small label--underline">active: {{ updated_at }}</span>
+          </div>
         </div>
       </div>
-    </div>
+    {% endif %}
     
   </div>
 </div>
 
 <div class="title_bar m--0">
-  <span class="title">Oshawa GO</span>
+  <span class="title">{{ station }}</span>
 </div>

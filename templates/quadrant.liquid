@@ -1,8 +1,14 @@
 {% comment %}
-  GO Transit Dashboard - Quadrant Layout PREVIEW
-  Static preview template with sample data (no API dependency)
+  GO Transit Dashboard - Quadrant Layout
+  Adapted from Sound Transit Link Light Rail Dashboard
   
-  Sample Data: Lakeshore East Line - Oshawa GO Station
+  Use Case: Quarter-size display (most compact)
+  
+  Features:
+  - Two columns showing both directions
+  - Only arriving/next times (no "later" - space constraint)
+  - Most compact layout
+  - Station name in title bar
 {% endcomment %}
 
 <div class="layout layout--row p--2 gap--xxlarge mb--0" style="position:relative">
@@ -11,10 +17,10 @@
     <!-- Two-direction time table -->
     <div class="columns time-table">
       
-      <!-- Direction 1: To Union Station -->
+      <!-- Direction 1 -->
       <div class="column gap--medium" data-overflow="true">
         <div>
-          <span class="title title--small" style="display:block">Union Station</span>
+          <span class="title title--small" style="display:block">{{ direction_1.label | split: "To " | last }}</span>
         </div>
         
         <!-- Arriving -->
@@ -23,8 +29,8 @@
           <div class="content text--black">
             <span class="label label--small label--inverted mb--1">arriving</span>
             <span>
-              <span class="value value--medium">9:34</span>
-              <span class="value value--xsmall">PM</span>
+              <span class="value value--medium">{{ direction_1.arriving | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ direction_1.arriving | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -35,17 +41,17 @@
           <div class="content text--gray-35">
             <span class="label label--small label--outline mb--1">next</span>
             <span>
-              <span class="value value--medium">9:44</span>
-              <span class="value value--xsmall">PM</span>
+              <span class="value value--medium">{{ direction_1.next | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ direction_1.next | split: " " | last }}</span>
             </span>
           </div>
         </div>
       </div>
       
-      <!-- Direction 2: To Oshawa -->
+      <!-- Direction 2 -->
       <div class="column gap--medium" data-overflow="true">
         <div>
-          <span class="title title--small" style="display:block">Oshawa</span>
+          <span class="title title--small" style="display:block">{{ direction_2.label | split: "To " | last }}</span>
         </div>
         
         <!-- Arriving -->
@@ -54,8 +60,8 @@
           <div class="content text--black">
             <span class="label label--small label--inverted mb--1">arriving</span>
             <span>
-              <span class="value value--medium">9:42</span>
-              <span class="value value--xsmall">PM</span>
+              <span class="value value--medium">{{ direction_2.arriving | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ direction_2.arriving | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -66,8 +72,8 @@
           <div class="content text--gray-35">
             <span class="label label--small label--outline mb--1">next</span>
             <span>
-              <span class="value value--medium">10:12</span>
-              <span class="value value--xsmall">PM</span>
+              <span class="value value--medium">{{ direction_2.next | split: " " | first }}</span>
+              <span class="value value--xsmall">{{ direction_2.next | split: " " | last }}</span>
             </span>
           </div>
         </div>
@@ -79,5 +85,5 @@
 </div>
 
 <div class="title_bar m--0">
-  <span class="title">Oshawa GO</span>
+  <span class="title">{{ station }}</span>
 </div>
