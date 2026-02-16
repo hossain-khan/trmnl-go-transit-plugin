@@ -43,7 +43,8 @@
               <span class="label label--small label--inverted" {% if departure.lineColour %}style="background-color: {{ departure.lineColour }};"{% endif %}>{{ departure.lineCode }}</span>
               <span class="title title--small md:title--medium">{{ departure.service }}</span>
             </div>
-          <span class="description text--gray-35" data-clamp="1">{{ departure.stopsDisplay }}</span>
+            <span class="description text--gray-35" data-clamp="1">Union Station - {{ departure.stopsDisplay }}</span>
+          </div>
           
           <!-- Scheduled Time -->
           <div class="text--center" style="min-width: 100px;">
