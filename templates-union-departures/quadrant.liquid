@@ -9,28 +9,6 @@
   - Most compact presentation
 {% endcomment %}
 
-<style type="text/css">
-  .departure-mini {
-    border-bottom: 1px solid #e0e0e0;
-    padding: 6px 0;
-  }
-  
-  .departure-mini:last-child {
-    border-bottom: none;
-  }
-  
-  .line-badge-mini {
-    display: inline-block;
-    padding: 2px 5px;
-    border-radius: 2px;
-    font-weight: bold;
-    color: white;
-    min-width: 24px;
-    text-align: center;
-    font-size: 10px;
-  }
-</style>
-
 <div class="layout layout--col p--2 mb--0">
   
   <!-- Header -->
@@ -39,13 +17,13 @@
   </div>
   
   <!-- Mini Departure List -->
-  <div class="flex flex--col">
+  <div class="flex flex--col gap--xsmall">
     {% for departure in trainDepartures.items limit: 4 %}
-      <div class="departure-mini">
+      <div class="outline p--1">
         
-        <!-- Line Badge -->
+        <!-- Line Badge & Service -->
         <div class="flex flex--row gap--xsmall flex--center-y mb--xsmall">
-          <span class="line-badge-mini" style="background-color: {{ departure.lineColour }};">{{ departure.lineCode }}</span>
+          <span class="label label--small label--inverted">{{ departure.lineCode }}</span>
           <span class="description">{{ departure.service }}</span>
         </div>
         

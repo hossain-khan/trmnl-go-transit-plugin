@@ -29,43 +29,6 @@
   }
 {% endcomment %}
 
-<style type="text/css">
-  .departure-row {
-    border-bottom: 1px solid #e0e0e0;
-    padding: 12px 0;
-  }
-  
-  .departure-row:last-child {
-    border-bottom: none;
-  }
-  
-  .line-indicator {
-    width: 6px;
-    height: 100%;
-    border-radius: 2px;
-  }
-  
-  .line-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: bold;
-    color: white;
-    min-width: 36px;
-    text-align: center;
-  }
-  
-  .status-icon {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #e0e0e0;
-    margin-right: 4px;
-    vertical-align: middle;
-  }
-</style>
-
 <div class="layout layout--col p--3 mb--0">
   
   <!-- Header -->
@@ -76,39 +39,39 @@
   <!-- Departure List -->
   <div class="flex flex--col gap--small">
     {% for departure in trainDepartures.items limit: 8 %}
-      <div class="departure-row">
+      <div class="outline mb--small p--2">
         <div class="flex flex--row gap--small flex--center-y">
-          
-          <!-- Line Indicator Bar -->
-          <div class="line-indicator" style="background-color: {{ departure.lineColour }};"></div>
           
           <!-- Line Badge & Route Info -->
           <div class="flex--1">
             <div class="flex flex--row gap--xsmall flex--center-y mb--1">
-              <span class="line-badge" style="background-color: {{ departure.lineColour }};">{{ departure.lineCode }}</span>
+              <span class="label label--small label--inverted">{{ departure.lineCode }}</span>
               <span class="title title--small">{{ departure.service }}</span>
             </div>
-            <span class="description text--gray-35">Union Station - {{ departure.stopsDisplay }}</span>
+            <span class="description text--gray-35" data-clamp="1">Union Station - {{ departure.stopsDisplay }}</span>
           </div>
           
           <!-- Scheduled Time -->
-          <div class="text--center" style="min-width: 80px;">
-            <span class="label label--small">Scheduled:</span>
-            <span class="value value--medium">{{ departure.scheduledTime }}</span>
+          <div class="text--center">
+            <span class="label label--small">Scheduled</span>
+            <div class="value value--medium">{{ departure.scheduledTime }}</div>
           </div>
           
           <!-- Platform -->
-          <div class="text--center" style="min-width: 70px;">
-            <span class="label label--small">Platform:</span>
-            <span class="value value--small">{{ departure.platform }}</span>
+          <div class="text--center">
+            <span class="label label--small">Platform</span>
+            <div class="value value--small">{{ departure.platform }}</div>
           </div>
           
           <!-- Status -->
-          <div class="text--center" style="min-width: 120px;">
-            <span class="label label--small">Status:</span>
-            <div class="flex flex--row flex--center-x gap--xsmall">
-              <span class="status-icon"></span>
-              <span class="description">{{ departure.info }}</span>
+          <div class="text--center">
+            <span class="label label--small">Status</span>
+            <div class="description">
+              {% if departure.info contains "Proceed" %}
+                <span class="label label--small label--inverted">Proceed</span>
+              {% else %}
+                <span class="label label--small label--outline">Wait</span>
+              {% endif %}
             </div>
           </div>
           

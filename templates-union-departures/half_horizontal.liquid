@@ -9,28 +9,6 @@
   - Optimized for wide, short displays
 {% endcomment %}
 
-<style type="text/css">
-  .departure-compact {
-    border-bottom: 1px solid #e0e0e0;
-    padding: 8px 0;
-  }
-  
-  .departure-compact:last-child {
-    border-bottom: none;
-  }
-  
-  .line-badge-compact {
-    display: inline-block;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-weight: bold;
-    color: white;
-    min-width: 28px;
-    text-align: center;
-    font-size: 12px;
-  }
-</style>
-
 <div class="layout layout--col p--2 mb--0">
   
   <!-- Header -->
@@ -39,14 +17,14 @@
   </div>
   
   <!-- Compact Departure List -->
-  <div class="flex flex--col">
+  <div class="flex flex--col gap--xsmall">
     {% for departure in trainDepartures.items limit: 5 %}
-      <div class="departure-compact">
+      <div class="outline p--1">
         <div class="flex flex--row gap--small flex--center-y">
           
           <!-- Line Badge & Service -->
-          <div class="flex flex--row gap--xsmall flex--center-y" style="min-width: 180px;">
-            <span class="line-badge-compact" style="background-color: {{ departure.lineColour }};">{{ departure.lineCode }}</span>
+          <div class="flex flex--row gap--xsmall flex--center-y">
+            <span class="label label--small label--inverted">{{ departure.lineCode }}</span>
             <span class="description">{{ departure.service }}</span>
           </div>
           
@@ -56,17 +34,17 @@
           </div>
           
           <!-- Time -->
-          <div style="min-width: 60px;">
+          <div>
             <span class="value value--small">{{ departure.scheduledTime }}</span>
           </div>
           
           <!-- Platform -->
-          <div style="min-width: 50px;">
+          <div>
             <span class="label label--small">{{ departure.platform }}</span>
           </div>
           
           <!-- Status -->
-          <div style="min-width: 90px;">
+          <div>
             {% if departure.info contains "Proceed" %}
               <span class="label label--small label--inverted">Proceed</span>
             {% else %}
