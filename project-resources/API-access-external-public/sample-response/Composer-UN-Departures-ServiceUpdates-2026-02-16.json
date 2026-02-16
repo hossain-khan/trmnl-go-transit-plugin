@@ -1,0 +1,19 @@
+{
+  "LastUpdated": "2026-02-16T08:33:40.2060005-05:00",
+  "TotalUpdates": 0,
+  "Trains": {
+    "TotalUpdates": 0,
+    "Train": [],
+    "Status": null
+  },
+  "Buses": {
+    "TotalUpdates": 0,
+    "Bus": [],
+    "Status": null
+  },
+  "Stations": {
+    "TotalUpdates": 0,
+    "Station": [],
+    "Status": null
+  }
+}

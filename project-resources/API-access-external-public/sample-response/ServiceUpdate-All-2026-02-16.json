@@ -1,0 +1,556 @@
+{
+  "LastUpdated": "2026-02-16T08:33:05.6215574-05:00",
+  "TotalUpdates": 18,
+  "Trains": {
+    "TotalUpdates": 1,
+    "Train": [
+      {
+        "CorridorName": "Lakeshore West",
+        "CorridorCode": "LW",
+        "Status": "On-Time",
+        "Notifications": {
+          "Notification": []
+        },
+        "SaagNotifications": {
+          "SaagNotification": []
+        },
+        "TotalUpdates": 0,
+        "LineColour": "#98002e",
+        "NetworkStatus": {
+          "LineCode": "LW",
+          "RealTimeStatus": "GOODSERVICE",
+          "RealTimeStatusOverride": null,
+          "HistoricalStatus": 0.9172,
+          "HistoricalMonth": "2026-01"
+        }
+      },
+      {
+        "CorridorName": "Lakeshore East",
+        "CorridorCode": "LE",
+        "Status": "On-Time",
+        "Notifications": {
+          "Notification": []
+        },
+        "SaagNotifications": {
+          "SaagNotification": []
+        },
+        "TotalUpdates": 0,
+        "LineColour": "#ff0d00",
+        "NetworkStatus": {
+          "LineCode": "LE",
+          "RealTimeStatus": "GOODSERVICE",
+          "RealTimeStatusOverride": null,
+          "HistoricalStatus": 0.9394,
+          "HistoricalMonth": "2026-01"
+        }
+      },
+      {
+        "CorridorName": "Kitchener",
+        "CorridorCode": "GT",
+        "Status": "On-Time",
+        "Notifications": {
+          "Notification": []
+        },
+        "SaagNotifications": {
+          "SaagNotification": []
+        },
+        "TotalUpdates": 0,
+        "LineColour": "#00853e",
+        "NetworkStatus": {
+          "LineCode": "GT",
+          "RealTimeStatus": "GOODSERVICE",
+          "RealTimeStatusOverride": null,
+          "HistoricalStatus": 0.9261,
+          "HistoricalMonth": "2026-01"
+        }
+      },
+      {
+        "CorridorName": "Stouffville",
+        "CorridorCode": "ST",
+        "Status": "On-Time",
+        "Notifications": {
+          "Notification": []
+        },
+        "SaagNotifications": {
+          "SaagNotification": []
+        },
+        "TotalUpdates": 0,
+        "LineColour": "#794500",
+        "NetworkStatus": {
+          "LineCode": "ST",
+          "RealTimeStatus": "GOODSERVICE",
+          "RealTimeStatusOverride": null,
+          "HistoricalStatus": 0.8952,
+          "HistoricalMonth": "2026-01"
+        }
+      },
+      {
+        "CorridorName": "Richmond Hill",
+        "CorridorCode": "RH",
+        "Status": "On-Time",
+        "Notifications": {
+          "Notification": []
+        },
+        "SaagNotifications": {
+          "SaagNotification": []
+        },
+        "TotalUpdates": 0,
+        "LineColour": "#0099c7",
+        "NetworkStatus": {
+          "LineCode": "RH",
+          "RealTimeStatus": "NOPLANNEDSERVICE",
+          "RealTimeStatusOverride": null,
+          "HistoricalStatus": 0.9293,
+          "HistoricalMonth": "2026-01"
+        }
+      },
+      {
+        "CorridorName": "Barrie",
+        "CorridorCode": "BR",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "TDELAY",
+              "Code": "BR",
+              "Name": "Barrie",
+              "MessageSubject": "Update: Train cancelled - Allandale Waterfront GO 07:01 - Union Station 08:42",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\">The&nbsp;Allandale Waterfront GO 07:01 - Union Station 08:42  train is cancelled&nbsp; due to an operational issue. Customers can take the next train at 08:01.</div>",
+              "PostedDateTime": "02/16/2026 07:11:31",
+              "Rank": null,
+              "Status": "UPD",
+              "ServiceMode": "GO Train",
+              "TripNumbers": [
+                "6808"
+              ]
+            }
+          ]
+        },
+        "SaagNotifications": {
+          "SaagNotification": []
+        },
+        "TotalUpdates": 1,
+        "LineColour": "#003767",
+        "NetworkStatus": {
+          "LineCode": "BR",
+          "RealTimeStatus": "MINORDELAYS",
+          "RealTimeStatusOverride": null,
+          "HistoricalStatus": 0.9492,
+          "HistoricalMonth": "2026-01"
+        }
+      },
+      {
+        "CorridorName": "Milton",
+        "CorridorCode": "MI",
+        "Status": "On-Time",
+        "Notifications": {
+          "Notification": []
+        },
+        "SaagNotifications": {
+          "SaagNotification": []
+        },
+        "TotalUpdates": 0,
+        "LineColour": "#f57f25",
+        "NetworkStatus": {
+          "LineCode": "MI",
+          "RealTimeStatus": "NOPLANNEDSERVICE",
+          "RealTimeStatusOverride": null,
+          "HistoricalStatus": 0.8446,
+          "HistoricalMonth": "2026-01"
+        }
+      }
+    ],
+    "Status": "1 Updates"
+  },
+  "Buses": {
+    "TotalUpdates": 7,
+    "Bus": [
+      {
+        "RouteName": "Oshawa / Hwy 407 Terminal",
+        "RouteNumber": "52",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "BTMPSTP",
+              "Code": "52",
+              "Name": "Oshawa / Hwy 407 Terminal",
+              "MessageSubject": "Temporary stop relocation – Route 52, 56, 70, 71",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><p><span style=\"font-family: Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; background-color: transparent;\">The eastbound stop at YMCA Boulevard west of Kennedy Road has been move to the Unionville GO bus loop due to long term construction.&nbsp;</span></p><p><span style=\"font-family: Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; background-color: transparent;\">Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. Sign up for On The GO alerts <a href=\"https://www.gotransit.com/en/service-updates/sign-up-for-on-the-go-alerts\" target=\"_blank\">here</a>.&nbsp;</span></p></div></div></div></div></div></div></div></div>",
+              "PostedDateTime": "01/29/2026 11:21:14",
+              "Rank": null,
+              "Status": "UPD",
+              "ServiceMode": "GO Bus",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1,
+        "LineColour": "#6f298d"
+      },
+      {
+        "RouteName": "Oshawa / Oakville",
+        "RouteNumber": "56",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "BTMPSTP",
+              "Code": "56",
+              "Name": "Oshawa / Oakville",
+              "MessageSubject": "Temporary stop relocation – Route 52, 56, 70, 71",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><p><span style=\"font-family: Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; background-color: transparent;\">The eastbound stop at YMCA Boulevard west of Kennedy Road has been move to the Unionville GO bus loop due to long term construction.&nbsp;</span></p><p><span style=\"font-family: Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; background-color: transparent;\">Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. Sign up for On The GO alerts <a href=\"https://www.gotransit.com/en/service-updates/sign-up-for-on-the-go-alerts\" target=\"_blank\">here</a>.&nbsp;</span></p></div></div></div></div></div></div></div></div>",
+              "PostedDateTime": "01/29/2026 11:21:14",
+              "Rank": null,
+              "Status": "UPD",
+              "ServiceMode": "GO Bus",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1,
+        "LineColour": "#6f298d"
+      },
+      {
+        "RouteName": "Barrie / Newmarket",
+        "RouteNumber": "68",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "BTMPSTP",
+              "Code": "68",
+              "Name": "Barrie / Newmarket",
+              "MessageSubject": "Update: Temporary bus stops re-located in Holland Landing",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><div>Buses will not stop along Toll Road/Yonge Street between Mount Albert Road and Doane Road due to long term construction. To better serve the community, temporary stops have been relocated to:<div><br>-Holland Landing Road @ Oriole Drive<br>-Holland Landing Road @ Bradford Street<br><br></div><div><span style=\"font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 15px; font-family: proximaNovaRegular, sans-serif;\">This project is estimated to be completed spring of 2026.</span></div></div><div></div><br></div></div>",
+              "PostedDateTime": "10/22/2025 18:12:29",
+              "Rank": null,
+              "Status": "UPD",
+              "ServiceMode": "GO Bus",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1,
+        "LineColour": "#003767"
+      },
+      {
+        "RouteName": "Uxbridge / Mount Joy",
+        "RouteNumber": "70",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "BTMPSTP",
+              "Code": "70",
+              "Name": "Uxbridge / Mount Joy",
+              "MessageSubject": "Temporary stop relocation – Route 52, 56, 70, 71",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><p><span style=\"font-family: Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; background-color: transparent;\">The eastbound stop at YMCA Boulevard west of Kennedy Road has been move to the Unionville GO bus loop due to long term construction.&nbsp;</span></p><p><span style=\"font-family: Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; background-color: transparent;\">Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. Sign up for On The GO alerts <a href=\"https://www.gotransit.com/en/service-updates/sign-up-for-on-the-go-alerts\" target=\"_blank\">here</a>.&nbsp;</span></p></div></div></div></div></div></div></div></div>",
+              "PostedDateTime": "01/29/2026 11:21:14",
+              "Rank": null,
+              "Status": "UPD",
+              "ServiceMode": "GO Bus",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1,
+        "LineColour": "#794500"
+      },
+      {
+        "RouteName": "Stouffville",
+        "RouteNumber": "71",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "BTMPSTP",
+              "Code": "71",
+              "Name": "Stouffville",
+              "MessageSubject": "Temporary stop relocation – Route 52, 56, 70, 71",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><p><span style=\"font-family: Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; background-color: transparent;\">The eastbound stop at YMCA Boulevard west of Kennedy Road has been move to the Unionville GO bus loop due to long term construction.&nbsp;</span></p><p><span style=\"font-family: Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; background-color: transparent;\">Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. Sign up for On The GO alerts <a href=\"https://www.gotransit.com/en/service-updates/sign-up-for-on-the-go-alerts\" target=\"_blank\">here</a>.&nbsp;</span></p></div></div></div></div></div></div></div></div>",
+              "PostedDateTime": "01/29/2026 11:21:14",
+              "Rank": null,
+              "Status": "UPD",
+              "ServiceMode": "GO Bus",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1,
+        "LineColour": "#794500"
+      },
+      {
+        "RouteName": "Peterborough / Oshawa",
+        "RouteNumber": "88",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "BTMPSTP",
+              "Code": "88",
+              "Name": "Peterborough / Oshawa",
+              "MessageSubject": "Temporary stop relocation – Route 88",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div class=\"\"><div class=\"\"><strong><span style=\"font-size: 10.5pt; line-height: 17.5px; font-family: Arial, sans-serif;\"></span></strong><div><div>&nbsp;<span style=\"background-color: transparent;\">The southbound stop on Bowmanville Avenue at Waverly Road is out of service due to long term construction. The northbound stop has moved to the south side of Waverly Road.</span><p><span style=\"background-color: transparent;\">Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. Sign up for On The GO alerts<a href=\"https://www.gotransit.com/en/service-updates/sign-up-for-on-the-go-alerts\" target=\"_blank\"> here.&nbsp;</a></span></p></div></div></div></div></div>",
+              "PostedDateTime": "02/05/2026 14:06:39",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "GO Bus",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1,
+        "LineColour": "#ff0d00"
+      },
+      {
+        "RouteName": "Oshawa / Yorkdale",
+        "RouteNumber": "92",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "BDETOUR",
+              "Code": "92",
+              "Name": "Oshawa / Yorkdale",
+              "MessageSubject": "Bus route modified – Route 92",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><div><span style=\"font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 15px; font-family: proximaNovaRegular, sans-serif; color: rgb(69, 69, 69);\">Eastbound GO buses will not stop at Kingston Road at Harwood Avenue as a result of construction work. Please board at the&nbsp; temporary stop located on the south side of Kingston Road, west of Harwood Avenue.&nbsp;<br><br _moz_dirty=\"\"></span></div><div></div>\n<div>Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more.&nbsp;<a href=\"https://www.gotransit.com/en/service-updates/sign-up-for-on-the-go-alerts\" target=\"_blank\">Sign up for On The GO alerts here.</a>&nbsp;</div></div></div>",
+              "PostedDateTime": "01/13/2026 23:53:23",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "GO Bus",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1,
+        "LineColour": "#ff0d00"
+      }
+    ],
+    "Status": "7 Updates"
+  },
+  "Stations": {
+    "TotalUpdates": 10,
+    "Station": [
+      {
+        "StationName": "Agincourt GO",
+        "StationCode": "AG",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SADIS",
+              "Code": "AG",
+              "Name": "Agincourt GO",
+              "MessageSubject": "Elevator out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">The elevators leading from the station building to the south tunnel are out of service. Customers can access both platforms through the north tunnel using elevator access.<o:p></o:p></span></div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">&nbsp;</span></div><div><u><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\"><a href=\"https://can01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.gotransit.com%2Fen%2Ffind-a-station-or-stop%2Fag%2Fstation-details&amp;data=05%7C02%7CTrudy.Taylor-Steele%40metrolinx.com%7C6b707d78ba784179919308ddde5f23b5%7C191b00eaedcc406c8456dc29abc0f10f%7C0%7C0%7C638911222514059223%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&amp;sdata=vtP9b7Y5FS3YtieAwUhFdR2q0hxNWFh%2FD2oPOLzWDBw%3D&amp;reserved=0\">Visit the Agincourt GO Station page to find helpful information on departures, a station map and a listing of all the services we have available.</a></span></u><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\"><o:p></o:p></span></div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">&nbsp;</span></div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\"><a href=\"https://can01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.gotransit.com%2Fen%2Ftravelling-on-go%2Faccessibility&amp;data=05%7C02%7CTrudy.Taylor-Steele%40metrolinx.com%7C6b707d78ba784179919308ddde5f23b5%7C191b00eaedcc406c8456dc29abc0f10f%7C0%7C0%7C638911222514100947%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&amp;sdata=SfPspOhIhbodziLyF6zqMXE27ckpZ4TbTwZx21yADQY%3D&amp;reserved=0\" target=\"_blank\" title=\"https://www.gotransit.com/en/travelling-on-go/accessibility\">For Accessibility support during elevator outages, contact us here for assistance.</a><o:p></o:p></span></div></div></div>",
+              "PostedDateTime": "01/01/2026 23:29:54",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      },
+      {
+        "StationName": "Exhibition GO",
+        "StationCode": "EX",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SGIOTHR",
+              "Code": "EX",
+              "Name": "Exhibition GO",
+              "MessageSubject": "Exhibition GO: Pedestrian Bridge Closure",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div><div><span style=\"font-size: 10.5pt; line-height: 115%; font-family: Arial, sans-serif;\">The pedestrian bridge at Exhibition GO, is closed for the winter season and inaccessible to customers. </span></div><div><span style=\"font-size: 10.5pt; font-family: Arial, sans-serif;\">Please use elevators and stairwells to access the pedestrian tunnel for Exhibition GO platform and station access. </span></div><div><span lang=\"EN-CA\" style=\"font-size:11.0pt;font-family:'Calibri',sans-serif; \">&nbsp;</span></div><div><span lang=\"EN-CA\" style=\"font-size:11.0pt;font-family:'Calibri',sans-serif; \"><a href=\"https://can01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.gotransit.com%2Fen%2Fsee-schedules&amp;data=05%7C02%7CMarcia.Simpson%40metrolinx.com%7C2bdcbacfd70f407ac21608de2789722d%7C191b00eaedcc406c8456dc29abc0f10f%7C0%7C0%7C638991668441098497%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&amp;sdata=mn%2BS3%2FzN8UgOb%2FFjFbotKt60bsf%2FWgPnY%2BWE3FXcimU%3D&amp;reserved=0\"><span lang=\"EN-US\" style=\"font-size:10.5pt;font-family:'Arial',sans-serif;color:#0563C1; \"></span></a></span>Subscribe to On the GO alerts and receive customized, real-time alerts for schedule changes, construction updates and more. <a href=\" https://www.gotransit.com/en/service-updates/sign-up-for-on-the-go-alerts\" target=\"_blank\">Sign up for On The GO alerts here.&nbsp;</a></div></div></div></div></div></div></div></div>",
+              "PostedDateTime": "11/19/2025 12:38:14",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      },
+      {
+        "StationName": "Finch Bus Terminal",
+        "StationCode": "00013",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SADIS",
+              "Code": "00013",
+              "Name": "Finch Bus Terminal",
+              "MessageSubject": "Elevator out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div class=\"masteroverridePublic_En\"><div class=\"masteroverridePublic_En\"><div><div><span style=\"color:black\">The elevator connecting the Finch Bus Terminal to the TTC tunnel is out of service. Passengers who need this elevator can access TTC using the step free path via the Kiss and Ride entrance.</span></div><div>&nbsp;</div><div><a href=\"https://www.gotransit.com/en/find-a-station-or-stop/00013/station-details\">Visit the Finch GO Station page to find helpful information on departures, a station map and a listing of all the services we have available.</a> </div><div>&nbsp;</div><div><a href=\"https://www.gotransit.com/en/travelling-on-go/accessibility\">For Accessibility support during elevator outages, contact us here for assistance.</a></div></div></div></div></div>",
+              "PostedDateTime": "02/03/2026 21:46:50",
+              "Rank": null,
+              "Status": "UPD",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      },
+      {
+        "StationName": "Hamilton GO Centre",
+        "StationCode": "HA",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SADIS",
+              "Code": "HA",
+              "Name": "Hamilton GO Centre",
+              "MessageSubject": "Elevator out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div class=\"\"><div><div>The elevator connecting the main lobby to platforms 1 and 2 is out of service. The station remains accessible through the ramp in the bus terminal.<o:p></o:p></div><div><o:p>&nbsp;</o:p></div><div><a href=\"https://www.gotransit.com/en/find-a-station-or-stop/ha/station-details\">Visit the Hamilton GO Centre page to find helpful information on departures, a station map and a listing of all the services we have available.</a><span lang=\"FR\"><o:p></o:p></span></div><div><o:p>&nbsp;</o:p></div><div><a href=\"https://www.gotransit.com/en/travelling-on-go/accessibility?utm_source=OTG&amp;utm_medium=Email&amp;utm_campaign=ElevatorAccessibility&amp;utm_content=NOCCommunications\">Visit out Accessibility page to see how we are committed to making our services easy for everyone to use</a>.<o:p></o:p></div></div></div></div>",
+              "PostedDateTime": "01/01/2026 23:40:49",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      },
+      {
+        "StationName": "Kennedy GO",
+        "StationCode": "KE",
+        "Status": "2 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SGIOTHR",
+              "Code": "KE",
+              "Name": "Kennedy GO",
+              "MessageSubject": "New Station Building Now Open!",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div class=\"masteroverridePublic_En\"><div><div><span lang=\"EN-CA\" style=\"font-size:10.5pt;font-family:'Arial',sans-serif\">The new Kennedy GO&nbsp;station&nbsp;is now open, connecting&nbsp;Stouffville line&nbsp;GO service to&nbsp;Line 5 Eglinton and TTC.</span><span style=\"font-size:10.5pt;font-family:'Arial',sans-serif;\">&nbsp;</span></div><div><br></div><div><span lang=\"EN-CA\"><a href=\"https://www.metrolinx.com/en/projects-and-programs/line5\"><span style=\"font-size:10.5pt;font-family:'Arial',sans-serif\">Learn more about the new station amenities and future construction near the station.</span></a></span></div></div></div></div>",
+              "PostedDateTime": "02/09/2026 23:26:01",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            },
+            {
+              "SubCategory": "SADIS",
+              "Code": "KE",
+              "Name": "Kennedy GO",
+              "MessageSubject": "Elevator out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div class=\"\"><div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">The elevator connecting the GO platform and the TTC tunnel is out of service. Customers who need this elevator to access the TTC system are advised to use the TTC station elevator on Transway Crescent, adjacent to the south parking lot.<o:p></o:p></span></div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">&nbsp;</span></div><div><a href=\"https://www.gotransit.com/en/the-future-and-go/construction-notices/kennedy-go-station-improvement\"><b><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">Visit the Kennedy GO Station page to find helpful information on departures, a station map and a listing of all the services we have available.</span></b></a><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\"><o:p></o:p></span></div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">&nbsp;</span></div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">Dignity Transportation shuttle service will be available, upon request, for transportation between the west and east side of the station.<o:p></o:p></span></div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">&nbsp;</span></div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">Requests must be made 48 hours in advance by calling 416-398-2222 and dial &#8220;0&#8221;. Please follow the signs to find the shuttle locations.<o:p></o:p></span></div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">&nbsp;</span></div><div><a href=\"https://www.gotransit.com/en/travelling-on-go/accessibility?utm_source=Website&amp;utm_medium=ServiceUpdates&amp;utm_campaign=ElevatorAccessibility&amp;utm_content=NOCCommunications\"><b><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">Visit our Accessibility page to see how we are committed to making our services easy for everyone to use.</span></b></a><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\"><o:p></o:p></span></div></div></div></div></div></div></div></div>",
+              "PostedDateTime": "01/01/2026 23:46:19",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 2
+      },
+      {
+        "StationName": "Langstaff GO",
+        "StationCode": "LA",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SGIOTHR",
+              "Code": "LA",
+              "Name": "Langstaff GO",
+              "MessageSubject": "Accessibility ramp is out of service.",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><div><span lang=\"EN-CA\" style=\"font-size:10.5pt;font-family:'Arial',sans-serif\">The accessibility ramp at Langstaff GO is temporarily out of service until further notice due to an operational issue.</span></div><div><span lang=\"EN-CA\" style=\"font-size:10.5pt;font-family:'Arial',sans-serif\">&nbsp;</span></div><div><strong><span lang=\"EN-CA\" style=\"font-size:10.5pt;font-family: 'Arial',sans-serif\">If you require the accessibility coach at Langstaff GO, here&#8217;s what you need to know:</span></strong></div><div><strong><span lang=\"EN-CA\" style=\"font-size:10.5pt;font-family: 'Arial',sans-serif\">&nbsp;</span></strong></div><div><span lang=\"EN-CA\" style=\"font-size:10.5pt;font-family:'Arial',sans-serif\">- Shuttle service is available between 06:00- 08:30 and 16:00 - 19:40.</span></div><div><span lang=\"EN-CA\" style=\"font-size:10.5pt;font-family:'Arial',sans-serif\">- Call 416-398-2222 and dial &#8216;0&#8217; to book a shuttle.</span></div><div><span lang=\"EN-CA\" style=\"font-size:10.5pt; font-family:'Arial',sans-serif\">- Note: Dignity Shuttle services must be booked 48 hours in advance.</span></div><div><span lang=\"EN-CA\" style=\"font-size:10.5pt;font-family:'Arial',sans-serif\">- If you&#8217;re travelling south towards Union Station; prearrange a Dignity shuttle from Langstaff to Old Cummer GO.</span></div><div><span lang=\"EN-CA\" style=\"font-size:10.5pt;font-family:'Arial',sans-serif\">- If you&#8217;re travelling north toward Bloomington; prearrange a Dignity shuttle from Langstaff to Richmond Hill GO.</span></div><div><span lang=\"EN-CA\" style=\"font-size:10.5pt;font-family:'Arial',sans-serif\">- If you&#8217;re travelling to Langstaff GO; Exit the train at Old Cummer or Richmond Hill GO, to access your prearranged Dignity shuttle.&nbsp;</span></div></div></div>",
+              "PostedDateTime": "01/20/2026 15:37:40",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      },
+      {
+        "StationName": "Milliken GO",
+        "StationCode": "MK",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SADIS",
+              "Code": "MK",
+              "Name": "Milliken GO",
+              "MessageSubject": "Elevator out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><div>The elevator connecting the north tunnel to platform 1 is out of service. The station remains accessible from the south end.<o:p></o:p></div><div><o:p>&nbsp;</o:p></div><div><a href=\"https://www.gotransit.com/en/find-a-station-or-stop/mk/station-details\">Visit the Milliken GO Station page to find helpful information on departures, a station map and a listing of all the services we have available.</a> <o:p></o:p></div><div><o:p>&nbsp;</o:p></div><div><a href=\"https://www.gotransit.com/en/travelling-with-us/accessibility?utm_source=OTG&amp;utm_medium=Email&amp;utm_campaign=ElevatorAccessibility&amp;utm_content=NOCCommunications\">For Accessibility support during elevator outages, contact us here for assistance.<span style=\"color: windowtext; text-decoration-line: none;\"><o:p></o:p></span></a></div></div></div>",
+              "PostedDateTime": "01/25/2026 09:07:38",
+              "Rank": null,
+              "Status": "UPD",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      },
+      {
+        "StationName": "Pickering GO",
+        "StationCode": "PIN",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SADIS",
+              "Code": "PIN",
+              "Name": "Pickering GO",
+              "MessageSubject": "Elevator out of service",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div class=\"masteroverridePublic_En\"><div><div><span lang=\"EN-CA\">The elevator connecting the pedestrian bridge to the bus loop and Kiss &amp; Ride is out of service. Customers can use the parking structure elevators to access both the bus loop and Kiss &amp; Ride as well as the station building.</span></div><div><span lang=\"EN-CA\">&nbsp;</span></div><div><span lang=\"EN-CA\"><a href=\"https://www.gotransit.com/en/find-a-station-or-stop/pin/station-details\">Visit the Pickering GO Station page to find helpful information on departures, a station map and a listing of all the services we have available.</a></span><span lang=\"EN-CA\"> </span></div><div><span lang=\"EN-CA\">&nbsp;</span></div><div><span lang=\"EN-CA\"><a href=\"https://www.gotransit.com/en/travelling-with-us/accessibility?utm_source=Website&amp;utm_medium=ServiceUpdates&amp;utm_campaign=ElevatorAccessibility&amp;utm_content=NOCCommunications\"><span style=\"color: windowtext; text-decoration-line: none;\"><u><span style=\"color:blue\">For Accessibility support during elevator outages, contact us here for assistance.</span></u></span></a></span></div></div></div></div>",
+              "PostedDateTime": "02/16/2026 05:13:38",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      },
+      {
+        "StationName": "West Harbour GO",
+        "StationCode": "WR",
+        "Status": "1 Updates",
+        "Notifications": {
+          "Notification": [
+            {
+              "SubCategory": "SGIOTHR",
+              "Code": "WR",
+              "Name": "West Harbour GO",
+              "MessageSubject": "Street level access after station hours",
+              "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\"><div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">Access to the waiting area and restrooms is open Monday &#8211; Friday, 5:20 a.m. to 12:40 p.m.<o:p></o:p></span></div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">After the main waiting area is closed:<o:p></o:p></span></div><div><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif\">To exit from the station building to MacNab Street, please use the walkway doors adjacent to the platform 1 staircase.<o:p></o:p></span></div></div></div>",
+              "PostedDateTime": "12/23/2025 06:48:10",
+              "Rank": null,
+              "Status": "INIT",
+              "ServiceMode": "Station",
+              "TripNumbers": null
+            }
+          ]
+        },
+        "TotalUpdates": 1
+      }
+    ],
+    "Status": "10 Updates"
+  },
+  "TrainAnnouncements": {
+    "Notification": [],
+    "TotalUpdates": 0
+  },
+  "BusAnnouncements": {
+    "Notification": [],
+    "TotalUpdates": 0
+  }
+}

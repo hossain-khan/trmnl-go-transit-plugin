@@ -1,0 +1,20 @@
+{
+  "LastUpdated": "2026-02-16T08:33:08.206689-05:00",
+  "TotalUpdates": 1,
+  "Notifications": {
+    "Notification": [
+      {
+        "SubCategory": "GDOTHER",
+        "Code": null,
+        "Name": null,
+        "MessageSubject": "Happy Family Day! We're running on a Saturday schedule today",
+        "MessageBody": "<style type=\"text/css\">.masteroverridePublic_En {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En p {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En div {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En span {font-family: \"Arial\" !important;font-size:10.5pt !important;}.masteroverridePublic_En li {font-family: \"Arial\" !important;font-size:10.5pt !important;}</style><div class=\"masteroverridePublic_En\">Today, we are running on a Saturday schedule.<br><br>&nbsp;There will be no GO train service on the Richmond Hill or Milton lines.<br><br>GO Bus service is also operating on a Saturday schedule.<br><br>&nbsp;You can click <a href=\"https://www.gotransit.com/en/plan-your-trip\" target=\"_blank\">here</a> to start planning your trip.<br></div>",
+        "PostedDateTime": "02/16/2026 05:39:14",
+        "Rank": null,
+        "Status": "INIT",
+        "ServiceMode": "General",
+        "TripNumbers": null
+      }
+    ]
+  }
+}

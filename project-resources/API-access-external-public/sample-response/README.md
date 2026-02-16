@@ -2,6 +2,34 @@
 
 This directory contains actual API responses from the GO Transit External Public API (`https://api.metrolinx.com/external/go/`).
 
+## Snapshot Dates
+
+| Date | Files | Status | Notes |
+|------|-------|--------|-------|
+| **2026-02-16** | 6 files | ✅ Current | Monday morning snapshot (8:33 AM ET) |
+| **2026-02-05** | 6 files | ✅ Archived | Wednesday morning snapshot |
+
+## Recent Snapshots (2026-02-16)
+
+Captured on Monday, February 16, 2026 at 8:33 AM ET.
+
+| File | Size | Status | Notes |
+|------|------|--------|-------|
+| `Timetable-OS-UN-2026-02-16.json` | 96 KB | ✅ OK | 28 journeys (Oshawa → Union) |
+| `Departures-UN-2026-02-16.json` | 24 KB | ✅ OK | Union Station live departures |
+| `ServiceUpdate-All-2026-02-16.json` | 43 KB | ✅ OK | All service updates (general + lines + stations) |
+| `ServiceUpdate-General-2026-02-16.json` | 1.3 KB | ✅ OK | System-wide alerts only |
+| `Composer-UN-Departures-ServiceUpdates-2026-02-16.json` | 313 B | ✅ OK | Combined departures + updates |
+| `FareCalculator-OS-UN-2026-02-16.json` | 59 B | ⚠️ 404 | Resource not found (possible API change) |
+
+**Notable Observations**:
+- **Real-time data**: Departures show trains scheduled throughout the morning with platform information
+- **Service updates**: No active service disruptions at capture time (empty arrays in Composer)
+- **Timetable**: Full day schedule from 4:00 AM to 11:40 PM with mix of Rail (LE) and Bus (90B) services
+- **FareCalculator**: Returned 404 - may require different parameters or endpoint has changed
+
+## Archived Snapshots (2026-02-05)
+
 ## Files
 
 ### Timetable-OS-UN-2026-02-05.json

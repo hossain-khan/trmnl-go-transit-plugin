@@ -1,0 +1,856 @@
+{
+  "stationCode": "UN",
+  "trainDepartures": {
+    "items": [
+      {
+        "lineCode": "LW",
+        "tripNumber": "1709",
+        "service": "Lakeshore West",
+        "transitType": 1,
+        "transitTypeName": "T",
+        "scheduledTime": "08:47",
+        "scheduledDateTime": "2026-02-16T08:47:00",
+        "platform": "-",
+        "scheduledPlatform": null,
+        "stopsDisplay": "Exhibition-Mimico-Long Branch",
+        "info": "Wait / Attendez",
+        "lineColour": "#98002e",
+        "allDepartureStops": {
+          "stayInTrain": false,
+          "tripNumbers": [
+            "1709"
+          ],
+          "departureDetailsList": [
+            {
+              "stopName": "Union Station",
+              "departureTime": "08:47",
+              "stopCode": "UN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Exhibition GO",
+              "departureTime": "08:55",
+              "stopCode": "EX",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Mimico GO",
+              "departureTime": "09:03",
+              "stopCode": "MI",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Long Branch GO",
+              "departureTime": "09:09",
+              "stopCode": "LO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Port Credit GO",
+              "departureTime": "09:15",
+              "stopCode": "PO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Clarkson GO",
+              "departureTime": "09:22",
+              "stopCode": "CL",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Oakville GO",
+              "departureTime": "09:29",
+              "stopCode": "OA",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Bronte GO",
+              "departureTime": "09:35",
+              "stopCode": "BO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Appleby GO",
+              "departureTime": "09:41",
+              "stopCode": "AP",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Burlington GO",
+              "departureTime": "09:48",
+              "stopCode": "BU",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Aldershot GO",
+              "departureTime": "09:55",
+              "stopCode": "AL",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "West Harbour GO",
+              "departureTime": "10:09",
+              "stopCode": "WR",
+              "isMajorStop": true
+            }
+          ]
+        },
+        "zone": null,
+        "gate": null
+      },
+      {
+        "lineCode": "KI",
+        "tripNumber": "3509",
+        "service": "Kitchener",
+        "transitType": 1,
+        "transitTypeName": "T",
+        "scheduledTime": "08:48",
+        "scheduledDateTime": "2026-02-16T08:48:00",
+        "platform": "-",
+        "scheduledPlatform": null,
+        "stopsDisplay": "Bloor-Mount Dennis-Weston",
+        "info": "Wait / Attendez",
+        "lineColour": "#00853e",
+        "allDepartureStops": {
+          "stayInTrain": false,
+          "tripNumbers": [
+            "3509"
+          ],
+          "departureDetailsList": [
+            {
+              "stopName": "Union Station",
+              "departureTime": "08:48",
+              "stopCode": "UN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Bloor GO",
+              "departureTime": "08:58",
+              "stopCode": "BL",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Mount Dennis GO",
+              "departureTime": "09:03",
+              "stopCode": "MD",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Weston GO",
+              "departureTime": "09:07",
+              "stopCode": "WE",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Malton GO",
+              "departureTime": "09:16",
+              "stopCode": "MA",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Bramalea GO",
+              "departureTime": "09:23",
+              "stopCode": "BE",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Brampton Innovation District GO",
+              "departureTime": "09:31",
+              "stopCode": "BR",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Mount Pleasant GO",
+              "departureTime": "09:37",
+              "stopCode": "MO",
+              "isMajorStop": true
+            }
+          ]
+        },
+        "zone": null,
+        "gate": null
+      },
+      {
+        "lineCode": "LE",
+        "tripNumber": "9308",
+        "service": "Lakeshore East",
+        "transitType": 1,
+        "transitTypeName": "T",
+        "scheduledTime": "08:50",
+        "scheduledDateTime": "2026-02-16T08:50:00",
+        "platform": "-",
+        "scheduledPlatform": null,
+        "stopsDisplay": "Danforth-Scarborough-Eglinton",
+        "info": "Wait / Attendez",
+        "lineColour": "#ff0d00",
+        "allDepartureStops": {
+          "stayInTrain": false,
+          "tripNumbers": [
+            "9308"
+          ],
+          "departureDetailsList": [
+            {
+              "stopName": "Union Station",
+              "departureTime": "08:50",
+              "stopCode": "UN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Danforth GO",
+              "departureTime": "09:02",
+              "stopCode": "DA",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Scarborough GO",
+              "departureTime": "09:08",
+              "stopCode": "SC",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Eglinton GO",
+              "departureTime": "09:13",
+              "stopCode": "EG",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Guildwood GO",
+              "departureTime": "09:18",
+              "stopCode": "GU",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Rouge Hill GO",
+              "departureTime": "09:25",
+              "stopCode": "RO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Pickering GO",
+              "departureTime": "09:33",
+              "stopCode": "PIN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Ajax GO",
+              "departureTime": "09:38",
+              "stopCode": "AJ",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Whitby GO",
+              "departureTime": "09:46",
+              "stopCode": "WH",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Durham College Oshawa GO",
+              "departureTime": "09:52",
+              "stopCode": "OS",
+              "isMajorStop": true
+            }
+          ]
+        },
+        "zone": null,
+        "gate": null
+      },
+      {
+        "lineCode": "BR",
+        "tripNumber": "6909",
+        "service": "Barrie",
+        "transitType": 1,
+        "transitTypeName": "T",
+        "scheduledTime": "08:52",
+        "scheduledDateTime": "2026-02-16T08:52:00",
+        "platform": "-",
+        "scheduledPlatform": null,
+        "stopsDisplay": "Downsview Park-Rutherford-Maple",
+        "info": "Wait / Attendez",
+        "lineColour": "#003767",
+        "allDepartureStops": {
+          "stayInTrain": false,
+          "tripNumbers": [
+            "6909"
+          ],
+          "departureDetailsList": [
+            {
+              "stopName": "Union Station",
+              "departureTime": "08:52",
+              "stopCode": "UN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Downsview Park GO",
+              "departureTime": "09:11",
+              "stopCode": "DW",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Rutherford GO",
+              "departureTime": "09:21",
+              "stopCode": "RU",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Maple GO",
+              "departureTime": "09:25",
+              "stopCode": "MP",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "King City GO",
+              "departureTime": "09:32",
+              "stopCode": "KC",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Aurora GO",
+              "departureTime": "09:42",
+              "stopCode": "AU",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Newmarket GO",
+              "departureTime": "09:50",
+              "stopCode": "NE",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "East Gwillimbury GO",
+              "departureTime": "09:54",
+              "stopCode": "EA",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Bradford GO",
+              "departureTime": "10:05",
+              "stopCode": "BD",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Barrie South GO",
+              "departureTime": "10:26",
+              "stopCode": "BA",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Allandale Waterfront GO",
+              "departureTime": "10:35",
+              "stopCode": "AD",
+              "isMajorStop": true
+            }
+          ]
+        },
+        "zone": null,
+        "gate": null
+      },
+      {
+        "lineCode": "ST",
+        "tripNumber": "7410",
+        "service": "Stouffville",
+        "transitType": 1,
+        "transitTypeName": "T",
+        "scheduledTime": "09:00",
+        "scheduledDateTime": "2026-02-16T09:00:00",
+        "platform": "-",
+        "scheduledPlatform": null,
+        "stopsDisplay": "Kennedy-Agincourt-Milliken",
+        "info": "Wait / Attendez",
+        "lineColour": "#794500",
+        "allDepartureStops": {
+          "stayInTrain": false,
+          "tripNumbers": [
+            "7410"
+          ],
+          "departureDetailsList": [
+            {
+              "stopName": "Union Station",
+              "departureTime": "09:00",
+              "stopCode": "UN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Kennedy GO",
+              "departureTime": "09:18",
+              "stopCode": "KE",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Agincourt GO",
+              "departureTime": "09:28",
+              "stopCode": "AG",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Milliken GO",
+              "departureTime": "09:34",
+              "stopCode": "MK",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Unionville GO",
+              "departureTime": "09:40",
+              "stopCode": "UI",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Centennial GO",
+              "departureTime": "09:45",
+              "stopCode": "CE",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Markham GO",
+              "departureTime": "09:50",
+              "stopCode": "MR",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Mount Joy GO",
+              "departureTime": "09:56",
+              "stopCode": "MJ",
+              "isMajorStop": true
+            }
+          ]
+        },
+        "zone": null,
+        "gate": null
+      },
+      {
+        "lineCode": "LW",
+        "tripNumber": "1961",
+        "service": "Lakeshore West",
+        "transitType": 1,
+        "transitTypeName": "T",
+        "scheduledTime": "09:04",
+        "scheduledDateTime": "2026-02-16T09:04:00",
+        "platform": "-",
+        "scheduledPlatform": null,
+        "stopsDisplay": "Express To-Exhibition-Port Credit",
+        "info": "Wait / Attendez",
+        "lineColour": "#98002e",
+        "allDepartureStops": {
+          "stayInTrain": false,
+          "tripNumbers": [
+            "1961"
+          ],
+          "departureDetailsList": [
+            {
+              "stopName": "Union Station",
+              "departureTime": "09:04",
+              "stopCode": "UN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Exhibition GO",
+              "departureTime": "09:13",
+              "stopCode": "EX",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Port Credit GO",
+              "departureTime": "09:28",
+              "stopCode": "PO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Oakville GO",
+              "departureTime": "09:39",
+              "stopCode": "OA",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Burlington GO",
+              "departureTime": "09:54",
+              "stopCode": "BU",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Aldershot GO",
+              "departureTime": "10:02",
+              "stopCode": "AL",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "West Harbour GO",
+              "departureTime": "10:16",
+              "stopCode": "WR",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Confederation GO",
+              "departureTime": "10:30",
+              "stopCode": "CF",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "St. Catharines GO (Via Station)",
+              "departureTime": "11:02",
+              "stopCode": "SCTH",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Niagara Falls GO (Via Station)",
+              "departureTime": "11:30",
+              "stopCode": "NI",
+              "isMajorStop": true
+            }
+          ]
+        },
+        "zone": null,
+        "gate": null
+      },
+      {
+        "lineCode": "LW",
+        "tripNumber": "1011",
+        "service": "Lakeshore West",
+        "transitType": 1,
+        "transitTypeName": "T",
+        "scheduledTime": "09:17",
+        "scheduledDateTime": "2026-02-16T09:17:00",
+        "platform": "-",
+        "scheduledPlatform": null,
+        "stopsDisplay": "Exhibition-Mimico-Long Branch",
+        "info": "Wait / Attendez",
+        "lineColour": "#98002e",
+        "allDepartureStops": {
+          "stayInTrain": false,
+          "tripNumbers": [
+            "1011"
+          ],
+          "departureDetailsList": [
+            {
+              "stopName": "Union Station",
+              "departureTime": "09:17",
+              "stopCode": "UN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Exhibition GO",
+              "departureTime": "09:25",
+              "stopCode": "EX",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Mimico GO",
+              "departureTime": "09:33",
+              "stopCode": "MI",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Long Branch GO",
+              "departureTime": "09:39",
+              "stopCode": "LO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Port Credit GO",
+              "departureTime": "09:45",
+              "stopCode": "PO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Clarkson GO",
+              "departureTime": "09:52",
+              "stopCode": "CL",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Oakville GO",
+              "departureTime": "09:59",
+              "stopCode": "OA",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Bronte GO",
+              "departureTime": "10:05",
+              "stopCode": "BO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Appleby GO",
+              "departureTime": "10:11",
+              "stopCode": "AP",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Burlington GO",
+              "departureTime": "10:18",
+              "stopCode": "BU",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Aldershot GO",
+              "departureTime": "10:26",
+              "stopCode": "AL",
+              "isMajorStop": true
+            }
+          ]
+        },
+        "zone": null,
+        "gate": null
+      },
+      {
+        "lineCode": "LE",
+        "tripNumber": "9110",
+        "service": "Lakeshore East",
+        "transitType": 1,
+        "transitTypeName": "T",
+        "scheduledTime": "09:20",
+        "scheduledDateTime": "2026-02-16T09:20:00",
+        "platform": "-",
+        "scheduledPlatform": null,
+        "stopsDisplay": "Danforth-Scarborough-Eglinton",
+        "info": "Wait / Attendez",
+        "lineColour": "#ff0d00",
+        "allDepartureStops": {
+          "stayInTrain": false,
+          "tripNumbers": [
+            "9110"
+          ],
+          "departureDetailsList": [
+            {
+              "stopName": "Union Station",
+              "departureTime": "09:20",
+              "stopCode": "UN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Danforth GO",
+              "departureTime": "09:32",
+              "stopCode": "DA",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Scarborough GO",
+              "departureTime": "09:38",
+              "stopCode": "SC",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Eglinton GO",
+              "departureTime": "09:43",
+              "stopCode": "EG",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Guildwood GO",
+              "departureTime": "09:48",
+              "stopCode": "GU",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Rouge Hill GO",
+              "departureTime": "09:55",
+              "stopCode": "RO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Pickering GO",
+              "departureTime": "10:03",
+              "stopCode": "PIN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Ajax GO",
+              "departureTime": "10:08",
+              "stopCode": "AJ",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Whitby GO",
+              "departureTime": "10:16",
+              "stopCode": "WH",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Durham College Oshawa GO",
+              "departureTime": "10:22",
+              "stopCode": "OS",
+              "isMajorStop": true
+            }
+          ]
+        },
+        "zone": null,
+        "gate": null
+      },
+      {
+        "lineCode": "LW",
+        "tripNumber": "1711",
+        "service": "Lakeshore West",
+        "transitType": 1,
+        "transitTypeName": "T",
+        "scheduledTime": "09:47",
+        "scheduledDateTime": "2026-02-16T09:47:00",
+        "platform": "-",
+        "scheduledPlatform": null,
+        "stopsDisplay": "Exhibition-Mimico-Long Branch",
+        "info": "Wait / Attendez",
+        "lineColour": "#98002e",
+        "allDepartureStops": {
+          "stayInTrain": false,
+          "tripNumbers": [
+            "1711"
+          ],
+          "departureDetailsList": [
+            {
+              "stopName": "Union Station",
+              "departureTime": "09:47",
+              "stopCode": "UN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Exhibition GO",
+              "departureTime": "09:55",
+              "stopCode": "EX",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Mimico GO",
+              "departureTime": "10:03",
+              "stopCode": "MI",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Long Branch GO",
+              "departureTime": "10:09",
+              "stopCode": "LO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Port Credit GO",
+              "departureTime": "10:15",
+              "stopCode": "PO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Clarkson GO",
+              "departureTime": "10:22",
+              "stopCode": "CL",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Oakville GO",
+              "departureTime": "10:29",
+              "stopCode": "OA",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Bronte GO",
+              "departureTime": "10:35",
+              "stopCode": "BO",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Appleby GO",
+              "departureTime": "10:41",
+              "stopCode": "AP",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Burlington GO",
+              "departureTime": "10:48",
+              "stopCode": "BU",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Aldershot GO",
+              "departureTime": "10:55",
+              "stopCode": "AL",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "West Harbour GO",
+              "departureTime": "11:09",
+              "stopCode": "WR",
+              "isMajorStop": true
+            }
+          ]
+        },
+        "zone": null,
+        "gate": null
+      },
+      {
+        "lineCode": "KI",
+        "tripNumber": "3511",
+        "service": "Kitchener",
+        "transitType": 1,
+        "transitTypeName": "T",
+        "scheduledTime": "09:48",
+        "scheduledDateTime": "2026-02-16T09:48:00",
+        "platform": "-",
+        "scheduledPlatform": null,
+        "stopsDisplay": "Bloor-Mount Dennis-Weston",
+        "info": "Wait / Attendez",
+        "lineColour": "#00853e",
+        "allDepartureStops": {
+          "stayInTrain": false,
+          "tripNumbers": [
+            "3511"
+          ],
+          "departureDetailsList": [
+            {
+              "stopName": "Union Station",
+              "departureTime": "09:48",
+              "stopCode": "UN",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Bloor GO",
+              "departureTime": "09:58",
+              "stopCode": "BL",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Mount Dennis GO",
+              "departureTime": "10:03",
+              "stopCode": "MD",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Weston GO",
+              "departureTime": "10:07",
+              "stopCode": "WE",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Malton GO",
+              "departureTime": "10:16",
+              "stopCode": "MA",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Bramalea GO",
+              "departureTime": "10:23",
+              "stopCode": "BE",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Brampton Innovation District GO",
+              "departureTime": "10:31",
+              "stopCode": "BR",
+              "isMajorStop": true
+            },
+            {
+              "stopName": "Mount Pleasant GO",
+              "departureTime": "10:37",
+              "stopCode": "MO",
+              "isMajorStop": true
+            }
+          ]
+        },
+        "zone": null,
+        "gate": null
+      }
+    ],
+    "page": 1,
+    "pageSize": 10,
+    "totalItemCount": 30
+  },
+  "busDepartures": {
+    "items": [],
+    "page": 1,
+    "pageSize": 0,
+    "totalItemCount": 0
+  }
+}
