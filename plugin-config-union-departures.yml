@@ -21,7 +21,8 @@
     Features include two-direction schedules, service alerts, and responsive layouts for all TRMNL devices.
     Data is sourced from the Metrolinx Open Data API with intelligent edge caching for optimal performance.
   github_url: https://github.com/hossain-khan/trmnl-go-transit-plugin
-  learn_more_url: https://www.gotransit.com/
+  learn_more_url: https://hossain-khan.github.io/trmnl-go-transit-plugin/
+  email_address: trmnl@hossain.dev
 
 # =============================================================================
 # STATION SELECTION
