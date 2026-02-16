@@ -4,51 +4,51 @@
   Use Case: Half-size horizontal display (abundant horizontal space, minimal vertical)
   
   Features:
-  - Compact departure list (4-5 departures)
-  - Essential info only: line, service, time, status
+  - Two-column layout with max 4 departures (2 rows × 2 columns)
+  - Vertical stacking: service name, route info, time, platform/status
   - Optimized for wide, short displays
 {% endcomment %}
 
 <div class="layout layout--col p--2 mb--0">
   
-  <!-- Compact Departure List -->
-  <div class="flex flex--col gap--xsmall">
-    {% for departure in trainDepartures.items limit: 5 %}
-      <div class="outline p--1 stretch-x">
-        <div class="flex flex--row gap--small flex--center-y stretch-x">
+  <!-- Two-Column Departure Grid -->
+  <div class="columns gap--small">
+    {% for departure in trainDepartures.items limit: 4 %}
+      <div class="column">
+        <div class="outline p--2">
           
           <!-- Line Badge & Service -->
-          <div class="flex flex--row gap--xsmall flex--center-y" style="min-width: 0;">
+          <div class="flex flex--row gap--xsmall flex--center-y mb--1">
             <span class="label label--small label--inverted" {% if departure.lineColour %}style="background-color: {{ departure.lineColour }};"{% endif %}>{{ departure.lineCode }}</span>
-            <span class="description md:title--small">{{ departure.service }}</span>
+            <span class="title title--small">{{ departure.service }}</span>
           </div>
           
           <!-- Route Info -->
-          <div class="flex--1" style="min-width: 0;">
-            <span class="description text--gray-35" data-clamp="1">{{ departure.stopsDisplay }}</span>
+          <div class="mb--1">
+            <span class="description text--gray-35" data-clamp="1">{{ departure.lineCode }} → Union Station</span>
           </div>
           
-          <!-- Time -->
-          <div style="min-width: 60px;">
-            <span class="value value--medium md:value--large">{{ departure.scheduledTime }}</span>
+          <!-- Time (Large) -->
+          <div class="mb--1">
+            <span class="value value--large md:value--xlarge">{{ departure.scheduledTime }}</span>
           </div>
           
-          <!-- Platform -->
-          <div style="min-width: 45px; text-align: center;">
-            {% if departure.platform == "-" %}
-              <span class="label label--small">-</span>
-            {% else %}
-              <span class="label label--small">{{ departure.platform }}</span>
-            {% endif %}
-          </div>
-          
-          <!-- Status -->
-          <div style="min-width: 65px;">
-            {% if departure.info contains "Proceed" %}
-              <span class="label label--small label--inverted">Go</span>
-            {% else %}
-              <span class="label label--small label--outline">Wait</span>
-            {% endif %}
+          <!-- Platform & Status -->
+          <div class="flex flex--row gap--small flex--center-y">
+            <div>
+              {% if departure.platform == "-" %}
+                <span class="label label--small">-</span>
+              {% else %}
+                <span class="label label--small">{{ departure.platform }}</span>
+              {% endif %}
+            </div>
+            <div>
+              {% if departure.info contains "Proceed" %}
+                <span class="label label--small label--inverted">Go</span>
+              {% else %}
+                <span class="label label--small label--outline">Wait</span>
+              {% endif %}
+            </div>
           </div>
           
         </div>
