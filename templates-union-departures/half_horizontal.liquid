@@ -4,16 +4,16 @@
   Use Case: Half-size horizontal display (abundant horizontal space, minimal vertical)
   
   Features:
-  - Two-column layout with max 4 departures (2 rows × 2 columns)
+  - Three-column layout (1 row × 3 columns)
   - Vertical stacking: service name, route info, time, platform/status
   - Optimized for wide, short displays
 {% endcomment %}
 
 <div class="layout layout--col p--2 mb--0">
   
-  <!-- Two-Column Departure Grid -->
+  <!-- Three-Column Departure Grid -->
   <div class="columns gap--small">
-    {% for departure in trainDepartures.items limit: 4 %}
+    {% for departure in trainDepartures.items limit: 3 %}
       <div class="column">
         <div class="outline p--2">
           
@@ -24,8 +24,8 @@
           </div>
           
           <!-- Route Info -->
-          <div class="mb--1">
-            <span class="description text--gray-35" data-clamp="1">{{ departure.lineCode }} → Union Station</span>
+          <div class="mb--1 text--center">
+            <span class="description" data-clamp="1">{{ departure.lineCode }} → Union Station</span>
           </div>
           
           <!-- Time (Large) -->
