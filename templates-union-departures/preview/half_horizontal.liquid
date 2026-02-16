@@ -1,0 +1,83 @@
+{% comment %}
+  GO Transit Union Station Departures - Half Horizontal Layout Preview
+  Static sample data for design testing
+{% endcomment %}
+
+{% assign sample_departures = "LW,Lakeshore West,08:47,7 & 8,Exhibition-Mimico-Long Branch,Proceed / Avancez,#98002e|KI,Kitchener,08:48,4,Bloor-Mount Dennis-Weston,Proceed / Avancez,#00853e|LE,Lakeshore East,08:50,11 & 12,Danforth-Scarborough-Eglinton,Wait / Attendez,#ff0d00|BR,Barrie,08:52,13,Downsview Park-Rutherford-Maple,Wait / Attendez,#003767|ST,Stouffville,09:00,3,Kennedy-Agincourt-Milliken,Proceed / Avancez,#794500" | split: "|" %}
+
+<style type="text/css">
+  .departure-compact {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 0;
+  }
+  
+  .departure-compact:last-child {
+    border-bottom: none;
+  }
+  
+  .line-badge-compact {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+    color: white;
+    min-width: 28px;
+    text-align: center;
+    font-size: 12px;
+  }
+</style>
+
+<div class="layout layout--col p--2 mb--0">
+  
+  <!-- Header -->
+  <div class="mb--1">
+    <span class="title title--small">Departures</span>
+  </div>
+  
+  <!-- Compact Departure List -->
+  <div class="flex flex--col">
+    {% for departure_data in sample_departures %}
+      {% assign departure = departure_data | split: "," %}
+      <div class="departure-compact">
+        <div class="flex flex--row gap--small flex--center-y">
+          
+          <!-- Line Badge & Service -->
+          <div class="flex flex--row gap--xsmall flex--center-y" style="min-width: 180px;">
+            <span class="line-badge-compact" style="background-color: {{ departure[6] }};">{{ departure[0] }}</span>
+            <span class="description">{{ departure[1] }}</span>
+          </div>
+          
+          <!-- Route Info -->
+          <div class="flex--1">
+            <span class="description text--gray-35" data-clamp="1">{{ departure[4] }}</span>
+          </div>
+          
+          <!-- Time -->
+          <div style="min-width: 60px;">
+            <span class="value value--small">{{ departure[2] }}</span>
+          </div>
+          
+          <!-- Platform -->
+          <div style="min-width: 50px;">
+            <span class="label label--small">{{ departure[3] }}</span>
+          </div>
+          
+          <!-- Status -->
+          <div style="min-width: 90px;">
+            {% if departure[5] contains "Proceed" %}
+              <span class="label label--small label--inverted">Proceed</span>
+            {% else %}
+              <span class="label label--small label--outline">Wait</span>
+            {% endif %}
+          </div>
+          
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+</div>
+
+<div class="title_bar m--0">
+  <span class="title">Union Station</span>
+</div>

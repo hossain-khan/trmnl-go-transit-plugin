@@ -1,0 +1,124 @@
+{% comment %}
+  GO Transit Union Station Departures - Full Layout
+  
+  Use Case: Full-screen departure board display
+  
+  Features:
+  - List of upcoming departures with color-coded line badges
+  - Service name and route information
+  - Scheduled departure times
+  - Platform information
+  - Status indicators (Proceed/Wait)
+  
+  Data Structure Expected:
+  {
+    "stationCode": "UN",
+    "trainDepartures": {
+      "items": [
+        {
+          "lineCode": "LW",
+          "service": "Lakeshore West",
+          "scheduledTime": "08:47",
+          "platform": "7 & 8",
+          "stopsDisplay": "Exhibition-Mimico-Long Branch",
+          "info": "Proceed / Avancez",
+          "lineColour": "#98002e"
+        }
+      ]
+    }
+  }
+{% endcomment %}
+
+<style type="text/css">
+  .departure-row {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 12px 0;
+  }
+  
+  .departure-row:last-child {
+    border-bottom: none;
+  }
+  
+  .line-indicator {
+    width: 6px;
+    height: 100%;
+    border-radius: 2px;
+  }
+  
+  .line-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: white;
+    min-width: 36px;
+    text-align: center;
+  }
+  
+  .status-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+</style>
+
+<div class="layout layout--col p--3 mb--0">
+  
+  <!-- Header -->
+  <div class="mb--2">
+    <span class="title title--large">Departures</span>
+  </div>
+  
+  <!-- Departure List -->
+  <div class="flex flex--col gap--small">
+    {% for departure in trainDepartures.items limit: 8 %}
+      <div class="departure-row">
+        <div class="flex flex--row gap--small flex--center-y">
+          
+          <!-- Line Indicator Bar -->
+          <div class="line-indicator" style="background-color: {{ departure.lineColour }};"></div>
+          
+          <!-- Line Badge & Route Info -->
+          <div class="flex--1">
+            <div class="flex flex--row gap--xsmall flex--center-y mb--1">
+              <span class="line-badge" style="background-color: {{ departure.lineColour }};">{{ departure.lineCode }}</span>
+              <span class="title title--small">{{ departure.service }}</span>
+            </div>
+            <span class="description text--gray-35">Union Station - {{ departure.stopsDisplay }}</span>
+          </div>
+          
+          <!-- Scheduled Time -->
+          <div class="text--center" style="min-width: 80px;">
+            <span class="label label--small">Scheduled:</span>
+            <span class="value value--medium">{{ departure.scheduledTime }}</span>
+          </div>
+          
+          <!-- Platform -->
+          <div class="text--center" style="min-width: 70px;">
+            <span class="label label--small">Platform:</span>
+            <span class="value value--small">{{ departure.platform }}</span>
+          </div>
+          
+          <!-- Status -->
+          <div class="text--center" style="min-width: 120px;">
+            <span class="label label--small">Status:</span>
+            <div class="flex flex--row flex--center-x gap--xsmall">
+              <span class="status-icon"></span>
+              <span class="description">{{ departure.info }}</span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+</div>
+
+<div class="title_bar m--0">
+  <span class="title">Union Station</span>
+</div>

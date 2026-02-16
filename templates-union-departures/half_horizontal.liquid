@@ -1,0 +1,86 @@
+{% comment %}
+  GO Transit Union Station Departures - Half Horizontal Layout
+  
+  Use Case: Half-size horizontal display (abundant horizontal space, minimal vertical)
+  
+  Features:
+  - Compact departure list (4-5 departures)
+  - Essential info only: line, service, time, status
+  - Optimized for wide, short displays
+{% endcomment %}
+
+<style type="text/css">
+  .departure-compact {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 0;
+  }
+  
+  .departure-compact:last-child {
+    border-bottom: none;
+  }
+  
+  .line-badge-compact {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+    color: white;
+    min-width: 28px;
+    text-align: center;
+    font-size: 12px;
+  }
+</style>
+
+<div class="layout layout--col p--2 mb--0">
+  
+  <!-- Header -->
+  <div class="mb--1">
+    <span class="title title--small">Departures</span>
+  </div>
+  
+  <!-- Compact Departure List -->
+  <div class="flex flex--col">
+    {% for departure in trainDepartures.items limit: 5 %}
+      <div class="departure-compact">
+        <div class="flex flex--row gap--small flex--center-y">
+          
+          <!-- Line Badge & Service -->
+          <div class="flex flex--row gap--xsmall flex--center-y" style="min-width: 180px;">
+            <span class="line-badge-compact" style="background-color: {{ departure.lineColour }};">{{ departure.lineCode }}</span>
+            <span class="description">{{ departure.service }}</span>
+          </div>
+          
+          <!-- Route Info -->
+          <div class="flex--1">
+            <span class="description text--gray-35" data-clamp="1">{{ departure.stopsDisplay }}</span>
+          </div>
+          
+          <!-- Time -->
+          <div style="min-width: 60px;">
+            <span class="value value--small">{{ departure.scheduledTime }}</span>
+          </div>
+          
+          <!-- Platform -->
+          <div style="min-width: 50px;">
+            <span class="label label--small">{{ departure.platform }}</span>
+          </div>
+          
+          <!-- Status -->
+          <div style="min-width: 90px;">
+            {% if departure.info contains "Proceed" %}
+              <span class="label label--small label--inverted">Proceed</span>
+            {% else %}
+              <span class="label label--small label--outline">Wait</span>
+            {% endif %}
+          </div>
+          
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+</div>
+
+<div class="title_bar m--0">
+  <span class="title">Union Station</span>
+</div>

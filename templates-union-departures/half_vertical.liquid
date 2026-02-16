@@ -1,0 +1,83 @@
+{% comment %}
+  GO Transit Union Station Departures - Half Vertical Layout
+  
+  Use Case: Half-size vertical display (abundant vertical space, limited horizontal)
+  
+  Features:
+  - More departures in vertical list (6-8 items)
+  - Stacked layout for narrow width
+  - Full information per departure
+{% endcomment %}
+
+<style type="text/css">
+  .departure-vertical {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+  }
+  
+  .departure-vertical:last-child {
+    border-bottom: none;
+  }
+  
+  .line-badge-vert {
+    display: inline-block;
+    padding: 3px 7px;
+    border-radius: 3px;
+    font-weight: bold;
+    color: white;
+    min-width: 32px;
+    text-align: center;
+  }
+</style>
+
+<div class="layout layout--col p--3 mb--0">
+  
+  <!-- Header -->
+  <div class="mb--2">
+    <span class="title title--small">Departures</span>
+  </div>
+  
+  <!-- Vertical Departure List -->
+  <div class="flex flex--col gap--xsmall">
+    {% for departure in trainDepartures.items limit: 8 %}
+      <div class="departure-vertical">
+        
+        <!-- Line & Service -->
+        <div class="flex flex--row gap--xsmall flex--center-y mb--1">
+          <span class="line-badge-vert" style="background-color: {{ departure.lineColour }};">{{ departure.lineCode }}</span>
+          <span class="title title--small">{{ departure.service }}</span>
+        </div>
+        
+        <!-- Route -->
+        <div class="mb--1">
+          <span class="description text--gray-35" data-clamp="1">Union Station - {{ departure.stopsDisplay }}</span>
+        </div>
+        
+        <!-- Time, Platform, Status -->
+        <div class="flex flex--row gap--small flex--center-y">
+          <div>
+            <span class="label label--small">Scheduled:</span>
+            <span class="value value--small">{{ departure.scheduledTime }}</span>
+          </div>
+          <div>
+            <span class="label label--small">Platform:</span>
+            <span class="value value--xsmall">{{ departure.platform }}</span>
+          </div>
+          <div class="flex--1 text--right">
+            {% if departure.info contains "Proceed" %}
+              <span class="label label--small label--inverted">Proceed</span>
+            {% else %}
+              <span class="label label--small label--outline">Wait</span>
+            {% endif %}
+          </div>
+        </div>
+        
+      </div>
+    {% endfor %}
+  </div>
+  
+</div>
+
+<div class="title_bar m--0">
+  <span class="title">Union Station</span>
+</div>

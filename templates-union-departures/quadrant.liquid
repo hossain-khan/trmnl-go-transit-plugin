@@ -1,0 +1,73 @@
+{% comment %}
+  GO Transit Union Station Departures - Quadrant Layout
+  
+  Use Case: Quarter-size display (most compact)
+  
+  Features:
+  - Minimal departures list (3-4 items)
+  - Essential info only
+  - Most compact presentation
+{% endcomment %}
+
+<style type="text/css">
+  .departure-mini {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 6px 0;
+  }
+  
+  .departure-mini:last-child {
+    border-bottom: none;
+  }
+  
+  .line-badge-mini {
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white;
+    min-width: 24px;
+    text-align: center;
+    font-size: 10px;
+  }
+</style>
+
+<div class="layout layout--col p--2 mb--0">
+  
+  <!-- Header -->
+  <div class="mb--1">
+    <span class="title title--small">Departures</span>
+  </div>
+  
+  <!-- Mini Departure List -->
+  <div class="flex flex--col">
+    {% for departure in trainDepartures.items limit: 4 %}
+      <div class="departure-mini">
+        
+        <!-- Line Badge -->
+        <div class="flex flex--row gap--xsmall flex--center-y mb--xsmall">
+          <span class="line-badge-mini" style="background-color: {{ departure.lineColour }};">{{ departure.lineCode }}</span>
+          <span class="description">{{ departure.service }}</span>
+        </div>
+        
+        <!-- Time & Status -->
+        <div class="flex flex--row gap--xsmall flex--center-y">
+          <span class="value value--xsmall">{{ departure.scheduledTime }}</span>
+          <span class="label label--small">{{ departure.platform }}</span>
+          <div class="flex--1 text--right">
+            {% if departure.info contains "Proceed" %}
+              <span class="label label--small label--inverted">Go</span>
+            {% else %}
+              <span class="label label--small label--outline">Wait</span>
+            {% endif %}
+          </div>
+        </div>
+        
+      </div>
+    {% endfor %}
+  </div>
+  
+</div>
+
+<div class="title_bar m--0">
+  <span class="title">Union Station</span>
+</div>
