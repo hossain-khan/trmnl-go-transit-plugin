@@ -25,8 +25,12 @@
         <!-- Time & Status -->
         <div class="flex flex--row gap--xsmall flex--center-y stretch-x">
           <span class="value value--small md:value--medium">{{ departure.scheduledTime }}</span>
-          <span class="label label--small" style="min-width: 35px;">
-            {% if departure.platform == "-" %}-{% else %}{{ departure.platform }}{% endif %}
+          <span style="min-width: 35px;">
+            {% if departure.platform == "-" %}
+              <span class="label label--small">TBD</span>
+            {% else %}
+              <span class="label label--small">{{ departure.platform }}</span>
+            {% endif %}
           </span>
           <div class="flex--1 text--right">
             {% if departure.info contains "Proceed" %}

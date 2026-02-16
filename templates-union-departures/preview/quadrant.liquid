@@ -22,7 +22,13 @@
         <!-- Time & Status -->
         <div class="flex flex--row gap--xsmall flex--center-y stretch-x">
           <span class="value value--small md:value--medium">{{ departure[2] }}</span>
-          <span class="label label--small" style="min-width: 35px;">{{ departure[3] }}</span>
+          <span style="min-width: 35px;">
+            {% if departure[3] == "-" %}
+              <span class="label label--small">TBD</span>
+            {% else %}
+              <span class="label label--small">{{ departure[3] }}</span>
+            {% endif %}
+          </span>
           <div class="flex--1 text--right">
             {% if departure[5] contains "Proceed" %}
               <span class="label label--small label--inverted">Go</span>
