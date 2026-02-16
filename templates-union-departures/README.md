@@ -41,6 +41,16 @@ These templates display real-time departure information from Toronto Union Stati
   - Smallest footprint
 - **Best For**: Multi-widget dashboards
 
+## Layout Previews
+
+| Full Layout | Half Horizontal Layout |
+|-------------|------------------------|
+| ![Full Layout Demo](../project-resources/assets/demo/demo-full.png) | ![Half Horizontal Layout Demo](../project-resources/assets/demo/demo-half-horizontal.png) |
+
+| Half Vertical Layout | Quadrant Layout |
+|----------------------|-----------------|
+| ![Half Vertical Layout Demo](../project-resources/assets/demo/demo-half-vertical.png) | ![Quadrant Layout Demo](../project-resources/assets/demo/demo-quadrant.png) |
+
 ## Data Structure
 
 The templates expect data from the `/api/V1/external/departures/{station}` endpoint:
