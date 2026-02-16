@@ -45,11 +45,11 @@ These templates display real-time departure information from Toronto Union Stati
 
 | Full Layout | Half Horizontal Layout |
 |-------------|------------------------|
-| ![Full Layout Demo](../project-resources/assets/demo/demo-full.png) | ![Half Horizontal Layout Demo](../project-resources/assets/demo/demo-half-horizontal.png) |
+| ![Full Layout Demo](../project-resources/assets/demo/go-schedule-preview-full.png) | ![Half Horizontal Layout Demo](../project-resources/assets/demo/go-schedule-preview-half-horizontal.png) |
 
 | Half Vertical Layout | Quadrant Layout |
 |----------------------|-----------------|
-| ![Half Vertical Layout Demo](../project-resources/assets/demo/demo-half-vertical.png) | ![Quadrant Layout Demo](../project-resources/assets/demo/demo-quadrant.png) |
+| ![Half Vertical Layout Demo](../project-resources/assets/demo/go-schedule-preview-half-vertical.png) | ![Quadrant Layout Demo](../project-resources/assets/demo/go-schedule-preview-quadrant.png) |
 
 ## Data Structure
 
