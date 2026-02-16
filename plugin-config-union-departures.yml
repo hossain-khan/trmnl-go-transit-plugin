@@ -5,7 +5,7 @@
 # Values are accessible in templates via {{ keyname }} or {{ trmnl.plugin_settings.custom_fields_values }}
 
 # Polling URL:
-# https://gta-go-transit.gohk.xyz/api/V1/external/departures/{{station_id}
+# https://gta-go-transit.gohk.xyz/api/V1/external/departures/{{station_id}}
 # Sample (for Ajax Station):
 # https://gta-go-transit.gohk.xyz/api/V1/external/departures/AJ
 
