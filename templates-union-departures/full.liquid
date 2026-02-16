@@ -40,31 +40,37 @@
   <div class="flex flex--col gap--small">
     {% for departure in trainDepartures.items limit: 8 %}
       <div class="outline mb--small p--2">
-        <div class="flex flex--row gap--small flex--center-y">
+        <div class="flex flex--row gap--small flex--center-y" style="width: 100%;">
           
           <!-- Line Badge & Route Info -->
-          <div class="flex--1">
+          <div class="flex--1" style="min-width: 0;">
             <div class="flex flex--row gap--xsmall flex--center-y mb--1">
-              <span class="label label--small label--inverted">{{ departure.lineCode }}</span>
-              <span class="title title--small">{{ departure.service }}</span>
+              <span class="label label--small label--inverted" {% if departure.lineColour %}style="background-color: {{ departure.lineColour }};"{% endif %}>{{ departure.lineCode }}</span>
+              <span class="title title--small md:title--medium">{{ departure.service }}</span>
             </div>
             <span class="description text--gray-35" data-clamp="1">Union Station - {{ departure.stopsDisplay }}</span>
           </div>
           
           <!-- Scheduled Time -->
-          <div class="text--center">
+          <div class="text--center" style="min-width: 100px;">
             <span class="label label--small">Scheduled</span>
-            <div class="value value--medium">{{ departure.scheduledTime }}</div>
+            <div class="value value--large md:value--xlarge">{{ departure.scheduledTime }}</div>
           </div>
           
           <!-- Platform -->
-          <div class="text--center">
+          <div class="text--center" style="min-width: 80px;">
             <span class="label label--small">Platform</span>
-            <div class="value value--small">{{ departure.platform }}</div>
+            <div class="value value--small md:value--medium">
+              {% if departure.platform == "-" %}
+                <span class="description">TBD</span>
+              {% else %}
+                {{ departure.platform }}
+              {% endif %}
+            </div>
           </div>
           
           <!-- Status -->
-          <div class="text--center">
+          <div class="text--center" style="min-width: 80px;">
             <span class="label label--small">Status</span>
             <div class="description">
               {% if departure.info contains "Proceed" %}

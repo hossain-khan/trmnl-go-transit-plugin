@@ -19,12 +19,12 @@
   <!-- Vertical Departure List -->
   <div class="flex flex--col gap--xsmall">
     {% for departure in trainDepartures.items limit: 8 %}
-      <div class="outline p--2">
+      <div class="outline p--2" style="width: 100%;">
         
         <!-- Line & Service -->
         <div class="flex flex--row gap--xsmall flex--center-y mb--1">
-          <span class="label label--small label--inverted">{{ departure.lineCode }}</span>
-          <span class="title title--small">{{ departure.service }}</span>
+          <span class="label label--small label--inverted" {% if departure.lineColour %}style="background-color: {{ departure.lineColour }};"{% endif %}>{{ departure.lineCode }}</span>
+          <span class="title title--small md:title--medium">{{ departure.service }}</span>
         </div>
         
         <!-- Route -->
@@ -33,18 +33,24 @@
         </div>
         
         <!-- Time, Platform, Status -->
-        <div class="flex flex--row gap--small flex--center-y">
-          <div>
+        <div class="flex flex--row gap--small flex--center-y" style="width: 100%;">
+          <div style="min-width: 70px;">
             <span class="label label--small">Time</span>
-            <div class="value value--small">{{ departure.scheduledTime }}</div>
+            <div class="value value--medium md:value--large">{{ departure.scheduledTime }}</div>
           </div>
-          <div>
+          <div style="min-width: 60px;">
             <span class="label label--small">Platform</span>
-            <div class="value value--xsmall">{{ departure.platform }}</div>
+            <div class="value value--small">
+              {% if departure.platform == "-" %}
+                <span class="description">TBD</span>
+              {% else %}
+                {{ departure.platform }}
+              {% endif %}
+            </div>
           </div>
           <div class="flex--1 text--right">
             {% if departure.info contains "Proceed" %}
-              <span class="label label--small label--inverted">Proceed</span>
+              <span class="label label--small label--inverted">Go</span>
             {% else %}
               <span class="label label--small label--outline">Wait</span>
             {% endif %}
