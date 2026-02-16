@@ -18,12 +18,13 @@ Real-time GO Transit departure and arrival information on your TRMNL display.
 
 ## Demo
 
-| Layout              | Preview                                                                                                         |
-| ------------------- | --------------------------------------------------------------------------------------------------------------- |
-| **Full**            | <img src="project-resources/assets/demo/preview-full.png" alt="Full Layout" width="400"/>                       |
-| **Half Horizontal** | <img src="project-resources/assets/demo/preview-half-horizontal.png" alt="Half Horizontal Layout" width="400"/> |
-| **Half Vertical**   | <img src="project-resources/assets/demo/preview-half-vertical.png" alt="Half Vertical Layout" width="200"/>     |
-| **Quadrant**        | <img src="project-resources/assets/demo/preview-quadrant.png" alt="Quadrant Layout" width="200"/>               |
+| Full Layout | Half Horizontal Layout |
+|-------------|------------------------|
+| ![Full Layout](project-resources/assets/demo/demo-full.png) | ![Half Horizontal Layout](project-resources/assets/demo/demo-half-horizontal.png) |
+
+| Half Vertical Layout | Quadrant Layout |
+|----------------------|-----------------|
+| ![Half Vertical Layout](project-resources/assets/demo/demo-half-vertical.png) | ![Quadrant Layout](project-resources/assets/demo/demo-quadrant.png) |
 
 ## Features
 
