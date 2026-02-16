@@ -19,15 +19,13 @@
           <span class="title title--small">{{ departure[1] }}</span>
         </div>
         
-        <!-- Route Info -->
-        <div class="mb--1 text--center">
-          <span class="description" data-clamp="1">{{ departure[4] }}</span>
-        </div>
-        
-        <!-- Time, Platform & Status (horizontal) -->
+        <!-- Time, Route, Platform & Status (single row) -->
         <div class="flex flex--row gap--small flex--center-y">
-          <div class="flex--1 text--center">
+          <div class="text--center">
             <span class="value value--large md:value--xlarge">{{ departure[2] }}</span>
+          </div>
+          <div class="flex--1">
+            <span class="description" data-clamp="1">{{ departure[4] }}</span>
           </div>
           <div class="flex flex--row gap--xsmall">
             <span class="label label--small">Platform</span>
