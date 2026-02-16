@@ -111,7 +111,35 @@ const journey = await fetch(journeyUrl);
 - Larger response size
 - Not officially supported
 
-### Pattern 3: Hybrid Approach
+### Pattern 3: Use Proxied External API (NEW - February 2026)
+**Use Cloudflare Worker proxy for external public API**
+
+```javascript
+// Station departures via proxy (no auth required, but with caching benefits)
+const departuresUrl = `https://gta-go-transit.gohk.xyz/api/V1/external/departures/${station}`;
+const departures = await fetch(departuresUrl);
+```
+
+**Pros**:
+- No authentication needed (public API)
+- Intelligent edge caching (60s/300s/30s SWR)
+- Consistent proxy infrastructure
+- CORS handled by worker
+- Monitoring and observability headers
+- Real-time departures with full itineraries
+- Perfect for departure boards
+
+**Cons**:
+- Undocumented source API (could change)
+- Depends on proxy availability
+- Limited to departures endpoint currently
+
+**Use Cases**:
+- Union Station departure boards
+- Multi-line station displays
+- Alternative to authenticated API for public stations
+
+### Pattern 4: Hybrid Approach
 **Combine both APIs for rich functionality**
 
 ```javascript

@@ -57,13 +57,20 @@ The plugin is configurable through the TRMNL plugin settings interface:
 
 ## Data Sources
 
-This plugin uses the [Metrolinx Open Data API](http://api.openmetrolinx.com/OpenDataAPI/Help/Index/en):
+This plugin uses multiple Metrolinx APIs:
 
+**Primary (Authenticated)**: [Metrolinx Open Data API](http://api.openmetrolinx.com/OpenDataAPI/Help/Index/en)
 - Real-time trip updates via `/ServiceataGlance/Trains/All`
 - Service alerts via `/ServiceUpdate/ServiceAlert/All`
+- Station predictions via `/Stop/NextService/{StopCode}`
 - Station information via GTFS data
 
-Data is proxied through a Cloudflare Worker for improved reliability, caching, and performance.
+**Alternative (No Auth Required)**: External Public API
+- Real-time station departures via `/external/departures/{StationCode}`
+- Full departure boards with itineraries (like gotransit.com)
+- No API key required
+
+All data is proxied through a Cloudflare Worker (`https://gta-go-transit.gohk.xyz`) for improved reliability, intelligent caching, and enhanced performance.
 
 ## Project Structure
 

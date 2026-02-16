@@ -1,11 +1,11 @@
 # Proxy API Validation Report
 
-**Date**: February 9, 2026  
+**Date**: February 16, 2026  
 **Status**: ✅ **PROXY IS OPERATIONAL AND RELIABLE**
 
 ## Executive Summary
 
-The Cloudflare Worker proxy (`https://gta-go-transit.gohk.xyz`) has been validated and is functioning properly. All critical endpoints are responding with real-time GO Transit data. The proxy successfully acts as a relay to the Metrolinx Open Data API, enabling the TRMNL plugin to fetch live departure information, service alerts, and station data.
+The Cloudflare Worker proxy (`https://gta-go-transit.gohk.xyz`) has been validated and is functioning properly. All critical endpoints are responding with real-time GO Transit data. The proxy successfully acts as a relay to both the Metrolinx Open Data API (authenticated) and the External Public API (no authentication), enabling the TRMNL plugin to fetch live departure information, service alerts, and station data.
 
 ## Test Results
 
@@ -17,11 +17,26 @@ The Cloudflare Worker proxy (`https://gta-go-transit.gohk.xyz`) has been validat
 
 ### Live Data Endpoints
 
+**Authenticated Metrolinx Open Data API:**
+
 | Endpoint | Status | Real-Time Data | Sample Route |
 |----------|--------|---|---|
 | `/api/V1/ServiceataGlance/Trains/All` | ✅ Working | Yes | All GO Rail trips with positions, delays |
 | `/api/V1/Stop/NextService/{StopCode}` | ✅ Working | Yes | Next 3 departures per line |
 | `/api/V1/ServiceUpdate/ServiceAlert/All` | ✅ Working | Yes | Service alerts and disruptions |
+
+**External Public API (No Authentication Required):**
+
+| Endpoint | Status | Real-Time Data | Sample Route |
+|----------|--------|---|---|
+| `/api/V1/external/departures/{StationCode}` | ✅ Working | Yes | Real-time station departures with full itineraries |
+
+**External API Example:**
+```bash
+curl "https://gta-go-transit.gohk.xyz/api/V1/external/departures/UN"
+```
+
+Returns complete departure board for Union Station with line codes, scheduled times, platforms, status, and route information.
 
 ### Route Testing: Oshawa (OS) ↔ Union Station (UN)
 

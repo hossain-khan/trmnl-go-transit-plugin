@@ -48,6 +48,31 @@ https://api.metrolinx.com/external/go/departures/        # Real-time departures 
 ### Authentication
 **None required** - This is a public, unauthenticated API
 
+### Using the Proxy (Recommended)
+
+For improved reliability and caching, use the Cloudflare Worker proxy instead of calling the external API directly:
+
+**Proxy Base URL**: `https://gta-go-transit.gohk.xyz`
+
+**Proxied Departures Endpoint**:
+
+```bash
+# Direct API (no proxy)
+curl "https://api.metrolinx.com/external/go/departures/stops/UN/departures"
+
+# Via Proxy (recommended)
+curl "https://gta-go-transit.gohk.xyz/api/V1/external/departures/UN"
+```
+
+**Benefits**:
+- ⚡ Edge caching (60s browser, 300s edge, 30s SWR)
+- 🌍 Global CDN with faster response times
+- 🔍 Observability headers (`X-Cache`, `X-Proxy-Time-Ms`)
+- 🛡️ Enhanced error handling and reliability
+
+**Currently Proxied**: Departures endpoint only  
+**Not Yet Proxied**: Timetable, Fare Calculator, Service Updates, Composer (use direct API)
+
 ### Response Format
 - **Format**: JSON
 - **Compression**: gzip
