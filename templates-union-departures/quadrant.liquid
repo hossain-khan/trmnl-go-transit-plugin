@@ -19,16 +19,16 @@
   <!-- Mini Departure List -->
   <div class="flex flex--col gap--xsmall">
     {% for departure in trainDepartures.items limit: 4 %}
-      <div class="outline p--1" style="width: 100%;">
+      <div class="outline p--1 stretch-x">
         
         <!-- Line Badge & Service -->
-        <div class="flex flex--row gap--xsmall flex--center-y mb--xsmall" style="width: 100%;">
+        <div class="flex flex--row gap--xsmall flex--center-y mb--xsmall stretch-x">
           <span class="label label--small label--inverted" {% if departure.lineColour %}style="background-color: {{ departure.lineColour }};"{% endif %}>{{ departure.lineCode }}</span>
           <span class="description" style="flex: 1; min-width: 0;">{{ departure.service }}</span>
         </div>
         
         <!-- Time & Status -->
-        <div class="flex flex--row gap--xsmall flex--center-y" style="width: 100%;">
+        <div class="flex flex--row gap--xsmall flex--center-y stretch-x">
           <span class="value value--small md:value--medium">{{ departure.scheduledTime }}</span>
           <span class="label label--small" style="min-width: 35px;">
             {% if departure.platform == "-" %}-{% else %}{{ departure.platform }}{% endif %}

@@ -16,10 +16,10 @@
   <div class="flex flex--col gap--xsmall">
     {% for departure_data in sample_departures %}
       {% assign departure = departure_data | split: "," %}
-      <div class="outline p--2" style="width: 100%;">
+      <div class="outline p--2 stretch-x">
         
         <!-- Line & Service -->
-        <div class="flex flex--row gap--xsmall flex--center-y mb--1">
+        <div class="flex flex--row gap--xsmall flex--center-y mb--1 stretch-x">
           <span class="label label--small label--inverted" style="background-color: {{ departure[6] }};">{{ departure[0] }}</span>
           <span class="title title--small md:title--medium">{{ departure[1] }}</span>
         </div>
@@ -30,7 +30,7 @@
         </div>
         
         <!-- Time, Platform, Status -->
-        <div class="flex flex--row gap--small flex--center-y" style="width: 100%;">
+        <div class="flex flex--row gap--small flex--center-y stretch-x">
           <div style="min-width: 70px;">
             <span class="label label--small">Time</span>
             <div class="value value--medium md:value--large">{{ departure[2] }}</div>

@@ -19,10 +19,10 @@
   <!-- Vertical Departure List -->
   <div class="flex flex--col gap--xsmall">
     {% for departure in trainDepartures.items limit: 8 %}
-      <div class="outline p--2" style="width: 100%;">
+      <div class="outline p--2 stretch-x">
         
         <!-- Line & Service -->
-        <div class="flex flex--row gap--xsmall flex--center-y mb--1">
+        <div class="flex flex--row gap--xsmall flex--center-y mb--1 stretch-x">
           <span class="label label--small label--inverted" {% if departure.lineColour %}style="background-color: {{ departure.lineColour }};"{% endif %}>{{ departure.lineCode }}</span>
           <span class="title title--small md:title--medium">{{ departure.service }}</span>
         </div>
@@ -33,7 +33,7 @@
         </div>
         
         <!-- Time, Platform, Status -->
-        <div class="flex flex--row gap--small flex--center-y" style="width: 100%;">
+        <div class="flex flex--row gap--small flex--center-y stretch-x">
           <div style="min-width: 70px;">
             <span class="label label--small">Time</span>
             <div class="value value--medium md:value--large">{{ departure.scheduledTime }}</div>
