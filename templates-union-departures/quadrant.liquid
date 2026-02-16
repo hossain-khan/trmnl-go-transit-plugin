@@ -4,16 +4,16 @@
   Use Case: Quarter-size display (most compact)
   
   Features:
-  - Minimal departures list (3-4 items)
-  - Essential info only
+  - Two-column grid (3 rows × 2 columns, 6 items max)
+  - Essential info only: line, service, time, status
   - Most compact presentation
 {% endcomment %}
 
 <div class="layout layout--col p--2 mb--0">
   
-  <!-- Mini Departure List -->
-  <div class="flex flex--col gap--xsmall">
-    {% for departure in trainDepartures.items limit: 4 %}
+  <!-- Two-Column Departure Grid -->
+  <div class="grid grid--cols-2 gap--xsmall">
+    {% for departure in trainDepartures.items limit: 6 %}
       <div class="outline p--1 stretch-x">
         
         <!-- Line Badge & Service -->
