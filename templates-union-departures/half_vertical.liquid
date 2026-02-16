@@ -4,7 +4,7 @@
   Use Case: Half-size vertical display (abundant vertical space, limited horizontal)
   
   Features:
-  - More departures in vertical list (6-8 items)
+  - Compact vertical list (3 items max)
   - Stacked layout for narrow width
   - Full information per departure
 {% endcomment %}
@@ -13,7 +13,7 @@
   
   <!-- Vertical Departure List -->
   <div class="flex flex--col gap--xsmall">
-    {% for departure in trainDepartures.items limit: 8 %}
+    {% for departure in trainDepartures.items limit: 3 %}
       <div class="outline p--2 stretch-x">
         
         <!-- Line & Service -->
