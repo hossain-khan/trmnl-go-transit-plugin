@@ -26,7 +26,8 @@
         <!-- Time, Platform, Status -->
         <div class="flex flex--row gap--small flex--center-y stretch-x">
           <div style="min-width: 70px;">
-            <span class="label label--small">Time</span>
+            <!-- Route Info -->
+            <span class="label label--small">{{ departure.stopsDisplay }}</span>
             <div class="value value--medium md:value--large">{{ departure.scheduledTime }}</div>
           </div>
           {% if stationCode == 'UN' %}
