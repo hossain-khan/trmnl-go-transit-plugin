@@ -1,0 +1,47 @@
+# GO Transit Dashboard - Plugin Configuration
+# Reference: https://help.usetrmnl.com/en/articles/10513740-custom-plugin-form-builder
+#
+# These custom fields allow users to configure their GO Transit dashboard.
+# Values are accessible in templates via {{ keyname }} or {{ trmnl.plugin_settings.custom_fields_values }}
+
+# Polling URL:
+# https://gta-go-transit.gohk.xyz/api/V1/external/departures/{{station_id}
+# Sample (for Ajax Station):
+# https://gta-go-transit.gohk.xyz/api/V1/external/departures/AJ
+
+# =============================================================================
+# ABOUT THIS PLUGIN
+# =============================================================================
+- keyname: about
+  name: About This Plugin
+  category: travel,life
+  field_type: author_bio
+  description: |
+    GO Transit Dashboard displays real-time departure information for your preferred GO Rail or Bus station.
+    Features include two-direction schedules, service alerts, and responsive layouts for all TRMNL devices.
+    Data is sourced from the Metrolinx Open Data API with intelligent edge caching for optimal performance.
+  github_url: https://github.com/hossain-khan/trmnl-go-transit-plugin
+  learn_more_url: https://www.gotransit.com/
+
+# =============================================================================
+# STATION SELECTION
+# =============================================================================
+- keyname: line
+  field_type: xhrSelect
+  name: GO Transit Line
+  description: Select your preferred GO Transit line.
+  endpoint: https://gta-go-transit.gohk.xyz/api/V1/lines
+  http_verb: POST
+  default: LE
+  help_text: This determines which stations are available in the next field.
+
+- keyname: station_id
+  field_type: xhrSelect
+  name: GO Station
+  description: Select your preferred station on this line.
+  endpoint: https://gta-go-transit.gohk.xyz/api/V1/stations-by-line/{{line}}
+  http_verb: POST
+  exclude_csrf_token: true
+  depends_on: line
+  optional: true
+  help_text: Select a line to see available stations.
