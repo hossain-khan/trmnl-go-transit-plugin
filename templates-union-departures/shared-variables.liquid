@@ -1,0 +1,96 @@
+{% comment %}
+  Shared Variables - Station Name Mapping
+  
+  Maps station codes to display names for dynamic title bar.
+  Station code is available via: trainDepartures.stationCode
+{% endcomment %}
+
+{% assign stationCode = trainDepartures.stationCode %}
+
+{% comment %} Map station code to display name {% endcomment %}
+{% case stationCode %}
+  {% comment %} Lakeshore East {% endcomment %}
+  {% when 'UN' %}{% assign stationName = 'Union Station' %}
+  {% when 'EX' %}{% assign stationName = 'Exhibition GO' %}
+  {% when 'DA' %}{% assign stationName = 'Danforth GO' %}
+  {% when 'SC' %}{% assign stationName = 'Scarborough GO' %}
+  {% when 'EG' %}{% assign stationName = 'Eglinton GO' %}
+  {% when 'GU' %}{% assign stationName = 'Guildwood GO' %}
+  {% when 'RO' %}{% assign stationName = 'Rouge Hill GO' %}
+  {% when 'PIN' %}{% assign stationName = 'Pickering GO' %}
+  {% when 'AJ' %}{% assign stationName = 'Ajax GO' %}
+  {% when 'WH' %}{% assign stationName = 'Whitby GO' %}
+  {% when 'OS' %}{% assign stationName = 'Oshawa GO' %}
+  
+  {% comment %} Lakeshore West {% endcomment %}
+  {% when 'MI' %}{% assign stationName = 'Mimico GO' %}
+  {% when 'LO' %}{% assign stationName = 'Long Branch GO' %}
+  {% when 'PO' %}{% assign stationName = 'Port Credit GO' %}
+  {% when 'CL' %}{% assign stationName = 'Clarkson GO' %}
+  {% when 'OA' %}{% assign stationName = 'Oakville GO' %}
+  {% when 'BO' %}{% assign stationName = 'Bronte GO' %}
+  {% when 'AP' %}{% assign stationName = 'Appleby GO' %}
+  {% when 'BU' %}{% assign stationName = 'Burlington GO' %}
+  {% when 'AL' %}{% assign stationName = 'Aldershot GO' %}
+  {% when 'HA' %}{% assign stationName = 'Hamilton GO Centre' %}
+  {% when 'WR' %}{% assign stationName = 'West Harbour GO' %}
+  {% when 'SCTH' %}{% assign stationName = 'St. Catharines GO' %}
+  {% when 'NI' %}{% assign stationName = 'Niagara Falls GO' %}
+  
+  {% comment %} Milton {% endcomment %}
+  {% when 'KP' %}{% assign stationName = 'Kipling GO' %}
+  {% when 'DI' %}{% assign stationName = 'Dixie GO' %}
+  {% when 'CO' %}{% assign stationName = 'Cooksville GO' %}
+  {% when 'ER' %}{% assign stationName = 'Erindale GO' %}
+  {% when 'SR' %}{% assign stationName = 'Streetsville GO' %}
+  {% when 'ME' %}{% assign stationName = 'Meadowvale GO' %}
+  {% when 'LS' %}{% assign stationName = 'Lisgar GO' %}
+  {% when 'ML' %}{% assign stationName = 'Milton GO' %}
+  
+  {% comment %} Kitchener {% endcomment %}
+  {% when 'BL' %}{% assign stationName = 'Bloor GO' %}
+  {% when 'WE' %}{% assign stationName = 'Weston GO' %}
+  {% when 'ET' %}{% assign stationName = 'Etobicoke North GO' %}
+  {% when 'MA' %}{% assign stationName = 'Malton GO' %}
+  {% when 'BE' %}{% assign stationName = 'Bramalea GO' %}
+  {% when 'BR' %}{% assign stationName = 'Brampton GO' %}
+  {% when 'MO' %}{% assign stationName = 'Mount Pleasant GO' %}
+  {% when 'GE' %}{% assign stationName = 'Georgetown GO' %}
+  {% when 'AC' %}{% assign stationName = 'Acton GO' %}
+  {% when 'GL' %}{% assign stationName = 'Guelph Central GO' %}
+  {% when 'KI' %}{% assign stationName = 'Kitchener GO' %}
+  
+  {% comment %} Barrie {% endcomment %}
+  {% when 'DW' %}{% assign stationName = 'Downsview Park GO' %}
+  {% when 'RU' %}{% assign stationName = 'Rutherford GO' %}
+  {% when 'MP' %}{% assign stationName = 'Maple GO' %}
+  {% when 'KC' %}{% assign stationName = 'King City GO' %}
+  {% when 'AU' %}{% assign stationName = 'Aurora GO' %}
+  {% when 'NE' %}{% assign stationName = 'Newmarket GO' %}
+  {% when 'EA' %}{% assign stationName = 'East Gwillimbury GO' %}
+  {% when 'BD' %}{% assign stationName = 'Bradford GO' %}
+  {% when 'BA' %}{% assign stationName = 'Barrie South GO' %}
+  {% when 'AD' %}{% assign stationName = 'Allandale Waterfront GO' %}
+  
+  {% comment %} Richmond Hill {% endcomment %}
+  {% when 'OR' %}{% assign stationName = 'Oriole GO' %}
+  {% when 'OL' %}{% assign stationName = 'Old Cummer GO' %}
+  {% when 'LA' %}{% assign stationName = 'Langstaff GO' %}
+  {% when 'RI' %}{% assign stationName = 'Richmond Hill GO' %}
+  {% when 'GO' %}{% assign stationName = 'Gormley GO' %}
+  
+  {% comment %} Stouffville {% endcomment %}
+  {% when 'KE' %}{% assign stationName = 'Kennedy GO' %}
+  {% when 'AG' %}{% assign stationName = 'Agincourt GO' %}
+  {% when 'MK' %}{% assign stationName = 'Milliken GO' %}
+  {% when 'UI' %}{% assign stationName = 'Unionville GO' %}
+  {% when 'CE' %}{% assign stationName = 'Centennial GO' %}
+  {% when 'MR' %}{% assign stationName = 'Markham GO' %}
+  {% when 'MJ' %}{% assign stationName = 'Mount Joy GO' %}
+  {% when 'ST' %}{% assign stationName = 'Stouffville GO' %}
+  {% when 'LI' %}{% assign stationName = 'Old Elm GO' %}
+  
+  {% comment %} Fallback for unknown codes {% endcomment %}
+  {% else %}
+    {% assign stationName = 'GO Transit' %}
+{% endcase %}
