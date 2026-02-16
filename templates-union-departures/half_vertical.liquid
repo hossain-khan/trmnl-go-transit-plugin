@@ -29,6 +29,7 @@
             <span class="label label--small">Time</span>
             <div class="value value--medium md:value--large">{{ departure.scheduledTime }}</div>
           </div>
+          {% if stationCode == 'UN' %}
           <div style="min-width: 60px;">
             <span class="label label--small">Platform</span>
             <div class="value value--small">
@@ -46,6 +47,7 @@
               <span class="label label--small label--outline">Wait</span>
             {% endif %}
           </div>
+          {% endif %}
         </div>
         
       </div>

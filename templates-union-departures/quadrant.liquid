@@ -25,6 +25,7 @@
         <!-- Time & Status -->
         <div class="flex flex--row gap--xsmall flex--center-y stretch-x">
           <span class="value value--small md:value--medium">{{ departure.scheduledTime }}</span>
+          {% if stationCode == 'UN' %}
           <span style="min-width: 35px;">
             {% if departure.platform == "-" or departure.platform == blank or departure.platform == "" %}
               <span class="label label--small">TBD</span>
@@ -39,6 +40,7 @@
               <span class="label label--small label--outline">Wait</span>
             {% endif %}
           </div>
+          {% endif %}
         </div>
         
       </div>
