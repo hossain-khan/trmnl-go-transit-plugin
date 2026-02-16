@@ -5,55 +5,49 @@
 
 {% assign sample_departures = "LW,Lakeshore West,08:47,7 & 8,Exhibition-Mimico-Long Branch,Proceed / Avancez,#98002e|KI,Kitchener,08:48,4,Bloor-Mount Dennis-Weston,Proceed / Avancez,#00853e|LE,Lakeshore East,08:50,11 & 12,Danforth-Scarborough-Eglinton,Wait / Attendez,#ff0d00|BR,Barrie,08:52,13,Downsview Park-Rutherford-Maple,Wait / Attendez,#003767|ST,Stouffville,09:00,-,Kennedy-Agincourt-Milliken,Proceed / Avancez,#794500|LW,Lakeshore West,09:04,5 & 6,Express To-Exhibition-Port Credit,Proceed / Avancez,#98002e|LW,Lakeshore West,09:17,-,Exhibition-Mimico-Long Branch,Wait / Attendez,#98002e|LE,Lakeshore East,09:20,11,Danforth-Scarborough-Eglinton,Wait / Attendez,#ff0d00" | split: "|" %}
 
-<div class="layout layout--col p--3 mb--0">
+<div class="layout layout--col p--2 mb--0">
   
-  <!-- Departure List -->
-  <div class="flex flex--col gap--small">
-    {% for departure_data in sample_departures %}
+  <!-- Two-Column Departure Grid (3 rows × 2 columns) -->
+  <div class="grid grid--cols-2 gap--small">
+    {% for departure_data in sample_departures limit: 6 %}
       {% assign departure = departure_data | split: "," %}
-      <div class="outline mb--small p--2 stretch-x">
-        <div class="flex flex--row gap--small flex--center-y stretch-x">
-          
-          <!-- Line Badge & Route Info -->
-          <div class="flex--1" style="min-width: 0;">
-            <div class="flex flex--row gap--xsmall flex--center-y mb--1">
-              <span class="label label--small label--inverted" style="background-color: {{ departure[6] }};">{{ departure[0] }}</span>
-              <span class="title title--small md:title--medium">{{ departure[1] }}</span>
-            </div>
-            <span class="description text--gray-35" data-clamp="1">{{ departure[4] }}</span>
-          </div>
-          
-          <!-- Scheduled Time -->
-          <div class="text--center" style="min-width: 100px;">
-            <span class="label label--small">Scheduled</span>
-            <div class="value value--large md:value--xlarge">{{ departure[2] }}</div>
-          </div>
-          
-          <!-- Platform -->
-          <div class="text--center" style="min-width: 80px;">
-            <span class="label label--small">Platform</span>
-            <div class="value value--small md:value--medium">
-              {% if departure[3] == "-" %}
-                <span class="description">TBD</span>
-              {% else %}
-                {{ departure[3] }}
-              {% endif %}
-            </div>
-          </div>
-          
-          <!-- Status -->
-          <div class="text--center" style="min-width: 80px;">
-            <span class="label label--small">Status</span>
-            <div class="description">
-              {% if departure[5] contains "Proceed" %}
-                <span class="label label--small label--inverted">Proceed</span>
-              {% else %}
-                <span class="label label--small label--outline">Wait</span>
-              {% endif %}
-            </div>
-          </div>
-          
+      <div class="outline p--2">
+        
+        <!-- Line Badge & Service -->
+        <div class="flex flex--row gap--xsmall flex--center-y mb--1">
+          <span class="label label--small label--inverted" style="background-color: {{ departure[6] }};">{{ departure[0] }}</span>
+          <span class="title title--small">{{ departure[1] }}</span>
         </div>
+        
+        <!-- Route Info -->
+        <div class="mb--1 text--center">
+          <span class="description" data-clamp="1">{{ departure[4] }}</span>
+        </div>
+        
+        <!-- Time (Large) -->
+        <div class="mb--1">
+          <span class="value value--large md:value--xlarge">{{ departure[2] }}</span>
+        </div>
+        
+        <!-- Platform & Status -->
+        <div class="flex flex--row gap--small flex--center-y">
+          <div>
+            <span class="label label--small">Platform</span>
+            {% if departure[3] == "-" %}
+              <span class="label label--small">TBD</span>
+            {% else %}
+              <span class="label label--small">{{ departure[3] }}</span>
+            {% endif %}
+          </div>
+          <div>
+            {% if departure[5] contains "Proceed" %}
+              <span class="label label--small label--inverted">Go</span>
+            {% else %}
+              <span class="label label--small label--outline">Wait</span>
+            {% endif %}
+          </div>
+        </div>
+        
       </div>
     {% endfor %}
   </div>
