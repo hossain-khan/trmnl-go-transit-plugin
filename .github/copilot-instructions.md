@@ -68,16 +68,19 @@ The `templates/preview/` directory contains static versions of all layouts with 
 
 ### Live Data Architecture
 
-The plugin uses a **Cloudflare Worker** as a real-time proxy:
+The plugin uses a **Cloudflare Worker** as a real-time proxy for both authenticated and public APIs:
 
 ```
-TRMNL Device → settings.yml (proxy URL: https://gta-go-transit.gohk.xyz) → Cloudflare Worker → Metrolinx API → Template Rendering
+TRMNL Device → settings.yml (proxy URL: https://gta-go-transit.gohk.xyz) → Cloudflare Worker → Metrolinx APIs → Template Rendering
+                                                                                   ├─ Authenticated: Open Data API
+                                                                                   └─ Public: External API
 ```
 
-- **No static data files**: All transit data is fetched live from the Metrolinx Open Data API
+- **No static data files**: All transit data is fetched live from Metrolinx APIs
+- **Dual API support**: Proxies both authenticated Open Data API and public External API
 - **Edge caching**: Intelligent caching at Cloudflare edge (60s browser, 300s edge, 30s SWR)
 - **Real-time updates**: TRMNL device gets current departures and alerts automatically
-- **Reference samples**: `project-resources/API-access/sample-response/` contains real API responses for development
+- **Reference samples**: Both `project-resources/API-access/sample-response/` and `project-resources/API-access-external-public/sample-response/` contain real API responses for development
 
 ## TRMNL Framework v2
 
@@ -774,6 +777,8 @@ When preparing a plugin for submission to the TRMNL public directory, follow the
 
 ### Proxy API Endpoints
 
+#### Authenticated Metrolinx Open Data API
+
 | Endpoint | Status | Purpose |
 |----------|--------|---------|
 | `GET /health` | ✅ Working | Health check with status and version |
@@ -783,13 +788,35 @@ When preparing a plugin for submission to the TRMNL public directory, follow the
 | `GET /api/V1/Stop/All` | ✅ Working | All GO Transit stops/stations (5520 locations) |
 | `GET /api/V1/Stop/NextService/{StopCode}` | ✅ Working | Station-specific predictions |
 
+#### External Public API (No Authentication Required)
+
+| Endpoint | Status | Purpose |
+|----------|--------|---------|
+| `GET /api/V1/external/departures/{StationCode}` | ✅ Working | Real-time station departures with full itineraries |
+
+**Example Usage**:
+```bash
+# Union Station departures (like gotransit.com website)
+curl "https://gta-go-transit.gohk.xyz/api/V1/external/departures/UN"
+```
+
+Returns complete departure board with line codes, scheduled times, platforms, status (Proceed/Wait/Attendez), and route information.
+
 ### API Endpoints Used
+
+**Metrolinx Open Data API (Authenticated)**:
 
 | Endpoint | Purpose |
 |----------|--------|
 | `/ServiceAtAGlance/All` | Real-time departure times |
 | `/ServiceAlerts/All` | Service alerts and delays |
 | `/Station/All` | Station information |
+
+**External Public API (No Auth)**:
+
+| Endpoint | Purpose |
+|----------|--------|
+| `/external/go/departures/stops/{station}/departures` | Station departure boards |
 
 ### Pre-commit CI Checks ✅
 
@@ -825,8 +852,11 @@ If any check fails, fix locally and re-run before pushing to avoid CI failures.
    # Health check
    curl https://gta-go-transit.gohk.xyz/health
    
-   # Real API test
+   # Authenticated API test
    curl "https://gta-go-transit.gohk.xyz/api/V1/ServiceataGlance/Trains/All?station_id=OS"
+   
+   # External public API test (no auth required)
+   curl "https://gta-go-transit.gohk.xyz/api/V1/external/departures/UN"
    ```
 
 **Why Not Local Dev Server?**
