@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Union Station Departures - TRMNL Preview</title>
+  
+  <!-- Include TRMNL Framework CSS -->
+  <link rel="stylesheet" href="https://usetrmnl.com/framework/latest/framework.css">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .subtitle {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    
+    .preview-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .preview-label {
+      text-align: center;
+      padding: 10px;
+      background: #333;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px 8px 0 0;
+      font-size: 14px;
+    }
+    
+    .preview-frame {
+      background: white;
+      border: 4px solid #333;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    /* TRMNL OG: 800x480 */
+    .full-layout { width: 800px; height: 480px; }
+    .half-h-layout { width: 800px; height: 240px; }
+    .half-v-layout { width: 400px; height: 480px; }
+    .quadrant-layout { width: 400px; height: 240px; }
+    
+    /* Scale content to fit iframe */
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .controls {
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .controls button {
+      padding: 10px 20px;
+      margin: 0 5px;
+      border: 2px solid #333;
+      background: white;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    
+    .controls button:hover {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Union Station Departures - TRMNL Preview</h1>
+  <p class="subtitle">Departure board templates using real Union Station data</p>
+  
+  <div class="controls">
+    <button onclick="loadPreview('preview')">Load Preview Templates (Static Data)</button>
+    <button onclick="loadPreview('live')">Load Live Templates (API Data - coming soon)</button>
+  </div>
+  
+  <div class="preview-container" id="preview-container">
+    
+    <!-- Full Layout -->
+    <div class="preview-wrapper">
+      <div class="preview-label">Full Layout (800×480)</div>
+      <div class="preview-frame full-layout">
+        <iframe src="templates-union-departures/preview/full.liquid" id="full-preview"></iframe>
+      </div>
+    </div>
+    
+    <!-- Half Horizontal Layout -->
+    <div class="preview-wrapper">
+      <div class="preview-label">Half Horizontal Layout (800×240)</div>
+      <div class="preview-frame half-h-layout">
+        <iframe src="templates-union-departures/preview/half_horizontal.liquid" id="half-h-preview"></iframe>
+      </div>
+    </div>
+    
+    <!-- Half Vertical Layout -->
+    <div class="preview-wrapper">
+      <div class="preview-label">Half Vertical Layout (400×480)</div>
+      <div class="preview-frame half-v-layout">
+        <iframe src="templates-union-departures/preview/half_vertical.liquid" id="half-v-preview"></iframe>
+      </div>
+    </div>
+    
+    <!-- Quadrant Layout -->
+    <div class="preview-wrapper">
+      <div class="preview-label">Quadrant Layout (400×240)</div>
+      <div class="preview-frame quadrant-layout">
+        <iframe src="templates-union-departures/preview/quadrant.liquid" id="quadrant-preview"></iframe>
+      </div>
+    </div>
+    
+  </div>
+  
+  <script>
+    function loadPreview(type) {
+      const iframes = document.querySelectorAll('iframe');
+      iframes.forEach(iframe => {
+        const id = iframe.id.replace('-preview', '');
+        if (type === 'preview') {
+          iframe.src = `templates-union-departures/preview/${id.replace('-', '_')}.liquid`;
+        } else {
+          iframe.src = `templates-union-departures/${id.replace('-', '_')}.liquid`;
+        }
+      });
+    }
+    
+    // Load preview by default
+    window.addEventListener('load', () => {
+      loadPreview('preview');
+    });
+  </script>
+</body>
+</html>

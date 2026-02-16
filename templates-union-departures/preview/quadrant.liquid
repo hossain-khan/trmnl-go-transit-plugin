@@ -1,0 +1,48 @@
+{% comment %}
+  GO Transit Union Station Departures - Quadrant Layout Preview
+  Static sample data for design testing
+{% endcomment %}
+
+{% assign sample_departures = "LW,Lakeshore West,08:47,7 & 8,Exhibition-Mimico-Long Branch,Proceed / Avancez|KI,Kitchener,08:48,4,Bloor-Mount Dennis-Weston,Proceed / Avancez|LE,Lakeshore East,08:50,11 & 12,Danforth-Scarborough-Eglinton,Wait / Attendez|BR,Barrie,08:52,13,Downsview Park-Rutherford-Maple,Wait / Attendez" | split: "|" %}
+
+<div class="layout layout--col p--2 mb--0">
+  
+  <!-- Header -->
+  <div class="mb--1">
+    <span class="title title--small">Departures</span>
+  </div>
+  
+  <!-- Mini Departure List -->
+  <div class="flex flex--col gap--xsmall">
+    {% for departure_data in sample_departures %}
+      {% assign departure = departure_data | split: "," %}
+      <div class="outline p--1">
+        
+        <!-- Line Badge & Service -->
+        <div class="flex flex--row gap--xsmall flex--center-y mb--xsmall">
+          <span class="label label--small label--inverted">{{ departure[0] }}</span>
+          <span class="description">{{ departure[1] }}</span>
+        </div>
+        
+        <!-- Time & Status -->
+        <div class="flex flex--row gap--xsmall flex--center-y">
+          <span class="value value--xsmall">{{ departure[2] }}</span>
+          <span class="label label--small">{{ departure[3] }}</span>
+          <div class="flex--1 text--right">
+            {% if departure[5] contains "Proceed" %}
+              <span class="label label--small label--inverted">Go</span>
+            {% else %}
+              <span class="label label--small label--outline">Wait</span>
+            {% endif %}
+          </div>
+        </div>
+        
+      </div>
+    {% endfor %}
+  </div>
+  
+</div>
+
+<div class="title_bar m--0">
+  <span class="title">Union Station</span>
+</div>

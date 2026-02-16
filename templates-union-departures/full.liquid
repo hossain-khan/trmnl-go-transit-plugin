@@ -1,0 +1,87 @@
+{% comment %}
+  GO Transit Union Station Departures - Full Layout
+  
+  Use Case: Full-screen departure board display
+  
+  Features:
+  - List of upcoming departures with color-coded line badges
+  - Service name and route information
+  - Scheduled departure times
+  - Platform information
+  - Status indicators (Proceed/Wait)
+  
+  Data Structure Expected:
+  {
+    "stationCode": "UN",
+    "trainDepartures": {
+      "items": [
+        {
+          "lineCode": "LW",
+          "service": "Lakeshore West",
+          "scheduledTime": "08:47",
+          "platform": "7 & 8",
+          "stopsDisplay": "Exhibition-Mimico-Long Branch",
+          "info": "Proceed / Avancez",
+          "lineColour": "#98002e"
+        }
+      ]
+    }
+  }
+{% endcomment %}
+
+<div class="layout layout--col p--3 mb--0">
+  
+  <!-- Header -->
+  <div class="mb--2">
+    <span class="title title--large">Departures</span>
+  </div>
+  
+  <!-- Departure List -->
+  <div class="flex flex--col gap--small">
+    {% for departure in trainDepartures.items limit: 8 %}
+      <div class="outline mb--small p--2">
+        <div class="flex flex--row gap--small flex--center-y">
+          
+          <!-- Line Badge & Route Info -->
+          <div class="flex--1">
+            <div class="flex flex--row gap--xsmall flex--center-y mb--1">
+              <span class="label label--small label--inverted">{{ departure.lineCode }}</span>
+              <span class="title title--small">{{ departure.service }}</span>
+            </div>
+            <span class="description text--gray-35" data-clamp="1">Union Station - {{ departure.stopsDisplay }}</span>
+          </div>
+          
+          <!-- Scheduled Time -->
+          <div class="text--center">
+            <span class="label label--small">Scheduled</span>
+            <div class="value value--medium">{{ departure.scheduledTime }}</div>
+          </div>
+          
+          <!-- Platform -->
+          <div class="text--center">
+            <span class="label label--small">Platform</span>
+            <div class="value value--small">{{ departure.platform }}</div>
+          </div>
+          
+          <!-- Status -->
+          <div class="text--center">
+            <span class="label label--small">Status</span>
+            <div class="description">
+              {% if departure.info contains "Proceed" %}
+                <span class="label label--small label--inverted">Proceed</span>
+              {% else %}
+                <span class="label label--small label--outline">Wait</span>
+              {% endif %}
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+</div>
+
+<div class="title_bar m--0">
+  <span class="title">Union Station</span>
+</div>

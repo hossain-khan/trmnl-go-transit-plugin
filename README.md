@@ -36,6 +36,35 @@ Real-time GO Transit departure and arrival information on your TRMNL display.
 - **52+ Stations**: Support for major GO Rail stations across all lines
 - **Customizable**: Time format (12h/24h), line filtering, and departure count options
 
+## Template Variants
+
+This plugin includes **two different template sets** for different use cases:
+
+### 1. Station-to-Station Schedule (`templates/`)
+
+Displays arrival/departure times between two stations (like a commuter schedule):
+
+- Shows **two directions** with arriving/next/later times
+- Includes **route line visualization** with station dots
+- Displays **service alerts** at the bottom
+- Best for: **Regular commuters** tracking specific routes
+
+**Data Source**: Metrolinx Open Data API (`/ServiceataGlance/Trains/All`)
+
+### 2. Union Station Departure Board (`templates-union-departures/`)
+
+Displays real-time departure board like the GO Transit website:
+
+- Shows **list of upcoming departures** (4-8 trains)
+- Includes **color-coded line badges** (LW, LE, KI, BR, ST)
+- Displays **platform numbers** and **status indicators** (Proceed/Wait)
+- Shows **route information** for each departure
+- Best for: **Union Station commuters** or anyone wanting a full departure board view
+
+**Data Source**: External Public API (`/external/departures/{station}`)
+
+> **Note**: Both template sets use the same Cloudflare Worker proxy and follow TRMNL Framework v2 design patterns.
+
 ## Configuration
 
 The plugin is configurable through the TRMNL plugin settings interface:
@@ -106,11 +135,15 @@ trmnl-go-transit-plugin/
 │   ├── half_vertical.liquid     # Half vertical layout
 │   ├── quadrant.liquid          # Quadrant layout
 │   └── preview/                 # Preview templates with sample data
-│       ├── full.liquid
-│       ├── half_horizontal.liquid
-│       ├── half_vertical.liquid
-│       └── quadrant.liquid
-├── index.html                   # Local preview page
+├── templates-union-departures/  # Union Station departure board templates
+│   ├── full.liquid              # Full departure board (8 departures)
+│   ├── half_horizontal.liquid   # Compact horizontal (5 departures)
+│   ├── half_vertical.liquid     # Vertical layout (8 departures)
+│   ├── quadrant.liquid          # Minimal layout (4 departures)
+│   ├── preview/                 # Static preview templates
+│   └── README.md                # Template documentation
+├── index.html                   # Local preview page (original templates)
+├── preview-union-departures.html # Preview page for Union templates
 ├── plugin-config.yml            # User-facing configuration fields
 ├── settings.yml                 # TRMNL plugin settings
 └── README.md

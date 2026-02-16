@@ -1,0 +1,64 @@
+{% comment %}
+  GO Transit Union Station Departures - Half Horizontal Layout
+  
+  Use Case: Half-size horizontal display (abundant horizontal space, minimal vertical)
+  
+  Features:
+  - Compact departure list (4-5 departures)
+  - Essential info only: line, service, time, status
+  - Optimized for wide, short displays
+{% endcomment %}
+
+<div class="layout layout--col p--2 mb--0">
+  
+  <!-- Header -->
+  <div class="mb--1">
+    <span class="title title--small">Departures</span>
+  </div>
+  
+  <!-- Compact Departure List -->
+  <div class="flex flex--col gap--xsmall">
+    {% for departure in trainDepartures.items limit: 5 %}
+      <div class="outline p--1">
+        <div class="flex flex--row gap--small flex--center-y">
+          
+          <!-- Line Badge & Service -->
+          <div class="flex flex--row gap--xsmall flex--center-y">
+            <span class="label label--small label--inverted">{{ departure.lineCode }}</span>
+            <span class="description">{{ departure.service }}</span>
+          </div>
+          
+          <!-- Route Info -->
+          <div class="flex--1">
+            <span class="description text--gray-35" data-clamp="1">{{ departure.stopsDisplay }}</span>
+          </div>
+          
+          <!-- Time -->
+          <div>
+            <span class="value value--small">{{ departure.scheduledTime }}</span>
+          </div>
+          
+          <!-- Platform -->
+          <div>
+            <span class="label label--small">{{ departure.platform }}</span>
+          </div>
+          
+          <!-- Status -->
+          <div>
+            {% if departure.info contains "Proceed" %}
+              <span class="label label--small label--inverted">Proceed</span>
+            {% else %}
+              <span class="label label--small label--outline">Wait</span>
+            {% endif %}
+          </div>
+          
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+</div>
+
+<div class="title_bar m--0">
+  <span class="title">Union Station</span>
+</div>
