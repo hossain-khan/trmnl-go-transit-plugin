@@ -47,22 +47,18 @@
           <span class="description" data-clamp="1">{{ departure.stopsDisplay }}</span>
         </div>
         
-        <!-- Time (Large) -->
-        <div class="mb--1">
-          <span class="value value--large md:value--xlarge">{{ departure.scheduledTime }}</span>
-        </div>
-        
-        <!-- Platform & Status -->
+        <!-- Time, Platform & Status (horizontal) -->
         <div class="flex flex--row gap--small flex--center-y">
-          <div>
+          <div class="flex--1 text--center">
+            <span class="value value--large md:value--xlarge">{{ departure.scheduledTime }}</span>
+          </div>
+          <div class="flex flex--row gap--xsmall">
             <span class="label label--small">Platform</span>
             {% if departure.platform == "-" %}
               <span class="label label--small">TBD</span>
             {% else %}
               <span class="label label--small">{{ departure.platform }}</span>
             {% endif %}
-          </div>
-          <div>
             {% if departure.info contains "Proceed" %}
               <span class="label label--small label--inverted">Go</span>
             {% else %}
