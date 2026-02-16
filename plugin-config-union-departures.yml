@@ -17,7 +17,7 @@
   category: travel,life
   field_type: author_bio
   description: |
-    GO Transit Dashboard displays real-time departure information for your preferred GO Rail or Bus station.
+    GO Transit Dashboard displays real-time departure information for your preferred GO Rail station.
     Features include two-direction schedules, service alerts, and responsive layouts for all TRMNL devices.
     Data is sourced from the Metrolinx Open Data API with intelligent edge caching for optimal performance.
   github_url: https://github.com/hossain-khan/trmnl-go-transit-plugin
