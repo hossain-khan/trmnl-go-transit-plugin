@@ -364,6 +364,104 @@ app.get('/api/V1/dashboard', async (c) => {
 })
 
 /**
+ * External Public API - Union Station Departures
+ * Proxies api.metrolinx.com/external/go/departures/stops/{station}/departures
+ *
+ * This endpoint proxies the undocumented public API used by gotransit.com
+ * No authentication required
+ *
+ * Example: /api/V1/external/departures/UN
+ */
+app.get('/api/V1/external/departures/:station', async (c) => {
+  try {
+    const station = c.req.param('station')?.toUpperCase()
+
+    if (!station) {
+      return c.json({ error: 'Station code is required' }, 400)
+    }
+
+    // Construct external API URL
+    const externalUrl = `https://api.metrolinx.com/external/go/departures/stops/${station}/departures`
+
+    console.log(`[External Departures] Fetching: ${externalUrl}`)
+
+    // Check cache
+    const cache = caches.default
+    const cacheKey = new Request(externalUrl, { method: 'GET' })
+    const cachedResponse = await cache.match(cacheKey)
+
+    if (cachedResponse) {
+      console.log(`[External Departures] Cache HIT: ${station}`)
+      const response = new Response(cachedResponse.body, cachedResponse)
+      response.headers.set('X-Cache', 'HIT')
+      return response
+    }
+
+    console.log(`[External Departures] Cache MISS: ${station}`)
+
+    // Fetch from external API
+    const startTime = Date.now()
+    const externalResponse = await fetch(externalUrl, {
+      method: 'GET',
+      headers: {
+        'User-Agent': 'TRMNL-GO-Transit-Proxy/1.0',
+        Accept: 'application/json',
+        'Accept-Encoding': 'gzip, deflate',
+      },
+    })
+
+    const fetchTime = Date.now() - startTime
+
+    console.log(`[External Departures] Response: ${externalResponse.status} (${fetchTime}ms)`)
+
+    if (!externalResponse.ok) {
+      console.error(`[External Departures] Error: ${externalResponse.status}`)
+      return c.json(
+        {
+          error: 'External API Error',
+          status: externalResponse.status,
+          message: `Failed to fetch departures for station ${station}`,
+        },
+        externalResponse.status
+      )
+    }
+
+    // Clone response for caching
+    const responseClone = externalResponse.clone()
+
+    // Read body (might be gzipped)
+    const bodyText = await responseClone.text()
+
+    // Create response with caching headers
+    const headers = new Headers(responseClone.headers)
+    headers.set('X-Cache', 'MISS')
+    headers.set('X-Proxy-Version', '1.0')
+    headers.set('X-Proxy-Time-Ms', fetchTime.toString())
+    headers.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=30')
+
+    const finalResponse = new Response(bodyText, {
+      status: responseClone.status,
+      statusText: responseClone.statusText,
+      headers: headers,
+    })
+
+    // Cache in background
+    c.executionCtx.waitUntil(cache.put(cacheKey, finalResponse.clone()))
+
+    return finalResponse
+  } catch (error) {
+    console.error('[External Departures] Error:', error.message)
+    return c.json(
+      {
+        error: 'External Departures Error',
+        details: error.message,
+      },
+      502
+    )
+  }
+})
+
+/**
  * Proxy all API requests to Metrolinx
  */
 app.get('/api/V1/*', async (c) => {

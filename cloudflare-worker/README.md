@@ -193,27 +193,37 @@ The Worker proxies requests to the Metrolinx API. The worker automatically adds 
 ### Example Requests
 
 ```bash
-# Service at a glance (train departures)
+# Service at a glance (train departures) - Authenticated API
 curl "https://gta-go-transit.gohk.xyz/api/V1/ServiceataGlance/Trains/All?station_id=OS"
 
-# Service alerts
+# Service alerts - Authenticated API
 curl "https://gta-go-transit.gohk.xyz/api/V1/ServiceUpdate/ServiceAlert/All"
+
+# Union Station departures - External Public API (no auth required)
+curl "https://gta-go-transit.gohk.xyz/api/V1/external/departures/UN"
 
 # Health check
 curl "https://gta-go-transit.gohk.xyz/health"
 ```
 
-**Note**: The API key is automatically added by the Worker from the `ORIGIN_AUTH_TOKEN` environment variable. Client requests do not need to include the key.
+**Note**: The authenticated API endpoints automatically add your API key from the `ORIGIN_AUTH_TOKEN` environment variable. Client requests do not need to include the key. The external public API endpoints do not require authentication.
 
 ### Supported Endpoints
 
 See [METROLINX_API.md](../project-resources/docs/METROLINX_API.md) for full API documentation.
 
-**Key endpoints:**
+**Authenticated Metrolinx Open Data API:**
 
 - `/api/V1/ServiceataGlance/Trains/All` - Real-time train departures
 - `/api/V1/ServiceUpdate/ServiceAlert/All` - Service alerts
 - `/api/V1/Stop/NextService/{StopCode}` - Predictions for a specific stop
+
+**External Public API (No Authentication):**
+
+- `/api/V1/external/departures/{StationCode}` - Real-time station departures with full itineraries
+  - Example: `/api/V1/external/departures/UN` for Union Station
+  - Returns train and bus departures with line info, scheduled times, platforms, and status
+  - Perfect for displaying departure boards like gotransit.com
 
 ### Query Parameters
 
