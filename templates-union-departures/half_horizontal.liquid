@@ -36,8 +36,9 @@
           <!-- Platform & Status -->
           <div class="flex flex--row gap--small flex--center-y">
             <div>
+              <span class="label label--small">Platform</span>
               {% if departure.platform == "-" %}
-                <span class="label label--small">-</span>
+                <span class="label label--small">TBD</span>
               {% else %}
                 <span class="label label--small">{{ departure.platform }}</span>
               {% endif %}

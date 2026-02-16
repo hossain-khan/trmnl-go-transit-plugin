@@ -33,7 +33,12 @@
           <!-- Platform & Status -->
           <div class="flex flex--row gap--small flex--center-y">
             <div>
-              <span class="label label--small">{{ departure[3] }}</span>
+              <span class="label label--small">Platform</span>
+              {% if departure[3] == "-" %}
+                <span class="label label--small">TBD</span>
+              {% else %}
+                <span class="label label--small">{{ departure[3] }}</span>
+              {% endif %}
             </div>
             <div>
               {% if departure[5] contains "Proceed" %}
