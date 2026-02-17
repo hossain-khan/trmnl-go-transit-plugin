@@ -26,6 +26,8 @@
           </div>
           <div class="flex--1 flex flex--col gap--xsmall">
             <span class="description lg:description--large">{{ departure[4] }}</span>
+            <!-- Platform information is only available from Union Station -->
+            <!-- Union Station is the major inter-city transportation hub of the Greater Toronto and Hamilton Area (GTHA). -->
             <div class="flex flex--row gap--xsmall">
               <span class="label label--small lg:label--base">Platform</span>
               {% if departure[3] == "-" %}

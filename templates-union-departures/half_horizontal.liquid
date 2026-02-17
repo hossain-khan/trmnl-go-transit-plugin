@@ -19,36 +19,37 @@
           
           <!-- Line Badge & Service -->
           <div class="flex flex--row gap--xsmall flex--center-y mb--1">
-            <span class="label label--small label--inverted" {% if departure.lineColour %}style="background-color: {{ departure.lineColour }};"{% endif %}>{{ departure.lineCode }}</span>
-            <span class="title title--small">{{ departure.service }}</span>
+            <span class="label label--small lg:label--base label--inverted" {% if departure.lineColour %}style="background-color: {{ departure.lineColour }};"{% endif %}>{{ departure.lineCode }}</span>
+            <span class="title title--small lg:title--base">{{ departure.service }}</span>
           </div>
           
           <!-- Route Info -->
           <div class="mb--1 text--center">
-            <span class="description" data-clamp="1">{{ departure.stopsDisplay }}</span>
+            <span class="description lg:description--large" data-clamp="1">{{ departure.stopsDisplay }}</span>
           </div>
           
           <!-- Time (Large) -->
           <div class="mb--1">
-            <span class="value value--large md:value--xlarge">{{ departure.scheduledTime }}</span>
+            <span class="value value--large md:value--xlarge lg:value--xxlarge">{{ departure.scheduledTime }}</span>
           </div>
           
-          <!-- Platform & Status (Union Station only) -->
+          <!-- Platform information is only available from Union Station -->
+          <!-- Union Station is the major inter-city transportation hub of the Greater Toronto and Hamilton Area (GTHA). -->
           {% if stationCode == 'UN' %}
           <div class="flex flex--row gap--small flex--center-y">
             <div>
-              <span class="label label--small">Platform</span>
+              <span class="label label--small lg:label--base">Platform</span>
               {% if departure.platform == "-" or departure.platform == blank or departure.platform == "" %}
-                <span class="label label--small">TBD</span>
+                <span class="label label--small lg:label--base">TBD</span>
               {% else %}
-                <span class="label label--small">{{ departure.platform }}</span>
+                <span class="label label--small lg:label--base">{{ departure.platform }}</span>
               {% endif %}
             </div>
             <div>
               {% if departure.info contains "Proceed" %}
-                <span class="label label--small label--inverted">Go</span>
+                <span class="label label--small lg:label--base label--inverted">Go</span>
               {% else %}
-                <span class="label label--small label--outline">Wait</span>
+                <span class="label label--small lg:label--base label--outline">Wait</span>
               {% endif %}
             </div>
           </div>
