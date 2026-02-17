@@ -25,6 +25,8 @@
         <!-- Time & Status -->
         <div class="flex flex--row gap--xsmall flex--center-y stretch-x">
           <span class="value value--small md:value--medium lg:value--large">{{ departure.scheduledTime }}</span>
+          <!-- Platform information is only available from Union Station -->
+          <!-- Union Station is the major inter-city transportation hub of the Greater Toronto and Hamilton Area (GTHA). -->
           {% if stationCode == 'UN' %}
           <span style="min-width: 35px;">
             {% if departure.platform == "-" or departure.platform == blank or departure.platform == "" %}
