@@ -11,8 +11,8 @@
 
 <div class="layout layout--col p--2 mb--0">
   
-  <!-- Two-Column Departure Grid -->
-  <div class="grid grid--cols-2 gap--xsmall">
+  <!-- Two-Column Departure Grid (1 column in portrait) -->
+  <div class="grid grid--cols-2 portrait:grid--cols-1 gap--xsmall">
     {% for departure in trainDepartures.items limit: 6 %}
       <div class="outline p--1 stretch-x">
         

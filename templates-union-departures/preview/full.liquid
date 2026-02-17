@@ -15,28 +15,28 @@
         
         <!-- Line Badge & Service -->
         <div class="flex flex--row gap--xsmall flex--center-y mb--1">
-          <span class="label label--small label--inverted" style="background-color: {{ departure[6] }};">{{ departure[0] }}</span>
-          <span class="title title--small">{{ departure[1] }}</span>
+          <span class="label label--small lg:label--base label--inverted" style="background-color: {{ departure[6] }};">{{ departure[0] }}</span>
+          <span class="title title--small lg:title--base">{{ departure[1] }}</span>
         </div>
         
         <!-- Time, Route, Platform & Status (single row) -->
-        <div class="flex flex--row gap--small flex--center-y">
+        <div class="flex flex--row lg:flex--col gap--small flex--center-y">
           <div class="text--center">
-            <span class="value value--large md:value--xlarge">{{ departure[2] }}</span>
+            <span class="value value--large md:value--xlarge lg:value--xxlarge">{{ departure[2] }}</span>
           </div>
           <div class="flex--1 flex flex--col gap--xsmall">
-            <span class="description">{{ departure[4] }}</span>
+            <span class="description lg:description--large">{{ departure[4] }}</span>
             <div class="flex flex--row gap--xsmall">
-              <span class="label label--small">Platform</span>
+              <span class="label label--small lg:label--base">Platform</span>
               {% if departure[3] == "-" %}
-                <span class="label label--small">TBD</span>
+                <span class="label label--small lg:label--base">TBD</span>
               {% else %}
-                <span class="label label--small">{{ departure[3] }}</span>
+                <span class="label label--small lg:label--base">{{ departure[3] }}</span>
               {% endif %}
               {% if departure[5] contains "Proceed" %}
-                <span class="label label--small label--inverted">Go</span>
+                <span class="label label--small lg:label--base label--inverted">Go</span>
               {% else %}
-                <span class="label label--small label--outline">Wait</span>
+                <span class="label label--small lg:label--base label--outline">Wait</span>
               {% endif %}
             </div>
           </div>

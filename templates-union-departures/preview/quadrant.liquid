@@ -8,7 +8,7 @@
 <div class="layout layout--col p--2 mb--0">
   
   <!-- Two-Column Departure Grid -->
-  <div class="grid grid--cols-2 gap--xsmall">
+  <div class="grid grid--cols-2 portrait:grid--cols-1 gap--xsm gap--xsmall">
     {% for departure_data in sample_departures %}
       {% assign departure = departure_data | split: "," %}
       <div class="outline p--1 stretch-x">

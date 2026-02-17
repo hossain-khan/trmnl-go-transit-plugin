@@ -38,29 +38,29 @@
         
         <!-- Line Badge & Service -->
         <div class="flex flex--row gap--xsmall flex--center-y mb--1">
-          <span class="label label--small label--inverted" {% if departure.lineColour %}style="background-color: {{ departure.lineColour }};"{% endif %}>{{ departure.lineCode }}</span>
-          <span class="title title--small">{{ departure.service }}</span>
+          <span class="label label--small lg:label--base label--inverted" {% if departure.lineColour %}style="background-color: {{ departure.lineColour }};"{% endif %}>{{ departure.lineCode }}</span>
+          <span class="title title--small lg:title--base">{{ departure.service }}</span>
         </div>
         
         <!-- Time, Route, Platform & Status (single row) -->
-        <div class="flex flex--row gap--small flex--center-y">
+        <div class="flex flex--row lg:flex--col gap--small flex--center-y">
           <div class="text--center">
-            <span class="value value--large md:value--xlarge">{{ departure.scheduledTime }}</span>
+            <span class="value value--large md:value--xlarge lg:value--xxlarge">{{ departure.scheduledTime }}</span>
           </div>
           <div class="flex--1 flex flex--col gap--xsmall">
-            <span class="description">{{ departure.stopsDisplay }}</span>
+            <span class="description lg:description--large">{{ departure.stopsDisplay }}</span>
             {% if stationCode == 'UN' %}
             <div class="flex flex--row gap--xsmall">
-              <span class="label label--small">Platform</span>
+              <span class="label label--small lg:label--base">Platform</span>
               {% if departure.platform == "-" or departure.platform == blank or departure.platform == "" %}
-                <span class="label label--small">TBD</span>
+                <span class="label label--small lg:label--base">TBD</span>
               {% else %}
-                <span class="label label--small">{{ departure.platform }}</span>
+                <span class="label label--small lg:label--base">{{ departure.platform }}</span>
               {% endif %}
               {% if departure.info contains "Proceed" %}
-                <span class="label label--small label--inverted">Go</span>
+                <span class="label label--small lg:label--base label--inverted">Go</span>
               {% else %}
-                <span class="label label--small label--outline">Wait</span>
+                <span class="label label--small lg:label--base label--outline">Wait</span>
               {% endif %}
             </div>
             {% endif %}
