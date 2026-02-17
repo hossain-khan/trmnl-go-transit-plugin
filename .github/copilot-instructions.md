@@ -4,7 +4,7 @@
 
 This is a TRMNL plugin that displays real-time **GO Transit** departure and arrival information for commuters. It provides "at-a-glance" status updates for a user's preferred GO Rail or Bus station, utilizing the Metrolinx Open Data API. The plugin leverages the TRMNL Framework v2 to create responsive, adaptive layouts that work across all TRMNL devices.
 
-**Design Reference**: Templates are adapted from the [Sound Transit Link Light Rail Dashboard](https://usetrmnl.com/plugin/sound-transit-link-light-rail-dashboard) plugin, featuring a two-direction schedule with emphasis-based time display (arriving/next/later).
+**Design Reference**: Templates are adapted from the [Sound Transit Link Light Rail Dashboard](https://trmnl.com/plugin/sound-transit-link-light-rail-dashboard) plugin, featuring a two-direction schedule with emphasis-based time display (arriving/next/later).
 
 ## Project Structure
 
@@ -95,7 +95,7 @@ TRMNL Device → settings.yml (proxy URL: https://gta-go-transit.gohk.xyz) → C
 
 ### Responsive System
 
-> **Reference**: [TRMNL Framework Responsive Guide](https://usetrmnl.com/framework/responsive)
+> **Reference**: [TRMNL Framework Responsive Guide](https://trmnl.com/framework/responsive)
 
 The framework provides two complementary approaches for creating adaptive layouts:
 1. **Size-based breakpoints** that respond to screen dimensions (progressive)
@@ -655,7 +655,7 @@ Test across all responsive breakpoints:
 
 ## Recipe Best Practices (Plugin Submission)
 
-> **Reference**: [TRMNL Recipe Best Practices](https://help.usetrmnl.com/en/articles/11395668-recipe-best-practices)
+> **Reference**: [TRMNL Recipe Best Practices](https://help.trmnl.com/en/articles/11395668-recipe-best-practices)
 
 When preparing a plugin for submission to the TRMNL public directory, follow these guidelines to pass the automated "Chef" linting utility.
 
@@ -679,9 +679,9 @@ When preparing a plugin for submission to the TRMNL public directory, follow the
 | `style="object-fit: cover"` | `object--cover` |
 
 **Framework References**:
-- Text alignment: [https://usetrmnl.com/framework/text#text-alignment](https://usetrmnl.com/framework/text#text-alignment)
-- Background: [https://usetrmnl.com/framework/background](https://usetrmnl.com/framework/background)
-- Image object-fit: [https://usetrmnl.com/framework/image#object-fit](https://usetrmnl.com/framework/image#object-fit)
+- Text alignment: [https://trmnl.com/framework/text#text-alignment](https://trmnl.com/framework/text#text-alignment)
+- Background: [https://trmnl.com/framework/background](https://trmnl.com/framework/background)
+- Image object-fit: [https://trmnl.com/framework/image#object-fit](https://trmnl.com/framework/image#object-fit)
 
 ### Optimize Custom Field Links
 

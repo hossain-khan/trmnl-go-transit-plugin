@@ -165,12 +165,12 @@ Brief tagline describing your recipe.
 
 ## Install
 
-**[→ Install Recipe Name](https://usetrmnl.com/recipes)**
+**[→ Install Recipe Name](https://trmnl.com/recipes)**
 
-1. Visit [TRMNL Plugins](https://usetrmnl.com/plugins)
+1. Visit [TRMNL Plugins](https://trmnl.com/plugins)
 2. Search for "**Your Recipe Name**"
 3. Click **Install**
-4. Add to your [Playlist](https://usetrmnl.com/playlists)
+4. Add to your [Playlist](https://trmnl.com/playlists)
 
 ## Demo
 
@@ -299,7 +299,7 @@ merge_tag:
 ### Step 9: Test in TRMNL
 
 1. **Create Private Plugin**
-   - Go to [TRMNL Dashboard](https://usetrmnl.com/plugins)
+   - Go to [TRMNL Dashboard](https://trmnl.com/plugins)
    - Click "New Private Plugin"
    - Copy/paste your `settings.yml` content
    - Copy/paste your template(s) content
@@ -330,7 +330,7 @@ merge_tag:
 
 3. **Share Your Recipe**
    - TRMNL team reviews (usually quick)
-   - Recipe appears at `https://usetrmnl.com/recipes`
+   - Recipe appears at `https://trmnl.com/recipes`
    - Share with the community!
 
 ## Additional Tips
@@ -425,8 +425,8 @@ To keep icons inline with text (not on separate lines):
 
 ## Resources
 
-- [TRMNL Framework Documentation](https://usetrmnl.com/framework)
-- [Plugin Recipes Guide](https://help.usetrmnl.com/en/articles/10122094-plugin-recipes)
+- [TRMNL Framework Documentation](https://trmnl.com/framework)
+- [Plugin Recipes Guide](https://help.trmnl.com/en/articles/10122094-plugin-recipes)
 - [TRMNL Community Plugins](https://github.com/usetrmnl/plugins)
 - [Liquid Template Language](https://shopify.github.io/liquid/)
 
@@ -445,4 +445,4 @@ To keep icons inline with text (not on separate lines):
 
 ---
 
-**Questions?** Check the [TRMNL Help Center](https://help.usetrmnl.com/) or [Community Forum](https://community.usetrmnl.com/)
+**Questions?** Check the [TRMNL Help Center](https://help.trmnl.com/) or [Community Forum](https://community.trmnl.com/)
