@@ -8,13 +8,13 @@ Real-time GO Transit departure and arrival information on your TRMNL display.
 
 ## Install
 
-**[→ Install GO Transit Dashboard](https://usetrmnl.com/recipes)**
+**[→ Install GO Transit Dashboard](https://trmnl.com/recipes)**
 
-1. Visit [TRMNL Plugins](https://usetrmnl.com/plugins)
+1. Visit [TRMNL Plugins](https://trmnl.com/plugins)
 2. Search for "**GO Transit Dashboard**"
 3. Click **Install**
 4. Configure your home station and API key
-5. Add to your [Playlist](https://usetrmnl.com/playlists)
+5. Add to your [Playlist](https://trmnl.com/playlists)
 
 ## Demo
 

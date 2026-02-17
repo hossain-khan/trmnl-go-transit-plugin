@@ -1,5 +1,5 @@
 # GO Transit Dashboard - Plugin Configuration
-# Reference: https://help.usetrmnl.com/en/articles/10513740-custom-plugin-form-builder
+# Reference: https://help.trmnl.com/en/articles/10513740-custom-plugin-form-builder
 #
 # These custom fields allow users to configure their GO Transit dashboard.
 # Values are accessible in templates via {{ keyname }} or {{ trmnl.plugin_settings.custom_fields_values }}
