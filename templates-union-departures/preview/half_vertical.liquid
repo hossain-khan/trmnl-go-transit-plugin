@@ -15,21 +15,21 @@
         
         <!-- Line & Service -->
         <div class="flex flex--row gap--xsmall flex--center-y mb--1 stretch-x">
-          <span class="label label--small label--inverted" style="background-color: {{ departure[6] }};">{{ departure[0] }}</span>
-          <span class="title title--small md:title--medium">{{ departure[1] }}</span>
+          <span class="label label--small lg:label--base label--inverted" style="background-color: {{ departure[6] }};">{{ departure[0] }}</span>
+          <span class="title title--small md:title--medium lg:title--large">{{ departure[1] }}</span>
         </div>
         
         <!-- Time, Platform, Status -->
         <div class="flex flex--row gap--small flex--center-y stretch-x">
           <div style="min-width: 70px;">
-            <span class="label label--small">Time</span>
-            <div class="value value--medium md:value--large">{{ departure[2] }}</div>
+            <span class="label label--small lg:label--base">Time</span>
+            <div class="value value--medium md:value--large lg:value--xlarge">{{ departure[2] }}</div>
           </div>
           <div style="min-width: 60px;">
-            <span class="label label--small">Platform</span>
-            <div class="value value--small">
+            <span class="label label--small lg:label--base">Platform</span>
+            <div class="value value--small lg:value--medium">
               {% if departure[3] == "-" %}
-                <span class="description">TBD</span>
+                <span class="description lg:description--large">TBD</span>
               {% else %}
                 {{ departure[3] }}
               {% endif %}
@@ -37,9 +37,9 @@
           </div>
           <div class="flex--1 text--right">
             {% if departure[5] contains "Proceed" %}
-              <span class="label label--small label--inverted">Go</span>
+              <span class="label label--small lg:label--base label--inverted">Go</span>
             {% else %}
-              <span class="label label--small label--outline">Wait</span>
+              <span class="label label--small lg:label--base label--outline">Wait</span>
             {% endif %}
           </div>
         </div>

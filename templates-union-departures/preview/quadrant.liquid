@@ -15,25 +15,25 @@
         
         <!-- Line Badge & Service -->
         <div class="flex flex--row gap--xsmall flex--center-y mb--xsmall stretch-x">
-          <span class="label label--small label--inverted" style="background-color: {{ departure[6] }};">{{ departure[0] }}</span>
-          <span class="description" style="flex: 1; min-width: 0;">{{ departure[1] }}</span>
+          <span class="label label--small lg:label--base label--inverted" style="background-color: {{ departure[6] }};">{{ departure[0] }}</span>
+          <span class="description lg:description--large" style="flex: 1; min-width: 0;">{{ departure[1] }}</span>
         </div>
         
         <!-- Time & Status -->
         <div class="flex flex--row gap--xsmall flex--center-y stretch-x">
-          <span class="value value--small md:value--medium">{{ departure[2] }}</span>
+          <span class="value value--small md:value--medium lg:value--large">{{ departure[2] }}</span>
           <span style="min-width: 35px;">
             {% if departure[3] == "-" %}
-              <span class="label label--small">TBD</span>
+              <span class="label label--small lg:label--base">TBD</span>
             {% else %}
-              <span class="label label--small">{{ departure[3] }}</span>
+              <span class="label label--small lg:label--base">{{ departure[3] }}</span>
             {% endif %}
           </span>
           <div class="flex--1 text--right">
             {% if departure[5] contains "Proceed" %}
-              <span class="label label--small label--inverted">Go</span>
+              <span class="label label--small lg:label--base label--inverted">Go</span>
             {% else %}
-              <span class="label label--small label--outline">Wait</span>
+              <span class="label label--small lg:label--base label--outline">Wait</span>
             {% endif %}
           </div>
         </div>
