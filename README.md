@@ -33,23 +33,15 @@ Real-time GO Transit departure and arrival information on your TRMNL display.
 - **Four Layouts**: Full, half horizontal, half vertical, and quadrant views
 - **E-ink Optimized**: Clean, high-contrast design for TRMNL displays
 - **52+ Stations**: Support for major GO Rail stations across all lines
-- **Customizable**: Time format (12h/24h), line filtering, and departure count options
 
 
 
 ## Configuration
 
-The plugin supports two display modes:
-
-1. **Station-to-Station Schedule** - Shows arrival/departure times between two stations with route visualization
-2. **Departure Board** - Shows real-time departures like the GO Transit website
-
 Configure the plugin through the TRMNL interface:
 
 - **GO Station**: Select your preferred station
-- **Time Format**: 12-hour or 24-hour display
 - **Refresh Interval**: 5-30 minutes (5-minute minimum)
-- **Optional**: Filter by line, toggle alerts, customize departure count
 
 ---
 
