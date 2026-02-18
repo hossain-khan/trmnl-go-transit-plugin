@@ -57,7 +57,7 @@
               {% if departure.platform == "-" or departure.platform == blank or departure.platform == "" %}
                 <span class="label label--small lg:label--base">TBD</span>
               {% else %}
-                <span class="label label--small lg:label--base">{{ departure.platform }}</span>
+                <span class="label label--medium lg:label--base">{{ departure.platform }}</span>
               {% endif %}
               {% if departure.info contains "Proceed" %}
                 <span class="label label--small lg:label--base label--inverted">Go</span>
