@@ -1,4 +1,4 @@
-[![Installs](https://trmnl-badges.gohk.xyz/badge/installs?recipe=226758)](https://trmnl.com/recipes/226758) [![Forks](https://trmnl-badges.gohk.xyz/badge/forks?recipe=226758)](https://trmnl.com/recipes/226758)
+[![CI - Code Quality & Tests](https://github.com/hossain-khan/trmnl-go-transit-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/hossain-khan/trmnl-go-transit-plugin/actions/workflows/ci.yml) [![Installs](https://trmnl-badges.gohk.xyz/badge/installs?recipe=226758)](https://trmnl.com/recipes/226758) [![Forks](https://trmnl-badges.gohk.xyz/badge/forks?recipe=226758)](https://trmnl.com/recipes/226758)
 
 # GO Transit Schedule for TRMNL
 
