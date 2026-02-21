@@ -15,7 +15,7 @@
   <!-- Direction 1 -->
   <div class="flex--1">
     <div class="mb--1">
-      <span class="title title--small" style="display: block;">{{ direction_1.origin }}</span>
+      <div class="title title--small">{{ direction_1.origin }}</div>
       <span class="description">{{ direction_1.label }}</span>
     </div>
     <div class="flex flex--col flex--left gap--small">
@@ -24,7 +24,7 @@
       <div class="item item--emphasis-3">
         <div class="meta"></div>
         <div class="content">
-            <span class="label label--small label--inverted mb--1">departing</span>
+          <span class="label label--small label--inverted mb--1">departing</span>
           <span>
             <span class="value">{{ direction_1.arriving | split: " " | first }}</span>
             <span class="value value--small">{{ direction_1.arriving | split: " " | last }}</span>
@@ -50,7 +50,7 @@
   <!-- Direction 2 -->
   <div class="flex--1">
     <div class="mb--1">
-      <span class="title title--small" style="display: block;">{{ direction_2.origin }}</span>
+      <div class="title title--small">{{ direction_2.origin }}</div>
       <span class="description">{{ direction_2.label }}</span>
     </div>
     <div class="flex flex--col flex--left gap--small">
